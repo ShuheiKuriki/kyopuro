@@ -1,0 +1,12 @@
+.vscode/
+bin/
+__pycache__/
+.envrc
+pyvenv.cfg
+include/
+lib/
+other/PAST.mov
+*.out
+other/PAST上級認定証.png
+other/certificate.pdf
+other/mekko.py

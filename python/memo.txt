@@ -1,0 +1,30 @@
+答えが1つ例を出すだけで良いなら、構成できないか考える
+チェック項目、計算量・デバッグ・自分の例
+sumやmaxもO(N)
+
+階乗 8:4*10^4, 10:4*10^6
+コンビネーション 16C8:10^4, 20C10:2*10^5, 26C13:10^7
+素数積 10個(2~31):7*10^9, 13個(2~43):5*10^14, 15個(2~53):10^18
+2の冪乗 15:10^4.5, 20:10^6, 23:10^7
+
+'STR'.isupper()
+'str'.islower()
+'str'.upper()
+'STR'.lower()
+
+math.factorial() #階乗
+math.factorial(), scipy.special.perm() #順列の総数を算出
+math.factorial(n)/math.factorial(r)/math.factorial(n-r)
+scipy.special.comb() #組み合わせの総数を算出
+
+#正規表現
+import re
+re.sub('ABC','BCA',s)
+
+#優先度付きキュー
+import heapq  # heapqライブラリのimport
+heapq.heapify(a)  # リストを優先度付きキューへ
+heapq.heappop(a)  # 最小値の取り出し
+heapq.heappush(a, -2)
+
+from statistics import mean, median,variance,stdev
