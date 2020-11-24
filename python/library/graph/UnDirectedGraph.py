@@ -26,16 +26,17 @@ class UnDirectedGraph:
     #記録したい値の配列を定義
     while stack:
       v = stack[-1]
+      mark = 1
       for u in self.edge[v]:
         if u==self.parent[v]:
           continue
         if self.parent[u]==self.V: #行きがけ
+          mark = 0
           self.parent[u]=v
           stack.append(u)
-          break
         else: #帰りがけ
           pass
-      else:
+      if mark:
         stack.pop() #帰りがけまとめ
         if v==start:
           #根の帰りがけまとめ処理
