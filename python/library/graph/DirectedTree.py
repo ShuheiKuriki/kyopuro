@@ -9,7 +9,7 @@ class Tree:
     self.parent = [N]*N
   
   def add_edges(self, ind=1):
-    for i in range(N-1):
+    for i in range(self.V-1):
       a,b = map(int, input().split())
       a -= ind; b -= ind
       self.edge[a].append(b)
@@ -21,20 +21,22 @@ class Tree:
   def dfs(self, start):
     stack = deque([start])
     self.parent[start] = -1
+    self.cnts = [0]*self.V
     #記録したい値の配列を定義
     while stack:
       v = stack[-1]
-      mark = 1
       for u in self.edge[v]:
         if u==self.parent[v]:
           continue
-        if self.parent[u]==self.V: #行きがけ
-          mark = 0
+        if self.cnts[u]==0: #行きがけ
           self.parent[u]=v
           stack.append(u)
-        else: #帰りがけ
-          pass
-      if mark:
+          self.cnts[u] += 1
+          break
+        elif self.cnts[u]==1:
+          self.cnts[u] += 1
+          #帰りがけ処理
+      else:
         stack.pop() #帰りがけまとめ
         if v==start:
           #根の帰りがけまとめ処理

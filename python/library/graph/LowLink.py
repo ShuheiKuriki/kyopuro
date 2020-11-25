@@ -30,22 +30,25 @@ class LowLink:
     stack = deque([start])
     self.parent[start] = -1
     self.order[start] = 0
-    cnt = 1
+    self.cnts = [0]*self.V
+    order = 1
     while stack:
       v = stack[-1]
       for u in self.edge[v]:
         if u==self.parent[v]:
-          pass
-        elif self.order[u]<self.order[v]: #後退辺の処理
+          continue
+        if self.order[u]<self.order[v]: #後退辺の処理
           self.low[v] = min(self.low[v], self.order[u])
-        elif self.parent[u]==N: #行きがけ
-          self.order[u] = self.low[u] = cnt
+        elif self.cnts[u]==0: #行きがけ
+          self.order[u] = self.low[u] = order
           self.parent[u] = v
           stack.append(u)
-          cnt += 1
+          self.cnts[u] += 1
+          order += 1
           break
-        else: #帰りがけ
+        elif self.cnts[u]==1: #帰りがけ
           self.low[v] = min(self.low[v], self.low[u])
+          self.cnts[u] += 1
       else:
         stack.pop() #帰り
     return
@@ -57,6 +60,15 @@ class LowLink:
         a,b = b,a
       if G.low[b]>G.order[a]:
         res.append((a,b))
+    return res
+
+  def cycle(self):
+    res = [0]*self.V
+    for a,b in self.edges:
+      if G.order[a]>G.order[b]:
+        a,b = b,a
+      if G.low[b]<=G.order[a]:
+        res[a] = 1; res[b] = 1
     return res
   
   def articulation(self):

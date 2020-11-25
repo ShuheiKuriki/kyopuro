@@ -21,20 +21,22 @@ class UnDirectedGraph:
   def dfs(self, start):
     stack = deque([start])
     self.parent[start] = -1
+    self.cnts = [0]*self.V
     #記録したい値の配列を定義
     while stack:
       v = stack[-1]
-      mark = 1
       for u in self.edge[v]:
         if u==self.parent[v]:
           continue
-        if self.parent[u]==self.V: #行きがけ
+        if self.cnts[u]==0: #行きがけ
           self.parent[u]=v
           stack.append(u)
-          mark = 0
-        else: #帰りがけ
-          pass
-      if mark:
+          self.cnts[u] += 1
+          break
+        elif self.cnts[u]==1:
+          self.cnts[u] += 1
+          #帰りがけ処理
+      else:
         stack.pop() #帰りがけまとめ
         if v==start:
           #根の帰りがけまとめ処理
