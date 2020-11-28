@@ -5,7 +5,7 @@ class Tree:
   def __init__(self, N):
     self.V = N
     self.edge = [[] for _ in range(N)]
-    self.visited = [False]*N
+    self.min_cost = [-1]*self.V
     self.parent = [N]*N
   
   def add_edges(self, ind=1, bi=True):
@@ -49,15 +49,15 @@ class Tree:
   
   def bfs(self, start):
     d = deque()
-    self.visited[start]=True
-    d.append((start,0))
+    self.min_cost[start]=0
+    d.append(start)
     while len(d)>0:
-      v,cnt = d.popleft()
+      v = d.popleft()
       for w in self.edge[v]:
-        if self.visited[w]==False:
-          self.visited[w]=True
-          d.append((w,cnt+1))
-    return cnt
+        if self.min_cost[w]==-1:
+          self.min_cost[w]=self.min_cost[v]+1
+          d.append(w)
+    return
 
 N = int(input())
 G = Tree(N)
