@@ -11,23 +11,23 @@ for i in range(n2):
 from collections import defaultdict
 from bisect import *
 def make(V,W,n):
-  res = {0}
-  dic = defaultdict(lambda: 0)
+  Ws = {0}
+  value = defaultdict(lambda: 0)
   for i in range(n):
-    lis = sorted(res,reverse=True)
+    lis = sorted(Ws,reverse=True)
     for l in lis:
-      res.add(l+W[i])
-      dic[l+W[i]] = max(dic[l+W[i]],dic[l]+V[i])
-  res = sorted(res)
-  for i in range(1,len(res)):
-    dic[res[i]] = max(dic[res[i]], dic[res[i-1]])
-  return res, dic
-res1,dic1 = make(V1,W1,n1)
-res2,dic2 = make(V2,W2,n2)
+      Ws.add(l+W[i])
+      value[l+W[i]] = max(value[l+W[i]],value[l]+V[i])
+  Ws = sorted(Ws)
+  for i in range(1,len(Ws)):
+    value[Ws[i]] = max(value[Ws[i]], value[Ws[i-1]])
+  return Ws, value
+Ws1,value1 = make(V1,W1,n1)
+Ws2,value2 = make(V2,W2,n2)
 ans = 0
-for r1 in res1:
-  if r1>Wlim:
+for w1 in Ws1:
+  if w1>Wlim:
     break
-  r2 = res2[bisect_right(res2,Wlim-r1)-1]
-  ans = max(ans, dic1[r1]+dic2[r2])
+  w2 = Ws2[bisect_right(Ws2,Wlim-w1)-1]
+  ans = max(ans, value1[w1]+value2[w2])
 print(ans)
