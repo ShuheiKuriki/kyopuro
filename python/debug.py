@@ -12,4 +12,5 @@ for t in range(T):
   if solve(N,A)!=gutyoku(N,A):
     print(N)
     print(*A)
+    print(solve(N,A), gutyoku(N,A))
 
