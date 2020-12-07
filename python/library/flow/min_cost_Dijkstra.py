@@ -65,6 +65,9 @@ class MinCostFlow:
         v = prv_v[v]
     return res
 
+import sys,os,io
+input = sys.stdin.readline
+#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
 n, m, f = map(int, input().split())
 graph = MinCostFlow(n)
 for i in range(m):

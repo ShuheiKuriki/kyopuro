@@ -1,13 +1,16 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(10**7)
 from collections import deque
 class Graph:
-  def __init__(self, N, M):
+  def __init__(self, N, M=False):
     self.V = N
-    self.E = M
+    if M:
+      self.E = M
     self.edge = [[] for _ in range(self.V)]
     self.min_cost = [-1]*self.V
     self.parent = [N]*self.V
+    self.sth = [0]*self.V #求めたいもの
   
   def add_edges(self, ind=1, bi=True):
     for i in range(self.E):
@@ -22,7 +25,16 @@ class Graph:
     if bi:
       self.edge[b].append(a)
 
-  def dfs(self, start):
+  def dfs_rec(self, v, parent):
+    if self.sth[v]>0:
+      return self.sth[v]
+    for u in self.edge[v]:
+      if u==parent:
+        continue
+      self.sth[v] += self.dfs_rec(u, v)
+    return self.sth[v]
+
+  def dfs(self, start): #DAG DPは再帰で!
     stack = deque([start])
     self.parent[start] = -1
     #記録したい値の配列を定義
@@ -31,7 +43,7 @@ class Graph:
       for u in self.edge[v]:
         if u==self.parent[v]:
           continue
-        if self.parent[u]==N: #行きがけ
+        if self.parent[u]==self.V: #行きがけ
           self.parent[u]=v
           stack.append(u)
           break
