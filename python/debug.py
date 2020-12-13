@@ -1,4 +1,4 @@
-def solve(d,k):
+def solve(N,A):
   ans = 0
   return ans
 def gutyoku(N,A):
