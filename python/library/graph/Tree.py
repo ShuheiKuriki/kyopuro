@@ -5,52 +5,41 @@ class Tree:
   def __init__(self, N):
     self.V = N
     self.edge = [[] for _ in range(N)]
-    self.min_cost = [-1]*self.V
-    self.parent = [N]*N
   
   def add_edges(self, ind=1, bi=True):
     for i in range(self.V-1):
       a,b = map(int, input().split())
       a -= ind; b -= ind
       self.edge[a].append(b)
-      if bi:
-        self.edge[b].append(a)
+      if bi: self.edge[b].append(a)
 
   def add_edge(self, a, b, bi=True):
     self.edge[a].append(b)
-    if bi:
-      self.edge[b].append(a)
+    if bi: self.edge[b].append(a)
 
-  def dfs(self, start):
+  def dp(self, start):
     stack = deque([start])
-    self.parent[start] = -1
-    self.cnts = [0]*self.V
+    self.parent = [self.V]*self.V; self.parent[start] = -1
+    order = [start]
     #記録したい値の配列を定義
     while stack:
-      v = stack[-1]
+      v = stack.pop()
       for u in self.edge[v]:
-        if u==self.parent[v]:
-          continue
-        if self.cnts[u]==0: #行きがけ
-          self.parent[u]=v
-          stack.append(u)
-          self.cnts[u] += 1
-          break
-        elif self.cnts[u]==1:
-          self.cnts[u] += 1
-          #帰りがけ処理
-      else:
-        stack.pop() #帰りがけまとめ
-        if v==start:
-          #根の帰りがけまとめ処理
-          continue
+        if u==self.parent[v]: continue
+        self.parent[u]=v
+        stack.append(u); order.append(u)
+    for v in order[::-1]:
+      for u in self.edge[v]:
+        if u==self.parent[v]: continue
+        #　帰りがけ処理
+      if v==start: pass
+        #根の帰りがけまとめ処理
+      else: pass
         #根以外の帰りがけまとめ処理
-    return
   
   def bfs(self, start):
-    d = deque()
-    self.min_cost[start]=0
-    d.append(start)
+    d = deque([start])
+    self.min_cost = [-1]*self.V; self.min_cost[start]=0
     while len(d)>0:
       v = d.popleft()
       for w in self.edge[v]:

@@ -41,10 +41,8 @@ class Dinic:
         d = self.dfs(w, t, min(f, cap))
         if d:
           e[1] -= d
-          if rev[2]==0:
-            e[2] += d
-          else:
-            rev[2] -= d
+          if rev[2]==0: e[2] += d
+          else: rev[2] -= d
           rev[1] += d
           return d
     return 0
