@@ -2,6 +2,7 @@ import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(10**7)
 from collections import deque
+import heapq
 class Graph:
   def __init__(self, N, M=False):
     self.V = N
@@ -36,9 +37,8 @@ class Graph:
       self.sth[v] += self.dfs_rec(u, v)
     return self.sth[v]
 
-  def dp(self): #topology → DP
+  def topo_sort(self): #topological sort
     updated = [0]*self.V
-    # topology
     for start in range(self.V):
       if self.fr[start] or updated[start]: continue
       stack = deque([start])
@@ -50,11 +50,11 @@ class Graph:
           self.fr[u] -= 1
           if self.fr[u]: continue
           stack.append(u)
+  def dp(self): #トポソしてから
     #記録したい値の配列を定義
-    for v in self.order:
-      for u in self.edge[v]:
-        pass
-        #　DPの遷移
+    for v in self.order: #トポロジカル順序
+      for u in self.edge[v]: #辺は逆向き
+        pass #配るDP
   
   def bfs(self, start):
     d = deque([start])
@@ -66,6 +66,23 @@ class Graph:
           self.min_cost[w]=self.min_cost[v]+1
           d.append(w)
     return
+
+  #O(ElogV),頂点数10**5以上の場合は避ける
+  def dijkstra_heap(self,s):
+    dists = [float('inf')] * self.V; dists[s] = 0
+    used = [False] * self.V; used[s] = True
+    vlist = [] #vlist : [sからの暫定(未確定)最短距離,頂点]のリスト
+    #edge[s] : sから出る枝の[重み,終点]のリスト
+    for e in self.edge[s]: heapq.heappush(vlist,e) #sの隣の点は枝の重さがそのまま暫定最短距離となる
+    while len(vlist):
+      #まだ使われてない頂点の中から最小の距離のものを探す→確定させる
+      d,v = heapq.heappop(vlist)
+      #[d,v]:[sからの(確定)最短距離,頂点]
+      if used[v]: continue
+      dists[v] = d; used[v] = True
+      for d,w in edge[v]:
+        if not used[w]: heapq.heappush(vlist,[dists[v]+d,w])
+    return dists
 
 N, M = map(int, input().split())
 G = Graph(N,M)
