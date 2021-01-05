@@ -69,7 +69,7 @@ class Graph:
 
   #O(ElogV),頂点数10**5以上の場合は避ける
   def dijkstra_heap(self,s):
-    dists = [float('inf')] * self.V; dists[s] = 0
+    self.dists = [float('inf')] * self.V; self.dists[s] = 0
     used = [False] * self.V; used[s] = True
     vlist = [] #vlist : [sからの暫定(未確定)最短距離,頂点]のリスト
     #edge[s] : sから出る枝の[重み,終点]のリスト
@@ -82,7 +82,6 @@ class Graph:
       dists[v] = d; used[v] = True
       for d,w in edge[v]:
         if not used[w]: heapq.heappush(vlist,[dists[v]+d,w])
-    return dists
 
 N, M = map(int, input().split())
 G = Graph(N,M)
