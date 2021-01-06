@@ -4,9 +4,9 @@ sys.setrecursionlimit(10**7)
 from collections import deque
 import heapq
 class Graph:
-  def __init__(self, N, M=False):
+  def __init__(self, N, M=-1):
     self.V = N
-    if M: self.E = M
+    if M>=0: self.E = M
     self.edge = [[] for _ in range(self.V)]
     self.order = []
     self.fr = [0]*self.V
