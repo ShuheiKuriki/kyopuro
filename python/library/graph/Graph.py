@@ -52,9 +52,10 @@ class Graph:
           stack.append(u)
   def dp(self): #トポソしてから
     #記録したい値の配列を定義
+    self.dp = [0]*self.V
     for v in self.order: #トポロジカル順序
       for u in self.edge[v]: #辺は逆向き
-        pass #配るDP
+        self.dp[u] = max(self.dp[u], self.dp[v]+1) #配るDP
   
   def bfs(self, start):
     d = deque([start])
