@@ -8,53 +8,53 @@ class Graph:
     self.V = N
     if M>=0: self.E = M
     self.edge = [[] for _ in range(self.V)]
+    self.edge_rev = [[] for _ in range(self.V)]
     self.order = []
-    self.fr = [0]*self.V
+    self.to = [0]*self.V
+    self.visited = [False]*self.V
+    self.dp = [0]*self.V
 
-  def add_edges(self, ind=1, bi=True):
+  def add_edges(self, ind=1, bi=False, rev=False):
     for i in range(self.E):
       a,b = map(int, input().split())
       a -= ind; b -= ind
       self.edge[a].append(b)
+      if rev: self.edge_rev[b].append(a)
+      self.to[b] += 1
       if bi: self.edge[b].append(a)
 
-  def add_revs(self, ind=1, bi=True): #トポソ用
-    for i in range(self.E):
-      a,b = map(int, input().split())
-      a -= ind; b -= ind
-      self.edge[b].append(a)
-      self.fr[a] += 1
-      if bi: self.edge[b].append(a)
-
-  def add_edge(self, a, b, bi=True):
+  def add_edge(self, a, b, bi=False, rev=False):
     self.edge[a].append(b)
+    if rev: self.edge_rev[b].append(a)
     if bi: self.edge[b].append(a)
 
-  def dfs_rec(self, v, parent):
-    if self.sth[v]>0: return self.sth[v]
+  def dfs_rec(self, v):
+    if self.visited[v]: return self.dp[v]
     for u in self.edge[v]:
-      if u==parent: continue
-      self.sth[v] += self.dfs_rec(u, v)
-    return self.sth[v]
+      self.dp[v] += self.dfs_rec(u, v)
+    self.visited[v] = True
+    return self.dp[v]
 
   def topo_sort(self): #topological sort
     updated = [0]*self.V
     for start in range(self.V):
-      if self.fr[start] or updated[start]: continue
+      if self.to[start] or updated[start]: continue
       stack = deque([start])
       while stack:
         v = stack.popleft()
         self.order.append(v)
         updated[v] = 1
         for u in self.edge[v]:
-          self.fr[u] -= 1
-          if self.fr[u]: continue
+          self.to[u] -= 1
+          if self.to[u]: continue
           stack.append(u)
   def dp(self): #トポソしてから
-    #記録したい値の配列を定義
     self.dp = [0]*self.V
-    for v in self.order: #トポロジカル順序
-      for u in self.edge[v]: #辺は逆向き
+    for v in self.order: #行きがけ
+      for u in self.edge[v]:
+        self.dp[u] = max(self.dp[u], self.dp[v]+1) #配るDP
+    for v in self.order[::-1]: #帰りがけ
+      for u in self.edge_rev[v]:
         self.dp[u] = max(self.dp[u], self.dp[v]+1) #配るDP
   
   def bfs(self, start):

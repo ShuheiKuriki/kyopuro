@@ -13,16 +13,19 @@ const ll INF = 1e18;
 int N, M, a, b, ans;
 vector<vector<int>> G;
 vector<bool> visited;
+vector<int> dp;
 
-void dfs(int v)
+int dfs(int v)
 {
+  if (visited[v])
+    return dp[v];
+  // cout << v << '\n';
   for (auto next_v : G[v])
   {
-    if (visited[next_v])
-      continue;
-    visited[next_v] = true;
-    dfs(next_v);
+    dp[v] += dfs(next_v);
   }
+  visited[v] = true;
+  return dp[v];
 }
 int main()
 {
@@ -31,15 +34,15 @@ int main()
   cin >> N >> M;
   G.assign(N, vector<int>(0));
   visited.assign(N, false);
+  dp.assign(N, 0);
   rep(i, M)
   {
     cin >> a >> b;
     a -= 1;
     b -= 1;
     G[a].push_back(b);
-    G[b].push_back(a);
+    // G[b].push_back(a);
   }
-  visited[0] = true;
-  dfs(0);
+  rep(i, N) dfs(i);
   return 0;
 }
