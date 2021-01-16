@@ -49,7 +49,7 @@ class Graph:
           if self.to[u]: continue
           stack.append(u)
   def dp(self): #トポソしてから
-    self.dp = [0]*self.V
+    # self.dp = [0]*self.V
     for v in self.order: #行きがけ
       for u in self.edge[v]:
         self.dp[u] = max(self.dp[u], self.dp[v]+1) #配るDP
@@ -104,4 +104,4 @@ class Graph:
 
 N, M = map(int, input().split())
 G = Graph(N,M)
-G.add_edges(ind=1, bi=True)
+G.add_edges(ind=1, bi=False, rev=False)
