@@ -11,6 +11,7 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 using ll = long long;
 const ll INF = 1e18;
+const int inf = 1e9;
 // 変数定義
 ll N, M, Q, a, b, c, d, x, y, t, T, total, cnt, ans;
 int main()
