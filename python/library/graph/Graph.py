@@ -20,13 +20,19 @@ class Graph:
       a -= ind; b -= ind
       self.edge[a].append(b)
       if rev: self.edge_rev[b].append(a)
-      self.to[b] += 1
+      if not bi: self.to[b] += 1
       if bi: self.edge[b].append(a)
 
-  def add_edge(self, a, b, bi=False, rev=False):
-    self.edge[a].append(b)
-    if rev: self.edge_rev[b].append(a)
-    if bi: self.edge[b].append(a)
+  def add_edge(self, a, b, dist=-1, bi=False, rev=False):
+    if dist>=0:
+      self.edge[a].append((dist, b))
+      if rev: self.edge_rev[b].append((dist, a))
+      if bi: self.edge[b].append((dist, a))
+    else:
+      self.edge[a].append(b)
+      if rev: self.edge_rev[b].append(a)
+      if bi: self.edge[b].append(a)
+    if not bi: self.to[b] += 1
 
   def dfs_rec(self, v):
     if self.visited[v]: return self.dp[v]
@@ -68,39 +74,25 @@ class Graph:
           d.append(w)
     return
 
-  #O(ElogV),頂点数10**5以下
-  def dijkstra_heap(self,s):
+  #O(ElogV),重みが整数の場合はmodで高速化
+  def dijkstra_heap(self,s,mod=0):
     self.dists = [float('inf')] * self.V; self.dists[s] = 0
     used = [False] * self.V; used[s] = True
     vlist = [] #vlist : [sからの暫定(未確定)最短距離,頂点]のリスト
     #edge[s] : sから出る枝の[重み,終点]のリスト
-    for e in self.edge[s]: heapq.heappush(vlist,e) #sの隣の点は枝の重さがそのまま暫定最短距離となる
+    for e in self.edge[s]:
+      if mod: e = e[0]*mod+e[1]
+      heapq.heappush(vlist,e) #sの隣の点は枝の重さがそのまま暫定最短距離となる
     while len(vlist):
       #まだ使われてない頂点の中から最小の距離のものを探す→確定させる
-      d,v = heapq.heappop(vlist)
+      d,v = divmod(heapq.heappop(vlist),mod) if mod else heapq.heappop(vlist)
       #[d,v]:[sからの(確定)最短距離,頂点]
       if used[v]: continue
       self.dists[v] = d; used[v] = True
-      for d,w in edge[v]:
-        if not used[w]: heapq.heappush(vlist,[self.dists[v]+d,w])
-
-  #O(ElogV),重みが整数の場合のみ
-  def dijkstra_fast(self,s,mod):
-    self.dists = [float('inf')] * self.V; self.dists[s] = 0 #始点sから各頂点への最短距離
-    used = [False] * self.V; used[s] = True
-    vlist = []
-    #vlist : [sからの暫定(未確定)最短距離,頂点]のリスト
-    #edge[s] : sから出る枝の[重み,終点]のリスト
-    for w,v in self.edge[s]:
-      heapq.heappush(vlist,w*mod+v) #sの隣の点は枝の重さがそのまま暫定最短距離となる
-    while len(vlist):
-      #まだ使われてない頂点の中から最小の距離のものを探す→確定させる
-      #d, v : sからの(確定)最短距離, 頂点
-      d,v = divmod(heapq.heappop(vlist),mod)
-      if used[v]: continue
-      self.dists[v] = d; used[v] = True
-      for d,w in edge[v]:
-        if not used[w]: heapq.heappush(vlist,(self.dists[v]+d)*mod+w)
+      for d,w in self.edge[v]:
+        if mod: e = (self.dists[v]+d)*mod+w
+        else: e = self.dists[v]+d,w
+        if not used[w]: heapq.heappush(vlist,e)
 
 N, M = map(int, input().split())
 G = Graph(N,M)
