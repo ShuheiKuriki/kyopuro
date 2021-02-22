@@ -14,20 +14,28 @@ class Graph:
     self.visited = [False]*self.V
     self.dp = [0]*self.V
 
-  def add_edges(self, ind=1, bi=False, rev=False):
+  def add_edges(self, ind=1, cost=False, bi=False, rev=False):
     for i in range(self.E):
-      a,b = map(int, input().split())
-      a -= ind; b -= ind
-      self.edge[a].append(b)
-      if rev: self.edge_rev[b].append(a)
-      if not bi: self.to[b] += 1
-      if bi: self.edge[b].append(a)
+      if cost:
+        a,b,d = map(int, input().split())
+        a -= ind; b -= ind
+        self.edge[a].append((d,b))
+        if rev: self.edge_rev[b].append((d,a))
+        if not bi: self.to[b] += 1
+        if bi: self.edge[b].append((d,a))
+      else:
+        a,b = map(int, input().split())
+        a -= ind; b -= ind
+        self.edge[a].append(b)
+        if rev: self.edge_rev[b].append(a)
+        if not bi: self.to[b] += 1
+        if bi: self.edge[b].append(a)
 
-  def add_edge(self, a, b, dist=-1, bi=False, rev=False):
-    if dist>=0:
-      self.edge[a].append((dist, b))
-      if rev: self.edge_rev[b].append((dist, a))
-      if bi: self.edge[b].append((dist, a))
+  def add_edge(self, a, b, cost=-1, bi=False, rev=False):
+    if cost>=0:
+      self.edge[a].append((cost, b))
+      if rev: self.edge_rev[b].append((cost, a))
+      if bi: self.edge[b].append((cost, a))
     else:
       self.edge[a].append(b)
       if rev: self.edge_rev[b].append(a)
@@ -72,28 +80,23 @@ class Graph:
         if self.min_cost[w]==-1:
           self.min_cost[w]=self.min_cost[v]+1
           d.append(w)
-    return
 
-  #O(ElogV),重みが整数の場合はmodで高速化
-  def dijkstra_heap(self,s,mod=0):
-    self.dists = [float('inf')] * self.V; self.dists[s] = 0
-    used = [False] * self.V; used[s] = True
-    vlist = [] #vlist : [sからの暫定(未確定)最短距離,頂点]のリスト
-    #edge[s] : sから出る枝の[重み,終点]のリスト
-    for e in self.edge[s]:
-      if mod: e = e[0]*mod+e[1]
-      heapq.heappush(vlist,e) #sの隣の点は枝の重さがそのまま暫定最短距離となる
-    while len(vlist):
-      #まだ使われてない頂点の中から最小の距離のものを探す→確定させる
-      d,v = divmod(heapq.heappop(vlist),mod) if mod else heapq.heappop(vlist)
+  #O(ElogV)
+  def dijkstra_heap(self,s):
+    self.dists = [float('inf')] * self.V
+    self.dists[s] = 0
+    que = [(0,s)] #que : [sからの暫定(未確定)最短距離,頂点]のリスト
+    while len(que):
+      d,v = heapq.heappop(que)
       #[d,v]:[sからの(確定)最短距離,頂点]
-      if used[v]: continue
-      self.dists[v] = d; used[v] = True
+      if self.dists[v]!=d: continue
       for d,w in self.edge[v]:
-        if mod: e = (self.dists[v]+d)*mod+w
-        else: e = self.dists[v]+d,w
-        if not used[w]: heapq.heappush(vlist,e)
+        new_d = self.dists[v]+d
+        if new_d<self.dists[w]:
+          self.dists[w] = new_d
+          heapq.heappush(que,(new_d,w))
 
-N, M = map(int, input().split())
+N, M, r = map(int, input().split())
 G = Graph(N,M)
-G.add_edges(ind=1, bi=False, rev=False)
+G.add_edges(ind=1, cost=False, bi=False, rev=False)
+
