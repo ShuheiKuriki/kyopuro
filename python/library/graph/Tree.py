@@ -1,6 +1,7 @@
 import sys
 input = sys.stdin.readline
 from collections import deque
+sys.setrecursionlimit(10**6)
 class Tree:
   def __init__(self, N):
     self.V = N

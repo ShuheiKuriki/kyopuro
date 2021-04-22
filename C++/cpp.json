@@ -1,0 +1,303 @@
+{
+  "1変数出力": {
+    "prefix": "cout1",
+    "body": [
+      "cout << ${1:ans} << '\\n';"
+    ]
+  },
+  "2変数出力": {
+    "prefix": "cout2",
+    "body": [
+      "cout << ${1:N} << ' ' << ${2:M} << '\\n';"
+    ]
+  },
+  "3変数出力": {
+    "prefix": "cout3",
+    "body": [
+      "cout << ${1:ans} << ' ' << ${2:ans} << ' ' << ${3:ans} << '\\n';"
+    ]
+  },
+  "4変数出力": {
+    "prefix": "cout4",
+    "body": [
+      "cout << ${1:ans} << ' ' << ${2:ans} << ' ' << ${3:ans} << ' ' << ${4:ans} << '\\n';"
+    ]
+  },
+  "1変数入力": {
+    "prefix": "cin1",
+    "body": [
+      "cin >> ${1:N};"
+    ]
+  },
+  "2変数入力": {
+    "prefix": "cin2",
+    "body": [
+      "cin >> ${1:N} >> ${2:M};"
+    ]
+  },
+  "3変数入力": {
+    "prefix": "cin3",
+    "body": [
+      "cin >> ${1:a} >> ${2:b} >> ${3:c};"
+    ]
+  },
+  "4変数入力": {
+    "prefix": "cin4",
+    "body": [
+      "cin >> ${1:a} >> ${2:b} >> ${3:c} >> ${4:d};"
+    ]
+  },
+  "二次元配列宣言": {
+    "prefix": "vec2",
+    "body": [
+      "vector<vector<${1:int}>> ${2:lis}(${3:N}, vector<${1:int}>(${4:N}));"
+    ]
+  },
+  "テンプレート": {
+    "prefix": "template",
+    "body": [
+      "// g++ ${1:A}.cpp -std=c++14 -I . && ./a.out",
+      "#include <bits/stdc++.h>",
+      "using namespace std;",
+      "// #include <atcoder/all>",
+      "// using namespace atcoder;",
+      "// using mint = modint1000000007;",
+      "// using mint = modint998244353;",
+      "#define rep(i, n) for (int i = 0; i < (int)(n); i++)",
+      "#define rep2(i, a, b) for (int i = a; i < (int)(b); i++)",
+      "#define rrep(i, a, b) for (int i = a; i > (int)(b); i--)",
+      "#define all(v) v.begin(), v.end()",
+      "using ll = long long;",
+      "const ll INF = 1e18;",
+      "// 変数定義",
+      "ll N, M, Q, a, b, c, d, x, y, t, T, total, cnt, ans;",
+      "int main()",
+      "{",
+      "\tios::sync_with_stdio(false);",
+      "\tcin.tie(nullptr);",
+      "",
+      "\treturn 0;",
+      "}"
+    ]
+  },
+  "約数列挙": {
+    "prefix": "divisor",
+    "body": [
+      "template <typename T>",
+      "vector<T> divisor(T N)",
+      "{",
+      "\tT i = 1;",
+      "\twhile (i * i <= N)",
+      "\t{",
+      "\t\tif (N % i == 0)",
+      "\t\t{",
+      "\t\t\tans.push_back(i);",
+      "\t\t\tif (i != N / i)",
+      "\t\t\t{",
+      "\t\t\t\tans.push_back(N / i);",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\ti++;",
+      "\t}",
+      "\tsort(all(ans));",
+      "\treturn ans;",
+      "}"
+    ]
+  },
+  "コンビネーション": {
+    "prefix": "comb",
+    "body": [
+      "template <typename T>",
+      "mint comb(T n, T m)",
+      "{",
+      "\tmint res = 1;",
+      "\tmint div = 1;",
+      "\trep(i, m)",
+      "\t{",
+      "\t\tres *= n - i;",
+      "\t\tdiv *= i + 1;",
+      "\t}",
+      "\tres /= div;",
+      "\treturn res;",
+      "}"
+    ]
+  },
+  "前計算コンビネーション": {
+    "prefix": "comb_pre",
+    "body": [
+      "vector<mint> fact, rfact;",
+      "mint comb(int n, int k)",
+      "{",
+      "\treturn fact[n] * rfact[k] * rfact[n - k];",
+      "}",
+      "int main()",
+      "{",
+      "\tios::sync_with_stdio(false);",
+      "\tcin.tie(nullptr);",
+      "\tfact.assign(K + 1, 1);",
+      "\trfact.assign(K + 1, 1);",
+      "\trep2(p, 1, K + 1)",
+      "\t{",
+      "\t\tfact[p] = fact[p - 1] * p;",
+      "\t}",
+      "\trfact[K] = fact[K].inv();",
+      "\trrep(p, K, 0)",
+      "\t{",
+      "\t\trfact[p - 1] = rfact[p] * p;",
+      "\t}",
+      "\treturn 0;",
+      "}"
+    ]
+  },
+  "階乗": {
+    "prefix": "perm",
+    "body": [
+      "template <typename T>",
+      "T perm(T n, T m)",
+      "{",
+      "\tres = 1;",
+      "\trep2(i, n - m, n)",
+      "\t{",
+      "\t\tres *= i + 1;",
+      "\t}",
+      "\treturn res;",
+      "}"
+    ]
+  },
+  "べき乗": {
+    "prefix": "pow",
+    "body": [
+      "ll power(ll x, ll n)",
+      "{",
+      "\tll res = 1;",
+      "\twhile (n > 0)",
+      "\t{",
+      "\t\tif (n & 1)",
+      "\t\t\tres *= x; // n の最下位bitが 1 ならば x^(2^i) をかける",
+      "\t\tx *= x;",
+      "\t\tn >>= 1; // n を1bit 左にずらす",
+      "\t}",
+      "\treturn res;",
+      "}"
+    ]
+  },
+  "Union Find Tree": {
+    "prefix": "uf",
+    "body": [
+      "struct uf",
+      "{",
+      "\tint n;",
+      "\tvector<int> parent_or_size;",
+      "\tvector<map<int, int>> dics;",
+      "",
+      "\tuf() {}",
+      "\tuf(int n_)",
+      "\t{",
+      "\t\tn = n_;",
+      "\t\tparent_or_size.assign(n, -1);",
+      "\t}",
+      "",
+      "\tint merge(int a, int b)",
+      "\t{",
+      "\t\tint x = leader(a), y = leader(b);",
+      "\t\tif (x == y)",
+      "\t\t\treturn x;",
+      "\t\tif (-parent_or_size[x] < -parent_or_size[y])",
+      "\t\t\tswap(x, y);",
+      "\t\tparent_or_size[x] += parent_or_size[y];",
+      "\t\tparent_or_size[y] = x;",
+      "\t\treturn x;",
+      "\t}",
+      "",
+      "\tbool same(int a, int b)",
+      "\t{",
+      "\t\treturn leader(a) == leader(b);",
+      "\t}",
+      "",
+      "\tint leader(int a)",
+      "\t{",
+      "\t\tif (parent_or_size[a] < 0)",
+      "\t\t\treturn a;",
+      "\t\treturn parent_or_size[a] = leader(parent_or_size[a]);",
+      "\t}",
+      "",
+      "\tint size(int a)",
+      "\t{",
+      "\t\treturn -parent_or_size[leader(a)];",
+      "\t}",
+      "",
+      "\tvector<int> leaders()",
+      "\t{",
+      "\t\tvector<int> result;",
+      "\t\trep(i, n)",
+      "\t\t{",
+      "\t\t\tif (parent_or_size[i] < 0)",
+      "\t\t\t\tresult.push_back(i);",
+      "\t\t}",
+      "\t\treturn result;",
+      "\t}",
+      "",
+      "\tvector<vector<int>> groups()",
+      "\t{",
+      "\t\tvector<int> ls = leaders();",
+      "\t\tmap<int, int> l_to_g;",
+      "\t\trep(i, ls.size()) l_to_g[ls[i]] = i;",
+      "\t\tvector<vector<int>> result(ls.size());",
+      "\t\trep(i, n) result[l_to_g[leader(i)]].push_back(i);",
+      "\t\treturn result;",
+      "\t}",
+      "};"
+    ]
+  },
+  "セグ木": {
+    "prefix": "segtree",
+    "body": [
+      "template <typename T>",
+      "T op(T a, T b)",
+      "{",
+      "\treturn min(a, b);",
+      "}",
+      "template <typename T>",
+      "T e()",
+      "{",
+      "\treturn 0;",
+      "}",
+      "segtree<int, op, e> seg(N);"
+    ]
+  },
+  "遅延セグ木": {
+    "prefix": "lazysegtree",
+    "body": [
+      "struct S",
+      "{",
+      "\tmint a;",
+      "\tint size;",
+      "};",
+      "struct F",
+      "{",
+      "\tmint b, c;",
+      "};",
+      "S op(S l, S r)",
+      "{",
+      "\treturn S{l.a + r.a, l.size + r.size};",
+      "}",
+      "S e()",
+      "{",
+      "\treturn S{0, 0};",
+      "}",
+      "S mapping(F f, S x)",
+      "{",
+      "\treturn S{x.a * f.b + x.size * f.c, x.size};",
+      "}",
+      "F composition(F f, F g) //f○g",
+      "{",
+      "\treturn F{f.b * g.b, f.b * g.c + f.c};",
+      "}",
+      "F id()",
+      "{",
+      "\treturn F{1, 0};",
+      "}",
+      "lazy_segtree<S, op, e, F, mapping, composition, id> seg(N);"
+    ]
+  }
+}

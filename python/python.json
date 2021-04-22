@@ -1,0 +1,1619 @@
+{
+  "solve": {
+    "prefix": "solve",
+    "body": [
+      "def solve():",
+      "\tans = 0",
+      "",
+      "\treturn ans",
+      "print(solve())"
+    ],
+    "description": "答えを求める"
+  },
+  "numpy_main": {
+    "prefix": "numpy_main",
+    "body": [
+      "import numpy as np",
+      "import numba",
+      "from numba import njit, b1, i4, i8, f8",
+      "",
+      "@njit((i8), cache=True)",
+      "def main(${1:N}):",
+      "",
+      "\treturn ans",
+      "",
+      "",
+      "print(main(${1:N}))"
+    ],
+    "description": "numpyで答えを求める"
+  },
+  "multi_solve": {
+    "prefix": "solve_multi",
+    "body": [
+      "def solve():",
+      "",
+      "\tans = []",
+      "",
+      "\treturn ans",
+      "print(*solve(),sep='\\n')"
+    ],
+    "description": "複数の答えを求める"
+  },
+  "input高速化": {
+    "prefix": "fast_input",
+    "body": [
+      "import sys,os,io",
+      "input = sys.stdin.readline",
+      "#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline"
+    ]
+  },
+  "testcase_multi": {
+    "prefix": "testcase_multi",
+    "body": [
+      "import sys,os,io",
+      "input = sys.stdin.readline",
+      "#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline",
+      "T = int(input())",
+      "ans = [0]*T",
+      "for t in range(T):",
+      "\tn = int(input())",
+      "\tA = list(map(int,input().split()))",
+      "\tans[t] = 0",
+      "print(*ans, sep='\\n')"
+    ],
+    "description": "マルチケース"
+  },
+  "check": {
+    "prefix": "check",
+    "body": [
+      "def check():",
+      "",
+      "\tif :",
+      "\t\treturn '${1:No}'",
+      "\treturn '${2:Yes}'",
+      "print(check())"
+    ],
+    "description": "答えを求める"
+  },
+  "printans": {
+    "prefix": "pr",
+    "body": [
+      "print(ans)"
+    ],
+    "description": "ansを出力"
+  },
+  "debug": {
+    "prefix": "debug",
+    "body": [
+      "def solve(d,k):",
+      "\tans = 0",
+      "\treturn ans",
+      "def gutyoku(N,A):",
+      "\tans = 0",
+      "\treturn ans",
+      "T = int(input())",
+      "from random import *",
+      "for t in range(T):",
+      "\tN = randint(1,100)",
+      "\tA = choices(range(101), k=N)",
+      "\tif solve(N,A)!=gutyoku(N,A):",
+      "\t\tprint(N)",
+      "\t\tprint(*A)"
+    ],
+    "description": "debug"
+  },
+  "interactive": {
+    "prefix": "interactive",
+    "body": [
+      "import sys",
+      "readline = sys.stdin.readline",
+      "write = sys.stdout.write",
+      "flush = sys.stdout.flush",
+      "",
+      "# クエリ: '? x1 x2' を出力",
+      "def query(x1, x2):",
+      "\twrite('? %d %d\\n' % (x1, x2))",
+      "\tflush()",
+      "\t# ジャッジから返される値を取得",
+      "\treturn readline().strip()",
+      "",
+      "# 回答: '! x' を出力",
+      "def answer(x):",
+      "\twrite('! %d\\n' % x)",
+      "\tflush()",
+      "\t# 即時終了",
+      "\texit(0)"
+    ],
+    "description": "interactive"
+  },
+  "transpose": {
+    "prefix": "transpose",
+    "body": [
+      "A = list(map(list,zip(*A)))"
+    ],
+    "description": "二次元リスト転置"
+  },
+  "ifelif": {
+    "prefix": "ifelif",
+    "body": [
+      "if ${1:condition}:",
+      "\t${2:pass}",
+      "elif ${3:condition}:",
+      "\t${4:pass}",
+      "else:",
+      "\t${5:pass}"
+    ],
+    "description": "if elif else文"
+  },
+  "forrange": {
+    "prefix": "forrange",
+    "body": [
+      "for ${1:i} in range(${2:N}):"
+    ],
+    "description": "if elif else文"
+  },
+  "二次元リスト": {
+    "prefix": "2list",
+    "body": [
+      "[[0]*${1:N} for _ in range(${2:N})]"
+    ],
+    "description": "二次元リスト"
+  },
+  "三次元リスト": {
+    "prefix": "3list",
+    "body": [
+      "[[[0]*${1:N} for _ in range(${2:N})] for _ in range(${3:N})]"
+    ],
+    "description": "三次元リスト"
+  },
+  "複数行プリント": {
+    "prefix": "*ans",
+    "body": [
+      "print(*ans, sep='\\n')"
+    ],
+    "description": "複数行print"
+  },
+  "フォーマット": {
+    "prefix": "prformat",
+    "body": [
+      "print('${1:i}: {}'.format(${1:i}))"
+    ],
+    "description": "フォーマット"
+  },
+  "elsebreak": {
+    "prefix": "else",
+    "body": [
+      "else:",
+      "\tcontinue",
+      "break"
+    ],
+    "description": "elsebreak"
+  },
+  "切り上げ": {
+    "prefix": "ceil",
+    "body": [
+      "from math import ceil"
+    ],
+    "description": "切り上げ"
+  },
+  "最大公約数": {
+    "prefix": "gcd",
+    "body": [
+      "from math import gcd"
+    ],
+    "description": "最大公約数"
+  },
+  "複数の最大公約数": {
+    "prefix": "multi_gcd",
+    "body": [
+      "from math import gcd",
+      "def multi_gcd(A):",
+      "\tg = A[0]",
+      "\tfor a in A:",
+      "\t\tg = gcd(g,a)",
+      "\treturn g"
+    ],
+    "description": "複数の最大公約数"
+  },
+  "拡張ユークリッド互助法": {
+    "prefix": "extended_gcd",
+    "body": [
+      "def extgcd(a, b): # ax + by = d",
+      "\tif b==0:",
+      "\t\treturn a, 1, 0 # a・1 + b・0 = a (b = 0のとき)",
+      "\td, y, x = extgcd(b, a%b)",
+      "\ty -= (a//b)*x",
+      "\treturn d, x, y"
+    ],
+    "description": "拡張ユークリッド互助法"
+  },
+  "複数の最小公倍数": {
+    "prefix": "multi_lcm",
+    "body": [
+      "from math import gcd",
+      "def multi_lcm(A):",
+      "\tans = A[0]",
+      "\tfor a in A:",
+      "\t\tans *= a//gcd(ans,a)",
+      "\treturn ans"
+    ],
+    "description": "複数の最小公倍数"
+  },
+  "複数の最小値": {
+    "prefix": "multi_min",
+    "body": [
+      "ans = 10**9",
+      "for a in A:",
+      "\tans = min(ans,a)",
+      "return ans"
+    ],
+    "description": "複数の最小値"
+  },
+  "複数の最大値": {
+    "prefix": "multi_max",
+    "body": [
+      "ans = 0",
+      "for a in A:",
+      "\tans = max(ans,a)",
+      "return ans"
+    ],
+    "description": "複数の最大値"
+  },
+  "bisect": {
+    "prefix": "bisect",
+    "body": [
+      "from bisect import *"
+    ],
+    "description": "bisect"
+  },
+  "itertools": {
+    "prefix": "itertools",
+    "body": [
+      "from itertools import groupby, accumulate, product, permutations, combinations"
+    ],
+    "description": "itertools"
+  },
+  "defaultdict": {
+    "prefix": "defaultdict",
+    "body": [
+      "from collections import defaultdict",
+      "d = defaultdict(lambda: 0)"
+    ],
+    "description": "defaultdic"
+  },
+  "プライオリティキュー": {
+    "prefix": "heapq",
+    "body": [
+      "from heapq import *"
+    ],
+    "description": "プライオリティキュー"
+  },
+  "集計": {
+    "prefix": "Counter",
+    "body": [
+      "from collections import Counter"
+    ],
+    "description": "集計"
+  },
+  "デック": {
+    "prefix": "deque",
+    "body": [
+      "from collections import deque"
+    ],
+    "description": "デック"
+  },
+  "文字列インクリメント": {
+    "prefix": "chr",
+    "body": "chr(ord('a') + 1)"
+  },
+  "二次元リストソート": {
+    "prefix": "sort_double",
+    "body": "${1:N}.sort(key=lambda x: (x[0], x[1]))"
+  },
+  "change_max": {
+    "prefix": "chmax",
+    "body": "${1:ans} = max(${1:ans}, ${2:score})"
+  },
+  "change_min": {
+    "prefix": "chmin",
+    "body": "${1:ans} = min(${1:ans}, ${2:score})"
+  },
+  "二次元累積和": {
+    "prefix": "cum_double",
+    "body": [
+      "from itertools import combinations",
+      "H, W = map(int, input().split())",
+      "A = [list(map(int, input().split())) for _ in range(H)]",
+      "cum = [[0]*(W+1) for _ in range(H+1)]",
+      "for i in range(1,H+1):",
+      "\tfor j in range(1,W+1):",
+      "\t\tcum[i][j]=cum[i-1][j]+cum[i][j-1]-cum[i-1][j-1]+A[i-1][j-1]",
+      "ans = 0",
+      "for i,j in combinations(range(1,H+1),2):",
+      "\tfor k,l in combinations(range(1,W+1),2):",
+      "\t\tcost = cum[j][l]+cum[i-1][k-1]-cum[j][k-1]-cum[i-1][l]",
+      "\t\tans = max(cost,ans)",
+      "print(ans)"
+    ]
+  },
+  "いもす法": {
+    "prefix": "imos",
+    "body": [
+      "#いもす法(最大値を求める)",
+      "N = int(input())",
+      "num = 10**6",
+      "firsts = [0]*(num+1)",
+      "lasts = [0]*(num+1)",
+      "for i in range(N):",
+      "\ta,b = map(int, input().split())",
+      "\tfirsts[a] += 1",
+      "\tlasts[b+1] += 1",
+      "now = 0",
+      "ans = 0",
+      "for i in range(N):",
+      "\tnow += firsts[i]-lasts[i]",
+      "\tans = max(ans,now)",
+      "print(ans)"
+    ]
+  },
+  "座標圧縮": {
+    "prefix": "compress",
+    "body": [
+      "comp = lambda arr: {e: i for i, e in enumerate(sorted(set(arr)))}",
+      "comp2 = lambda arr: {i: e for i, e in enumerate(sorted(set(arr)))}"
+    ]
+  },
+  "二文字入力": {
+    "prefix": "n2=",
+    "body": [
+      "${1:N}, ${2:M} = map(int, input().split())"
+    ],
+    "description": "二文字入力"
+  },
+  "桁分割": {
+    "prefix": "digit_input",
+    "body": [
+      "${1:N} = list(map(int,list(input())))"
+    ],
+    "description": "桁分割"
+  },
+  "複数行入力": {
+    "prefix": "nmulti=",
+    "body": [
+      "for i in range(${1:N}):",
+      "\t${2:a} = int(input())"
+    ],
+    "description": "複数行入力"
+  },
+  "複数行入力記録": {
+    "prefix": "nmultirec=",
+    "body": [
+      "${1:A} = [int(input()) for _ in range(${2:N})]"
+    ],
+    "description": "複数行入力"
+  },
+  "複数行文字列入力記録": {
+    "prefix": "smultirec=",
+    "body": [
+      "${1:S} = [input() for _ in range(${2:N})]"
+    ],
+    "description": "複数行文字列入力記録"
+  },
+  "複数行文字列入力": {
+    "prefix": "smulti=",
+    "body": [
+      "for i in range(${1:N}):",
+      "\t${2:S} = input()"
+    ],
+    "description": "複数行文字列入力"
+  },
+  "二文字複数行入力記録": {
+    "prefix": "n2multirec=",
+    "body": [
+      "${1:A},${2:B} = [0]*${3:N},[0]*${3:N}",
+      "for i in range(${3:N}):",
+      "\t${1:A}[i],${2:B}[i] = map(int, input().split())"
+    ],
+    "description": "二文字複数行入力記録"
+  },
+  "三文字複数行入力記録": {
+    "prefix": "n3multirec=",
+    "body": [
+      "${1:A},${2:B},${3:C} = [0]*${4:N},[0]*${4:N},[0]*${4:N}",
+      "for i in range(${4:N}):",
+      "\t${1:A}[i],${2:B}[i],${3:C}[i] = map(int, input().split())"
+    ],
+    "description": "三文字複数行入力記録"
+  },
+  "二文字複数行入力": {
+    "prefix": "n2multi=",
+    "body": [
+      "for i in range(${1:N}):",
+      "\t${2:x},${3:y} = map(int, input().split())"
+    ],
+    "description": "二文字複数行入力"
+  },
+  "三文字複数行入力": {
+    "prefix": "n3multi=",
+    "body": [
+      "for i in range(${1:N}):",
+      "\t${2:x},${3:y},${4:z} = map(int, input().split())"
+    ],
+    "description": "三文字複数行入力"
+  },
+  "二文字列複数行入力記録": {
+    "prefix": "stmultirec=",
+    "body": [
+      "${1:S} = [0]*${2:N}",
+      "${3:T} = [0]*${2:N}",
+      "for i in range(N):",
+      "\t${1:S}[i],${3:T}[i] = input().split()"
+    ],
+    "description": "二文字列複数行入力記録"
+  },
+  "3文字入力": {
+    "prefix": "n3=",
+    "body": [
+      "${1:A}, ${2:B}, ${3:C} = map(int, input().split())"
+    ],
+    "description": "3文字入力"
+  },
+  "4文字入力": {
+    "prefix": "n4=",
+    "body": [
+      "${1:A}, ${2:B}, ${3:C}, ${4:D} = map(int, input().split())"
+    ],
+    "description": "4文字入力"
+  },
+  "文字列入力": {
+    "prefix": "s=",
+    "body": [
+      "${1:S} = input()"
+    ],
+    "description": "文字列入力"
+  },
+  "文字列*2入力": {
+    "prefix": "s2=",
+    "body": [
+      "${1:S}, ${2:T} = input().split()"
+    ],
+    "description": "文字列入力"
+  },
+  "数値入力": {
+    "prefix": "n=",
+    "body": [
+      "${1:N} = int(input())"
+    ],
+    "description": "数値入力"
+  },
+  "数値リスト一行入力": {
+    "prefix": "a=",
+    "body": [
+      "${1:A} = list(map(int, input().split()))"
+    ],
+    "description": "数値リスト一行入力"
+  },
+  "数値リスト複数行入力": {
+    "prefix": "amulti=",
+    "body": [
+      "for i in range(${1:N}):",
+      "\t${2:A} = list(map(int, input().split()))"
+    ],
+    "description": "数値リスト複数行入力"
+  },
+  "数値リスト複数行入力記録": {
+    "prefix": "amultirec=",
+    "body": [
+      "${1:A} = [list(map(int, input().split())) for _ in range(${2:N})]"
+    ],
+    "description": "数値リスト複数行入力記録"
+  },
+  "グラフ入力": {
+    "prefix": "graph_input",
+    "body": [
+      "import sys,os,io",
+      "input = sys.stdin.readline",
+      "#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline",
+      "N, M = map(int, input().split())",
+      "edge = [[] for _ in range(N)]",
+      "for i in range(M):",
+      "\ta,b = map(int, input().split())",
+      "\tedge[a-1].append(b-1)",
+      "\tedge[b-1].append(a-1)"
+    ],
+    "description": "グラフ入力"
+  },
+  "木入力": {
+    "prefix": "tree_input",
+    "body": [
+      "import sys,os,io",
+      "input = sys.stdin.readline",
+      "#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline",
+      "N = int(input())",
+      "edge = [[] for _ in range(N)]",
+      "for i in range(N-1):",
+      "\ta,b = map(int, input().split())",
+      "\tedge[a-1].append(b-1)",
+      "\tedge[b-1].append(a-1)"
+    ],
+    "description": "グラフ入力"
+  },
+  "グラフ深さ優先探索": {
+    "prefix": "graph_dfs",
+    "body": [
+      "import sys",
+      "sys.setrecursionlimit(10**7)",
+      "",
+      "def dfs(v):",
+      "\tif len(edge[v])==0:",
+      "\t\treturn 0",
+      "\tfor u in edge[v]:",
+      "\t\tif visited[u]==False:",
+      "\t\t\tvisited[u]=True",
+      "\t\t\tdfs(u)",
+      "\treturn 0",
+      "",
+      "visited = [False]*N",
+      "visited[0]=True",
+      "dfs(0)"
+    ],
+    "description": "深さ優先探索グラフ"
+  },
+  "グラフスタック深さ優先探索": {
+    "prefix": "graph_dfs_w_stack",
+    "body": [
+      "def dfs(start):",
+      "\tstack = [start]",
+      "\tparent = [N]*N",
+      "\tparent[start] = -1",
+      "\t#記録したい値の配列を定義",
+      "\twhile stack:",
+      "\t\tv = stack[-1]",
+      "\t\tfor u in edge[v]:",
+      "\t\t\tif u==parent[v]:",
+      "\t\t\t\tcontinue",
+      "\t\t\tif parent[u]==N: #子へ降ろす",
+      "\t\t\t\tparent[u]=v",
+      "\t\t\t\tstack.append(u)",
+      "\t\t\t\tbreak",
+      "\t\t\telse: #子から吸い上げる",
+      "\t\t\t\t#吸い上げる際の個々の処理",
+      "\t\telse:",
+      "\t\t\tstack.pop()",
+      "\t\t\tif v==start:",
+      "\t\t\t\t#根へ吸い上げる時のまとめ処理",
+      "\t\t\t\tcontinue",
+      "\t\t\t#根以外へ吸い上げる時のまとめ処理",
+      "\treturn"
+    ],
+    "description": "スタック深さ優先探索グラフ"
+  },
+  "グラフスタック深さ優先探索easy": {
+    "prefix": "graph_dfs_easy_w_stack",
+    "body": [
+      "def dfs_easy(start):",
+      "\tstack = [start]",
+      "\tparent = [N]*N",
+      "\tparent[start] = -1",
+      "\twhile stack:",
+      "\t\tv = stack.pop()",
+      "\t\tfor u in edge[v]:",
+      "\t\t\tif u==parent[v]:",
+      "\t\t\t\tcontinue",
+      "\t\t\tparent[u]=v",
+      "\t\t\t#頂点に対する処理",
+      "\t\t\tstack.append(u)",
+      "\t\t\tbreak",
+      "\treturn"
+    ],
+    "description": "スタック深さ優先探索easyグラフ"
+  },
+  "木深さ優先探索": {
+    "prefix": "tree_dfs",
+    "body": [
+      "import sys",
+      "sys.setrecursionlimit(10**7)",
+      "",
+      "def dfs(v,p):",
+      "\tif p!=-1 and len(edge[v])==1:",
+      "\t\treturn 0",
+      "\tfor u in edge[v]:",
+      "\t\tif u!=p:",
+      "\t\t\tdfs(u,v)",
+      "\treturn 0",
+      "",
+      "dfs(0,-1)"
+    ],
+    "description": "深さ優先探索グラフ"
+  },
+  "全方位木DP": {
+    "prefix": "all_angle_tree_dp",
+    "body": [
+      "def dfs(start):",
+      "\tstack = [start]",
+      "\tparent = [N]*N",
+      "\tparent[start] = -1",
+      "\t#記録したい値の配列を定義",
+      "\twhile stack:",
+      "\t\tv = stack[-1]",
+      "\t\tmarker = 0",
+      "\t\tfor u in edge[v]:",
+      "\t\t\tif u==parent[v]:",
+      "\t\t\t\tcontinue",
+      "\t\t\tif parent[u]==N: #子へ降ろす",
+      "\t\t\t\tmarker = 1",
+      "\t\t\t\tparent[u]=v",
+      "\t\t\t\tstack.append(u)",
+      "\t\t\telse: #子から吸い上げる",
+      "\t\t\t\tpass",
+      "\t\t\t\t#吸い上げる際の個々の処理",
+      "\t\t\t\t# ans[v] = ",
+      "\t\tif marker==0:",
+      "\t\t\tstack.pop()",
+      "\t\t\tif v==start:",
+      "\t\t\t\t#根へ吸い上げる時のまとめ処理",
+      "\t\t\t\t# ans[v]",
+      "\t\t\t\tcontinue",
+      "\t\t\t#根以外へ吸い上げる時のまとめ処理",
+      "\t\t\t# ans[v]",
+      "\treturn",
+      "",
+      "def dfs2(start):",
+      "\tstack = [start]",
+      "\tparent = [N]*N",
+      "\tparent[start] = -1",
+      "\tp_value = [0]*N",
+      "\twhile stack:",
+      "\t\tv = stack.pop()",
+      "\t\t# cum1 = [1]*(len(edge[v])+1)",
+      "\t\t# cum2 = [1]*(len(edge[v])+1)",
+      "\t\t# for i,u in enumerate(edge[v]):",
+      "\t\t#   if u==parent[v]:",
+      "\t\t#     cum1[i+1] = cum1[i]",
+      "\t\t#   else:",
+      "\t\t#     cum1[i+1] = cum1[i]",
+      "\t\t# for i,u in enumerate(edge[v][::-1]):",
+      "\t\t#   if u==parent[v]:",
+      "\t\t#     cum2[-i-2] = cum2[-i-1]",
+      "\t\t#   else:",
+      "\t\t#     cum2[-i-2] = cum2[-i-1]",
+      "\t\tfor i,u in enumerate(edge[v]):",
+      "\t\t\tif u==parent[v]:",
+      "\t\t\t\tcontinue",
+      "\t\t\tparent[u] = v",
+      "\t\t\t# p_value[u] = cum1[i]*cum2[i+1]",
+      "\t\t\t# ans[u] = ",
+      "\t\t\tstack.append(u)",
+      "\treturn",
+      "",
+      "ans = [0]*N",
+      "dfs(0)",
+      "dfs2(0)",
+      "print(*ans, sep='\\n')"
+    ],
+    "description": "全方位木DP"
+  },
+  "グラフ幅優先探索": {
+    "prefix": "graph_bfs",
+    "body": [
+      "from collections import deque",
+      "visited = [False]*N",
+      "d = deque()",
+      "for i in range(N):",
+      "\tif visited[i]==False:",
+      "\t\tvisited[i]=True",
+      "\t\td.append(i)",
+      "\t\twhile len(d)>0:",
+      "\t\t\tv = d.popleft()",
+      "\t\t\tfor w in edge[v]:",
+      "\t\t\t\tif visited[w]==False:",
+      "\t\t\t\t\tvisited[w]=True",
+      "\t\t\t\t\td.append(w)"
+    ],
+    "description": "幅優先探索グラフ"
+  },
+  "Warshall Floyd": {
+    "prefix": "Warshall_Floyd",
+    "body": [
+      "N, M = map(int, input().split())",
+      "d = [[float('inf')]*N for _ in range(N)]",
+      "for i in range(M): #ひとまず枝があるペアは枝の長さをセット",
+      "\ta,b,t = map(int, input().split())",
+      "\td[a-1][b-1] = t",
+      "\td[b-1][a-1] = t",
+      "",
+      "for i in range(N):",
+      "\td[i][i] = 0 #自身への最短経路は0",
+      "#三重ループ",
+      "for k in range(N):",
+      "\tfor i in range(N):",
+      "\t\tfor j in range(N):",
+      "\t\t\td[i][j] = min(d[i][j], d[i][k]+d[k][j])"
+    ]
+  },
+  "dijkstra": {
+    "prefix": "dijkstra",
+    "body": [
+      "#O(ElogV),頂点数10**5以上の場合は避ける",
+      "import heapq",
+      "def dijkstra_heap(s,edge):",
+      "\tN = len(edge)",
+      "\tdists = [float('inf')] * N #始点sから各頂点への最短距離",
+      "\tused = [False] * N",
+      "\tdists[s] = 0",
+      "\tused[s] = True",
+      "\tvlist = []",
+      "\t#vlist : [sからの暫定(未確定)最短距離,頂点]のリスト",
+      "\t#edge[s] : sから出る枝の[重み,終点]のリスト",
+      "\tfor e in edge[s]:",
+      "\t\theapq.heappush(vlist,e) #sの隣の点は枝の重さがそのまま暫定最短距離となる",
+      "\twhile len(vlist):",
+      "\t\t#まだ使われてない頂点の中から最小の距離のものを探す→確定させる",
+      "\t\td,v = heapq.heappop(vlist)",
+      "\t\t#[d,v]:[sからの(確定)最短距離,頂点]",
+      "\t\tif used[v]:",
+      "\t\t\tcontinue",
+      "\t\tdists[v] = d",
+      "\t\tused[v] = True",
+      "\t\tfor d,w in edge[v]:",
+      "\t\t\tif not used[w]:",
+      "\t\t\t\theapq.heappush(vlist,[dists[v]+d,w])",
+      "\treturn dists"
+    ]
+  },
+  "高速化dijkstra": {
+    "prefix": "dijkstra_fast",
+    "body": [
+      "#O(ElogV),重みが整数の場合のみ",
+      "import heapq",
+      "def dijkstra_fast(s,edge,mod):",
+      "\tN = len(edge)",
+      "\tdists = [float('inf')] * N #始点sから各頂点への最短距離",
+      "\tused = [False] * N",
+      "\tdists[s] = 0",
+      "\tused[s] = True",
+      "\tvlist = []",
+      "\t#vlist : [sからの暫定(未確定)最短距離,頂点]のリスト",
+      "\t#edge[s] : sから出る枝の[重み,終点]のリスト",
+      "\tfor w,v in edge[s]:",
+      "\t\theapq.heappush(vlist,w*mod+v) #sの隣の点は枝の重さがそのまま暫定最短距離となる",
+      "\twhile len(vlist):",
+      "\t\t#まだ使われてない頂点の中から最小の距離のものを探す→確定させる",
+      "\t\tminedge = heapq.heappop(vlist)",
+      "\t\t#minedge : sからの(確定)最短距離*mod+頂点",
+      "\t\td,v = divmod(minedge,mod)",
+      "\t\tif used[v]:",
+      "\t\t\tcontinue",
+      "\t\tdists[v] = d",
+      "\t\tused[v] = True",
+      "\t\tfor d,w in edge[v]:",
+      "\t\t\tif not used[w]:",
+      "\t\t\t\theapq.heappush(vlist,(dists[v]+d)*mod+w)",
+      "\treturn dists"
+    ]
+  },
+  "UnionFind木": {
+    "prefix": "uf",
+    "body": [
+      "class UnionFind():",
+      "\tdef __init__(self, n):",
+      "\t\tself.n = n",
+      "\t\tself.parents = [-1] * n",
+      "",
+      "\tdef find(self, x):",
+      "\t\tif self.parents[x] < 0:",
+      "\t\t\treturn x",
+      "\t\telse:",
+      "\t\t\tself.parents[x] = self.find(self.parents[x])",
+      "\t\treturn self.parents[x]",
+      "",
+      "\tdef union(self, x, y):",
+      "\t\tx = self.find(x)",
+      "\t\ty = self.find(y)",
+      "",
+      "\t\tif x == y:",
+      "\t\t\treturn",
+      "",
+      "\t\tif self.parents[x] > self.parents[y]:",
+      "\t\t\tx, y = y, x",
+      "",
+      "\t\tself.parents[x] += self.parents[y]",
+      "\t\tself.parents[y] = x",
+      "",
+      "\tdef same(self, x, y):",
+      "\t\treturn self.find(x) == self.find(y)",
+      "",
+      "\tdef roots(self):",
+      "\t\treturn [i for i, x in enumerate(self.parents) if x < 0]",
+      "",
+      "\tdef members(self, x):",
+      "\t\troot = self.find(x)",
+      "\t\treturn [i for i in range(self.n) if self.find(i) == root]",
+      "",
+      "\tdef size(self,x):",
+      "\t\treturn abs(self.parents[self.find(x)])",
+      "",
+      "\tdef groups(self):",
+      "\t\troots = self.roots()",
+      "\t\tr_to_g = {}",
+      "\t\tfor i, r in enumerate(roots):",
+      "\t\t\tr_to_g[r] = i",
+      "\t\tgroups = [[] for _ in roots]",
+      "\t\tfor i in range(self.n):",
+      "\t\t\tgroups[r_to_g[self.find(i)]].append(i)",
+      "\t\treturn groups"
+    ]
+  },
+  "最近共通祖先": {
+    "prefix": "LCA",
+    "body": [
+      "def dfs_easy(start):",
+      "\tstack = [start]",
+      "\tparent = [N]*N",
+      "\tparent[start] = -1",
+      "\tdepth = [0]*N",
+      "\twhile stack:",
+      "\t\tv = stack.pop()",
+      "\t\tfor u in edge[v]:",
+      "\t\t\tif u==parent[v]:",
+      "\t\t\t\tcontinue",
+      "\t\t\tparent[u]=v",
+      "\t\t\t#頂点に対する処理",
+      "\t\t\tdepth[u] = depth[v]+1",
+      "\t\t\tstack.append(u)",
+      "\treturn parent, depth",
+      "",
+      "parent, depth = dfs_easy(0)",
+      "parent[0] = 0",
+      "K = N.bit_length()",
+      "db = [[0]*N for _ in range(K)]",
+      "db[0] = parent[:]",
+      "for i in range(1,K):",
+      "\tfor j in range(N):",
+      "\t\tdb[i][j] = db[i-1][db[i-1][j]]",
+      "",
+      "def go_up(v,x):",
+      "\tp = 0",
+      "\twhile x:",
+      "\t\tif x%2:",
+      "\t\t\tv = db[p][v]",
+      "\t\tp += 1",
+      "\t\tx >>= 1",
+      "\treturn v",
+      "",
+      "Q = int(input())",
+      "ans = [0]*Q",
+      "for i in range(Q):",
+      "\tu,v = map(int, input().split())",
+      "\tu -= 1",
+      "\tv -= 1",
+      "\td = depth[u]-depth[v]",
+      "\tif d>=0:",
+      "\t\tu = go_up(u,d)",
+      "\telse:",
+      "\t\tv = go_up(v,-d)",
+      "\tif u==v:",
+      "\t\t# ans[i] = ",
+      "\t\tcontinue",
+      "\tfor p in range(K-1,-1,-1):",
+      "\t\tif db[p][u]!=db[p][v]:",
+      "\t\t\tu, v = db[p][u], db[p][v]",
+      "\t# ans[i] = ",
+      "print(*ans, sep='\\n')"
+    ]
+  },
+  "クラスカル法": {
+    "prefix": "cruskal",
+    "body": [
+      "class UnionFind():",
+      "\tdef __init__(self, n):",
+      "\t\tself.n = n",
+      "\t\tself.parents = [-1] * n",
+      "",
+      "\tdef find(self, x):",
+      "\t\tif self.parents[x] < 0:",
+      "\t\t\treturn x",
+      "\t\telse:",
+      "\t\t\tself.parents[x] = self.find(self.parents[x])",
+      "\t\treturn self.parents[x]",
+      "",
+      "\tdef union(self, x, y):",
+      "\t\tx = self.find(x)",
+      "\t\ty = self.find(y)",
+      "",
+      "\t\tif x == y:",
+      "\t\t\treturn",
+      "",
+      "\t\tif self.parents[x] > self.parents[y]:",
+      "\t\t\tx, y = y, x",
+      "",
+      "\t\tself.parents[x] += self.parents[y]",
+      "\t\tself.parents[y] = x",
+      "",
+      "\tdef same(self, x, y):",
+      "\t\treturn self.find(x) == self.find(y)",
+      "",
+      "\tdef roots(self):",
+      "\t\treturn [i for i, x in enumerate(self.parents) if x < 0]",
+      "",
+      "\tdef num_roots(self):",
+      "\t\treturn len([i for i, x in enumerate(self.parents) if x < 0])",
+      "",
+      "\tdef members(self, x):",
+      "\t\troot = self.find(x)",
+      "\t\treturn [i for i in range(self.n) if self.find(i) == root]",
+      "",
+      "\tdef num_members(self,x):",
+      "\t\treturn abs(self.parents[self.find(x)])",
+      "",
+      "\tdef __str__(self):",
+      "\t\treturn '\\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())",
+      "N, M = map(int, input().split())",
+      "edges = []*M",
+      "for i in range(M):",
+      "\ta,b,w = map(int, input().split())",
+      "\tedges.append((w,a,b))",
+      "",
+      "edges.sort()",
+      "",
+      "uf = UnionFind(N)",
+      "ans = 0",
+      "for i in range(M):",
+      "\tu,x,y = edges[i]",
+      "\tif not uf.same(x,y):",
+      "\t\tuf.union(x,y)",
+      "\t\tans += u",
+      "print(ans)"
+    ]
+  },
+  "プリム法": {
+    "prefix": "prim",
+    "body": [
+      "#最小全域木問題、プリム法",
+      "from heapq import *",
+      "def solve():",
+      "\tedge = [[] for _ in range(N)]",
+      "\tfor i in range(M):",
+      "\t\ta,b,w = map(int, input().split())",
+      "\t\tedge[a].append((w,b))",
+      "\t\tedge[b].append((w,a))",
+      "\tbridges = []",
+      "\theapify(bridges)",
+      "\tused = [False]*N",
+      "\tused[0] = True",
+      "\tans = 0",
+      "\tfor w,v in edge[0]:",
+      "\t\theappush(bridges,(w,v))",
+      "\twhile len(bridges)>0:",
+      "\t\tw,v = heappop(bridges)",
+      "\t\tif used[v]==False:",
+      "\t\t\tans += w",
+      "\t\t\tused[v] = True",
+      "\t\t\tfor w,u in edge[v]:",
+      "\t\t\t\tif used[u]==False:",
+      "\t\t\t\t\theappush(bridges,(w,u))",
+      "\treturn ans",
+      "print(solve())"
+    ]
+  },
+  "Binary Indexed Tree": {
+    "prefix": "BIT",
+    "body": [
+      "# Binary Indexed Tree (Fenwick Tree, 1-indexed)",
+      "class BIT:",
+      "\tdef __init__(self, n):",
+      "\t\tself.n = n",
+      "\t\tself.bit = [0]*(n+1)",
+      "\t\tself.el = [0]*(n+1)",
+      "\tdef sum(self, i): # sum of [1,i]",
+      "\t\ts = 0",
+      "\t\twhile i > 0:",
+      "\t\t\ts += self.bit[i]",
+      "\t\t\ti -= i & -i",
+      "\t\treturn s",
+      "\tdef add(self, i, x):",
+      "\t\t# assert i > 0",
+      "\t\tself.el[i] += x",
+      "\t\twhile i <= self.n:",
+      "\t\t\tself.bit[i] += x",
+      "\t\t\ti += i & -i",
+      "\tdef get(self, i, j=None):",
+      "\t\tif j is None:",
+      "\t\t\treturn self.el[i]",
+      "\t\treturn self.sum(j) - self.sum(i-1)",
+      "\tdef lower_bound(self,x):",
+      "\t\tw = i = 0",
+      "\t\tk = 1<<((self.n).bit_length())",
+      "\t\twhile k:",
+      "\t\t\tif i+k <= self.n and w + self.bit[i+k] < x:",
+      "\t\t\t\tw += self.bit[i+k]",
+      "\t\t\t\ti += k",
+      "\t\t\tk >>= 1",
+      "\t\treturn i+1"
+    ]
+  },
+  "BIT for max": {
+    "prefix": "BIT_max",
+    "body": [
+      "# Binary Indexed Tree (Fenwick Tree)",
+      "class BIT_max:",
+      "\tdef __init__(self, n):",
+      "\t\tself.n = n",
+      "\t\tself.bit = [0]*(n+1)",
+      "\t\tself.el = [0]*(n+1)",
+      "\tdef query(self, i):",
+      "\t\ts = 0",
+      "\t\twhile i > 0:",
+      "\t\t\ts = max(s,self.bit[i])",
+      "\t\t\ti -= i & -i",
+      "\t\treturn s",
+      "\tdef update(self, i, x):",
+      "\t\t# assert i > 0",
+      "\t\tself.el[i] = max(self.el[i],x)",
+      "\t\twhile i <= self.n:",
+      "\t\t\tself.bit[i] = max(self.bit[i],x)",
+      "\t\t\ti += i & -i"
+    ]
+  },
+  "Range Minimum Query": {
+    "prefix": "RMQ",
+    "body": [
+      "# N: 処理する区間の長さ",
+      "N, Q = map(int, input().split())",
+      "N0 = 1<<(N.bit_length())",
+      "INF = (1<<31)-1",
+      "data = [INF]*(2*N0)",
+      "# a_k の値を x に更新",
+      "def update(k, x):",
+      "\tk += N0-1",
+      "\tdata[k] = x",
+      "\twhile k >= 0:",
+      "\t\tk = (k - 1) // 2",
+      "\t\tdata[k] = min(data[2*k+1], data[2*k+2])",
+      "# 区間[l, r)の最小値",
+      "def query(l, r):",
+      "\tL = l + N0-1; R = r + N0-1",
+      "\ts = INF",
+      "\twhile L < R:",
+      "\t\tif R%2==0:",
+      "\t\t\tR -= 1",
+      "\t\t\ts = min(s, data[R])",
+      "\t\tif L%2==0:",
+      "\t\t\ts = min(s, data[L])",
+      "\t\t\tL += 1",
+      "\t\tL //= 2; R //= 2",
+      "\treturn s"
+    ]
+  },
+  "リスト圧縮": {
+    "prefix": "compress",
+    "body": [
+      "def compress(arr):",
+      "\tXS = list(set(arr))",
+      "\tXS.sort()",
+      "\tdic = {e: i for i, e in enumerate(XS)}",
+      "\tfor i in range(len(arr)):",
+      "\t\tarr[i] = dic[arr[i]]",
+      "\treturn arr"
+    ]
+  },
+  "盤面入力": {
+    "prefix": "board_input",
+    "body": [
+      "H, W = map(int, input().split())",
+      "S = [0]*(H+2)",
+      "S[0] = '*'*(W+2)",
+      "S[H+1] = '*'*(W+2)",
+      "for h in range(1,H+1):",
+      "\tS[h] = '*' + input() + '*'"
+    ],
+    "description": "盤面入力"
+  },
+  "盤面dfs": {
+    "prefix": "board_dfs",
+    "body": [
+      "import sys",
+      "sys.setrecursionlimit(10**8)",
+      "",
+      "visited = [[False]*(W+2) for _ in range(H+2)]",
+      "dh = [0,1,0,-1]",
+      "dw = [1,0,-1,0]",
+      "",
+      "def dfs(h,w):",
+      "\t#print(h,w)",
+      "\tfor i in range(4):",
+      "\t\th0 = h+dh[i]",
+      "\t\tw0 = w+dw[i]",
+      "\t\tif visited[h0][w0]==False:",
+      "\t\t\tvisited[h0][w0]=True",
+      "\t\t\tdfs(h0,w0)",
+      "",
+      "for h in range(H+2):",
+      "\tfor w in range(W+2):",
+      "\t\tif visited[h][w]==False:",
+      "\t\t\tvisited[h][w]=True",
+      "\t\t\tdfs(h,w)"
+    ],
+    "description": "盤面dfs"
+  },
+  "盤面bfs": {
+    "prefix": "board_bfs",
+    "body": [
+      "visited = [[False]*(W+2) for _ in range(H+2)]",
+      "dh = [0,1,0,-1]",
+      "dw = [1,0,-1,0]",
+      "",
+      "from collections import deque",
+      "d = deque()",
+      "",
+      "visited[sh][sw]=True",
+      "d.append((sh,sw,0))",
+      "",
+      "while len(d)>0:",
+      "\th,w,cnt = d.popleft()",
+      "\tfor i in range(4):",
+      "\t\th0 = h+dh[i]",
+      "\t\tw0 = w+dw[i]",
+      "\t\tif (h0,w0) == (gh,gw):",
+      "\t\t\tprint(cnt+1)",
+      "\t\t\tbreak",
+      "\t\tif S[h0][w0]=='.' and visited[h0][w0]==False:",
+      "\t\t\tvisited[h0][w0]=True",
+      "\t\t\td.append((h0,w0,cnt+1))",
+      "\telse:",
+      "\t\tcontinue",
+      "\tbreak"
+    ],
+    "description": "盤面の幅優先探索"
+  },
+  "二分探索存在判定": {
+    "prefix": "binary",
+    "body": [
+      "from bisect import bisect_left",
+      "def binary_search(A,p):",
+      "\tA = sorted(A)",
+      "\tif A[0]<=p and p<=A[-1]:",
+      "\t\tif p == A[bisect_left(A,p)]:",
+      "\t\t\treturn True",
+      "\treturn False"
+    ],
+    "description": "二分探索による値存在判定"
+  },
+  "素因数分解": {
+    "prefix": "factorize",
+    "body": [
+      "#素因数分解、計算量はO(√N)",
+      "from collections import defaultdict",
+      "def factorize(n):",
+      "\tfct = defaultdict(lambda:0)",
+      "\tb = 2",
+      "\twhile b * b <= n:",
+      "\t\twhile n % b == 0:",
+      "\t\t\tn //= b",
+      "\t\t\tfct[b] += 1",
+      "\t\tb = b + 1",
+      "\tif n > 1:",
+      "\t\tfct[n] += 1",
+      "\treturn fct"
+    ],
+    "description": "素因数分解"
+  },
+  "約数列挙": {
+    "prefix": "divisor",
+    "body": [
+      "def divisor(n):",
+      "\tcd = []",
+      "\ti = 1",
+      "\twhile i*i <= n:",
+      "\t\tif n%i==0:",
+      "\t\t\tcd.append(i)",
+      "\t\t\tif i != n//i:",
+      "\t\t\t\tcd.append(n//i)",
+      "\t\ti += 1",
+      "\treturn cd"
+    ],
+    "description": "約数列挙"
+  },
+  "素数判定": {
+    "prefix": "prime",
+    "body": [
+      "def is_prime(n):",
+      "\tfor i in range(2, n + 1):",
+      "\t\tif i * i > n:",
+      "\t\t\tbreak",
+      "\t\tif n % i == 0:",
+      "\t\t\treturn False",
+      "\treturn n != 1"
+    ],
+    "description": "素数判定"
+  },
+  "エラトステネスの篩": {
+    "prefix": "prime_sieve",
+    "body": [
+      "def sieve(n):",
+      "\tis_prime = [True for _ in range(n+1)]",
+      "\tis_prime[1] = False",
+      "\tfor i in range(2, n+1):",
+      "\t\tif is_prime[i]:",
+      "\t\t\tj = 2 * i",
+      "\t\t\twhile j <= n:",
+      "\t\t\t\tis_prime[j] = False",
+      "\t\t\t\tj += i",
+      "\ttable = [i for i in range(1, n+1) if is_prime[i]]",
+      "\treturn is_prime, table"
+    ],
+    "description": "エラトステネスの篩"
+  },
+  "コンビネーション前計算": {
+    "prefix": "combs_mod",
+    "body": [
+      "MOD = 998244353",
+      "N = 10**5",
+      "",
+      "fact = [1]*(N+1)",
+      "rfact = [1]*(N+1)",
+      "for i in range(1, N+1):",
+      "  fact[i] = fact[i-1]*i % MOD",
+      "rfact[N] = pow(fact[N], MOD-2, MOD)",
+      "for i in range(N, 0, -1):",
+      "  rfact[i-1] = rfact[i] * i % MOD",
+      "",
+      "# nPk (mod MOD) を求める",
+      "def perm(n, k):",
+      "  return fact[n] * rfact[n-k] % MOD",
+      "",
+      "# nCk (mod MOD) を求める",
+      "def comb(n, k):",
+      "  return fact[n] * rfact[k] * rfact[n-k] % MOD"
+    ],
+    "description": "コンビネーションwithフェルマー"
+  },
+  "コンビネーション": {
+    "prefix": "comb",
+    "body": [
+      "def comb(n,r):",
+      "\tans = 1",
+      "\tfor i in range(r):",
+      "\t\tans = ans*(n-i)//(i+1)",
+      "\treturn ans"
+    ],
+    "description": "コンビネーション"
+  },
+  "modintによるコンビネーションmod": {
+    "prefix": "comb_mod_w_modint",
+    "body": [
+      "def comb(n,r):",
+      "\tans = div = ModInt(1)",
+      "\tfor i in range(r):",
+      "\t\tans *= n-i",
+      "\t\tdiv *= i+1",
+      "\treturn ans / div"
+    ],
+    "description": "modintによるコンビネーションmod"
+  },
+  "コンビネーションmod": {
+    "prefix": "comb_mod",
+    "body": [
+      "def comb_mod(n,r):",
+      "\tans = 1",
+      "\tfor i in range(r):",
+      "\t\tans *= n-i",
+      "\t\tans %= MOD",
+      "\tfor i in range(1,r+1):",
+      "\t\tans *= pow(i,MOD-2,MOD)",
+      "\t\tans %= MOD",
+      "\treturn ans"
+    ],
+    "description": "コンビネーションmod"
+  },
+  "mod10000007": {
+    "prefix": "mod1",
+    "body": [
+      "MOD = 10**9+7"
+    ],
+    "description": "mod定義1000000007"
+  },
+  "mod998244353": {
+    "prefix": "mod2",
+    "body": [
+      "MOD = 998244353"
+    ],
+    "description": "mod定義998244353"
+  },
+  "modint": {
+    "prefix": "modint",
+    "body": [
+      "class ModInt:",
+      "\tdef __init__(self, x):",
+      "\t\tself.x = x % MOD",
+      "",
+      "\tdef __str__(self):",
+      "\t\treturn str(self.x)",
+      "",
+      "\t__repr__ = __str__",
+      "",
+      "\tdef __add__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(self.x + other.x) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(self.x + other)",
+      "\t\t)",
+      "",
+      "\tdef __sub__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(self.x - other.x) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(self.x - other)",
+      "\t\t)",
+      "",
+      "\tdef __mul__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(self.x * other.x) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(self.x * other)",
+      "\t\t)",
+      "",
+      "\tdef __truediv__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(",
+      "\t\t\t\tself.x * pow(other.x, MOD - 2, MOD)",
+      "\t\t\t) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(self.x * pow(other, MOD - 2, MOD))",
+      "\t\t)",
+      "",
+      "\t__floordiv__ = __truediv__",
+      "",
+      "\tdef __pow__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(pow(self.x, other.x, MOD)) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(pow(self.x, other, MOD))",
+      "\t\t)",
+      "",
+      "\t__radd__ = __add__",
+      "",
+      "\tdef __rsub__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(other.x - self.x) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(other - self.x)",
+      "\t\t)",
+      "",
+      "\t__rmul__ = __mul__",
+      "",
+      "\tdef __rtruediv__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(",
+      "\t\t\t\tother.x * pow(self.x, MOD - 2, MOD)",
+      "\t\t\t) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(other * pow(self.x, MOD - 2, MOD))",
+      "\t\t)",
+      "",
+      "\tdef __rpow__(self, other):",
+      "\t\treturn (",
+      "\t\t\tModInt(pow(other.x, self.x, MOD)) if isinstance(other, ModInt) else",
+      "\t\t\tModInt(pow(other, self.x, MOD))",
+      "\t\t)",
+      ""
+    ],
+    "description": "modintクラス"
+  },
+  "inf定義": {
+    "prefix": "inf",
+    "body": [
+      "inf = 10**10"
+    ],
+    "description": "inf定義"
+  },
+  "round定義": {
+    "prefix": "round",
+    "body": [
+      "(${1:N}*2+1)//2"
+    ]
+  },
+  "最長増加部分列問題": {
+    "prefix": "LIS",
+    "body": [
+      "from bisect import bisect_left",
+      "lis = []",
+      "for i in range(N):",
+      "\tind = bisect_left(lis,${1:A}[i])",
+      "\tif ind == len(lis):",
+      "\t\tlis.append(${1:A}[i])",
+      "\telse:",
+      "\t\tlis[ind] = ${1:A}[i]",
+      "ans = len(lis)"
+    ]
+  },
+  "行列累乗": {
+    "prefix": "mat_power",
+    "body": [
+      "def power(x,n,mod):",
+      "\tdigit = len(str(bin(n)))-2",
+      "\ta = len(x)",
+      "\tdp = [x]*digit",
+      "\tfor i in range(1,digit):",
+      "\t\tdp[i] = dot(dp[i-1],dp[i-1],mod)",
+      "\tans = [[0]*a for _ in range(a)]",
+      "\tfor i in range(a):",
+      "\t\tans[i][i] = 1",
+      "\tfor i in range(digit):",
+      "\t\tif 1<<i & n:",
+      "\t\t\tans = dot(dp[i],ans,mod)",
+      "\treturn ans",
+      "",
+      "def dot(A,B,mod):",
+      "\tp = len(A)",
+      "\tq = len(A[0])",
+      "\tr = len(B)",
+      "\ts = len(B[0])",
+      "\tif q!=r:",
+      "\t\tprint('掛け算できません')",
+      "\t\treturn",
+      "\tans = [[0]*s for _ in range(p)]",
+      "\tfor i in range(p):",
+      "\t\tfor j in range(s):",
+      "\t\t\tfor k in range(q):",
+      "\t\t\t\tans[i][j] += A[i][k]*B[k][j]",
+      "\t\t\t\tans[i][j] %= mod",
+      "\treturn ans",
+      "",
+      "def mv(A,x,mod):",
+      "\tp = len(A)",
+      "\tq = len(A[0])",
+      "\tr = len(x)",
+      "\tif q!=r:",
+      "\t\tprint('掛け算できません')",
+      "\t\treturn",
+      "\tans = [0]*p",
+      "\tfor i in range(p):",
+      "\t\tfor k in range(q):",
+      "\t\t\tans[i] += A[i][k]*x[k]",
+      "\t\t\tans[i] %= mod",
+      "\treturn ans",
+      "",
+      "def solve():",
+      "\tN, M = map(int, input().split())",
+      "\tinit = [1,0]",
+      "\tmat = [[1,1],[1,0]]",
+      "\tans = mv(power(mat,N-2,M),init,M)",
+      "\treturn ans[0]",
+      "print(solve())"
+    ]
+  },
+  "アルファベット数値化": {
+    "prefix": "alph_to_num",
+    "body": [
+      "def alph_to_num(s):",
+      "\treturn ord(s)-ord('a')"
+    ]
+  },
+  "n乗判定": {
+    "prefix": "npower",
+    "body": "round(${1:N}**(1/${2:n}))**${2:n}==${1:N}"
+  },
+  "二分探索最大最小": {
+    "prefix": "binary_search",
+    "body": [
+      "def check(target):",
+      "\t#checkする処理",
+      "\t\treturn False",
+      "\treturn True",
+      "",
+      "N, K = map(int, input().split())",
+      "A = list(map(int, input().split()))",
+      "low,high = 0,10**9",
+      "mid = (low+high)//2",
+      "while high-low>1:",
+      "\tif check(mid):",
+      "\t\thigh = mid",
+      "\telse:",
+      "\t\tlow = mid",
+      "\tmid = (low+high)//2",
+      "ans = high",
+      "print(ans)"
+    ]
+  },
+  "ダブリング": {
+    "prefix": "doubling",
+    "body": [
+      "sup = 10**18",
+      "db = [[0]*${1:N} for _ in range(sup.bit_length())]",
+      "# db[0] =  初期化",
+      "for i in range(1,sup.bit_length()):",
+      "  for j in range(${1:N}):",
+      "    db[i][j] = db[i-1][db[i-1][j]]",
+      "ans = p = 0",
+      "while ${2:K}:",
+      "  if ${2:K}%2:",
+      "    ans = db[p][ans]",
+      "  p += 1",
+      "  K >>= 1"
+    ]
+  },
+  "Zアルゴリズム": {
+    "prefix": "z_slgo",
+    "body": [
+      "def z_algo(S):",
+      "N = len(S)",
+      "A = [0]*N",
+      "i = 1; j = 0",
+      "A[0] = l = len(S)",
+      "while i < l:",
+      "\twhile i+j < l and S[j] == S[i+j]:",
+      "\t\tj += 1",
+      "\tif not j:",
+      "\t\ti += 1",
+      "\t\tcontinue",
+      "\tA[i] = j",
+      "\tk = 1",
+      "\twhile l-i > k < j - A[k]:",
+      "\t\tA[i+k] = A[k]",
+      "\t\tk += 1",
+      "\ti += k; j -= k",
+      "return A"
+    ]
+  },
+  "メモ化再帰": {
+    "prefix": "memoize",
+    "body": [
+      "import sys",
+      "sys.setrecursionlimit(10**6)",
+      "from functools import lru_cache",
+      "@lru_cache(maxsize=None)",
+      "def dp(n):",
+      "\tif n==0: return 0",
+      "\treturn 0"
+    ]
+  },
+  "osa_k法": {
+    "prefix": "osa_k法",
+    "body": [
+      "from collections import defaultdict",
+      "def sieve(n):",
+      "\tfact = [float('inf')]*(n+1)",
+      "\tfact[1] = 1",
+      "\tfor i in range(2, n+1):",
+      "\t\tif fact[i]==float('inf'):",
+      "\t\t\tj = i",
+      "\t\t\twhile j <= n:",
+      "\t\t\t\tfact[j] = min(fact[j], i)",
+      "\t\t\t\tj += i",
+      "\treturn fact",
+      "def osa_k(n):",
+      "\tfct = defaultdict(lambda: 0)",
+      "\twhile n>1:",
+      "\t\tfct[facts[n]] += 1",
+      "\t\tn //= fct[n]",
+      "\treturn d",
+      "",
+      "facts = sieve(M)"
+    ]
+  },
+  "lucasの定理": {
+    "prefix": "lucas",
+    "body": [
+      "MOD = 3",
+      "",
+      "fac = [1]*(MOD+1)",
+      "finv = [0]*(MOD+1)",
+      "",
+      "for i in range(1, MOD+1):",
+      "\tfac[i] = fac[i-1]*i % MOD",
+      "finv[MOD-1] = pow(fac[MOD-1], MOD-2, MOD)",
+      "for i in range(MOD-1, 0, -1):",
+      "\tfinv[i-1] = finv[i] * i % MOD",
+      "",
+      "def comb_naive(n, k):",
+      "\tif k < 0 or n < 0 or n - k < 0:",
+      "\t\treturn 0",
+      "\treturn fac[n] * finv[k] * finv[n - k] % MOD",
+      "",
+      "def comb_lucas(n, k):",
+      "\tret = 1",
+      "\twhile n > 0:",
+      "\t\tnq, nr = divmod(n, MOD)",
+      "\t\tkq, kr = divmod(k, MOD)",
+      "\t\tret *= comb_naive(nr, kr)",
+      "\t\tret %= MOD",
+      "\t\tn = nq",
+      "\t\tk = kq",
+      "\treturn ret"
+    ]
+  }
+}
