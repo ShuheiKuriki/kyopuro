@@ -12,8 +12,8 @@ const ll INF = 1e18;
 // 変数定義
 int H, W, sx, sy, h1, w1, ans;
 string S;
-vector<string> grid;
-vector<vector<bool>> visited;
+string grid[3000];
+bool visited[3000][3000];
 vector<int> dh, dw;
 
 bool dfs(int h, int w)
@@ -43,13 +43,12 @@ int main()
   ios::sync_with_stdio(false);
   cin.tie(nullptr);
   cin >> H >> W;
-  visited.assign(H, vector<bool>(W));
   dh = {1, 0, -1, 0};
   dw = {0, 1, 0, -1};
   rep(h, H)
   {
     cin >> S;
-    grid.push_back(S);
+    grid[h] = S;
     rep(w, W)
     {
       if (S[w] == 's')
