@@ -6,7 +6,7 @@ class SCC:
     def __init__(self, N, M):
         self.V = N
         self.E = M
-        self.edge = [[] for _ in range(self.V)]
+        self.edge = [deque([]) for _ in range(self.V)]
         self.edge_rev = [[] for _ in range(self.V)]
         self.v_to_g = [None]*self.V
         self.label = 0
@@ -29,7 +29,8 @@ class SCC:
             stack = [s]; used[s] = 1
             while stack:
                 v = stack[-1]
-                for u in self.edge[v]:
+                while len(self.edge[v]):
+                    u = self.edge[v].popleft()
                     if not used[u]:
                         used[u] = 1; stack.append(u); break
                     else:
