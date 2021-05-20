@@ -1,5 +1,4 @@
 import sys
-sys.setrecursionlimit(10**7)
 from collections import deque
 class Grid:
   def __init__(self, H, W, typ='str'):
@@ -24,6 +23,27 @@ class Grid:
         if self.grid[h0][w0]=='.' and self.min_cost[h0][w0]==-1:
           self.min_cost[h0][w0]=self.min_cost[h][w]+1
           d.append((h0,w0))
+    return -1
+
+  def bfs01(self, sh, sw, gh=-1, gw=-1, ind=0):
+    sh -= ind; sw -= ind; gh -= ind; gw -= ind;
+    d = deque([(sh,sw,0)])
+    self.cost = [[-1]*W for _ in range(H)]; self.min_cost[sh][sw]=0
+    while len(d)>0:
+      h,w,cnt = d.popleft()
+      if (h,w) == (gh,gw): return cnt
+      for i in range(4):
+        h0 = h+self.dh[i]; w0 = w+self.dw[i]
+        if not (0<=h0<self.H and 0<=w0<self.W): continue
+        if self.grid[h0][w0]=='.':
+          if 0:
+            if cost < self.cost[h0][w0]:
+              self.cost[h0][w0]=cnt
+              d.appendleft((h0,w0,cnt))
+          if 1:
+            if cost + 1 < self.cost[h0][w0]:
+              self.cost[h0][w0]=cnt+1
+              d.append((h0,w0,cnt+1))
     return -1
 
   def dp(self, h, w):

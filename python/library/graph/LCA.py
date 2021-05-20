@@ -1,53 +1,73 @@
 import sys
 input = sys.stdin.readline
-#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
+from collections import deque
+class Tree:
+  def __init__(self, N):
+    self.V = N
+    self.edge = [deque([]) for _ in range(N)]
+    self.order = []
+  
+  def add_edges(self, ind=1, bi=True):
+    for i in range(self.V-1):
+      a,b = map(int, input().split())
+      a -= ind; b -= ind
+      self.edge[a].append(b)
+      if bi: self.edge[b].append(a)
+
+  def add_edge(self, a, b, bi=True):
+    self.edge[a].append(b)
+    if bi: self.edge[b].append(a)
+
+  def dfs(self, start):
+    stack = deque([start])
+    self.parent = [self.V]*self.V; self.parent[start] = start
+    self.order.append(start)
+    self.depth = [0]*self.V
+    while stack:
+      v = stack[-1]
+      while len(self.edge[v]):
+        u = self.edge[v].popleft()
+        if u==self.parent[v]: continue
+        self.depth[u] = self.depth[v] + 1
+        self.parent[u]=v
+        stack.append(u); self.order.append(u)
+        break
+      else:
+        stack.pop()
+  
+  def set_db(self):
+    self.K = self.V.bit_length()
+    self.db = [[0]*self.V for _ in range(self.K)]
+    self.db[0] = self.parent[:]
+    for i in range(self.K-1):
+      for j in range(self.V):
+        self.db[i+1][j] = self.db[i][self.db[i][j]]
+  
+  def lca(self, u, v):
+    def go_up(v,x):
+      p = 0
+      while x:
+        if x%2:
+          v = self.db[p][v]
+        p += 1
+        x >>= 1
+      return v
+    diff = self.depth[u]-self.depth[v]
+    # res = abs(diff)
+    if diff>=0:
+      u = go_up(u,diff)
+    else:
+      v = go_up(v,-diff)
+    if u==v:
+      return u
+    for p in range(self.K-1,-1,-1):
+      if self.db[p][u]!=self.db[p][v]:
+        u, v = self.db[p][u], self.db[p][v]
+        # res += 1<<(p+1)
+    return self.parent[u] # res+2
+
 N = int(input())
-parent = [0]*N
-edge = [[] for _ in range(N)]
-for i in range(N):
-  A = list(map(int, input().split()))
-  edge[i] = A[1:]
-  for a in A[1:]:
-    parent[a] = i
-def bfs(start):
-  stack = [start]
-  depth = [0]*N
-  while stack:
-    v = stack.pop()
-    for u in edge[v]:
-      #頂点に対する処理
-      depth[u] = depth[v] + 1
-      stack.append(u)
-  return depth
-depth = bfs(0)
-K = N.bit_length()
-db = [[0]*N for _ in range(K)]
-db[0] = parent[:]
-for i in range(1,K):
-  for j in range(N):
-    db[i][j] = db[i-1][db[i-1][j]]
-Q = int(input())
-ans = [0]*Q
-def go_up(v,x):
-  p = 0
-  while x:
-    if x%2:
-      v = db[p][v]
-    p += 1
-    x >>= 1
-  return v
-for i in range(Q):
-  u,v = map(int, input().split())
-  d = depth[u]-depth[v]
-  if d>=0:
-    u = go_up(u,d)
-  else:
-    v = go_up(v,-d)
-  if u==v:
-    ans[i] = u
-    continue
-  for p in range(K-1,-1,-1):
-    if db[p][u]!=db[p][v]:
-      u, v = db[p][u], db[p][v]
-  ans[i] = parent[u]
-print(*ans, sep='\n')
+G = Tree(N)
+G.add_edges(ind=1, bi=True)
+G.dfs(0)
+G.set_db()
