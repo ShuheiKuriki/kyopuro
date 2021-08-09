@@ -48,15 +48,15 @@ def SA_IS(s, with_lcp = False):
         sa = [_s for _s in sa if LMS[_s]]
         tmp = [-1] * (n//2) + [0]
         dupl = 0
-        for _ in range(1, l):
-            i, j = sa[_-1], sa[_]
+        for k in range(1, l):
+            i, j = sa[k-1], sa[k]
             for ii in range(n):
                 if a[i+ii] != a[j+ii] or stype[i+ii] != stype[j+ii]:
                     break
                 if ii and (LMS[i+ii] or LMS[j+ii]):
                     dupl += 1
                     break
-        tmp[j//2] = _ - dupl
+            tmp[j//2] = k - dupl
         tmp = [t for t in tmp if t >= 0]
         return tmp, dupl
     

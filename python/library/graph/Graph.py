@@ -3,6 +3,7 @@ input = sys.stdin.readline
 sys.setrecursionlimit(10**7)
 from collections import deque
 import heapq
+INF = float('inf')
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N
@@ -87,19 +88,31 @@ class Graph:
                     d.append(w)
 
   #O(ElogV)
-    def dijkstra_heap(self,s):
-        self.dists = [float('inf')] * self.V
-        self.dists[s] = 0
+    def dijkstra_heap(self, s):
+        dists = [INF] * self.V
+        dists[s] = 0
         que = [(0,s)] #que : [sからの暫定(未確定)最短距離,頂点]のリスト
         while len(que):
             d,v = heapq.heappop(que)
             #[d,v]:[sからの(確定)最短距離,頂点]
-            if self.dists[v]!=d: continue
+            if dists[v] != d: continue
             for d,w in self.edge[v]:
-                new_d = self.dists[v]+d
-                if new_d<self.dists[w]:
-                    self.dists[w] = new_d
+                new_d = dists[v]+d
+                if new_d < dists[w]:
+                    dists[w] = new_d
                     heapq.heappush(que,(new_d,w))
+    
+    def bellman_ford(self, s):
+        dist = [INF]*self.V
+        dist[s] = 0
+        for _ in range(self.V):
+            for v in range(self.V):
+                for d,u in self.edge[v]:
+                    dist[u] = min(dist[u], dist[v]+d)
+        for v in range(self.V):
+            for d,u in self.edge[v]:
+                if dist[u] > dist[v]+d: return -1
+
 
 N, M, r = map(int, input().split())
 G = Graph(N,M)
