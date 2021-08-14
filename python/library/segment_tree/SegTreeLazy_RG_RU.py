@@ -119,8 +119,8 @@ class LazySegmentTree():
             while l % 2 == 0: l >>= 1
             if not g(self.op(sm, self.data[l])):
                 while l < self.size:
-                self.push(l)
-                l = 2 * l
+                    self.push(l)
+                    l = 2 * l
                 if g(self.op(sm, self.data[l])):
                     sm = self.op(sm, self.data[l])
                     l += 1
