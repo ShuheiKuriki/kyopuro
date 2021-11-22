@@ -58,10 +58,10 @@ class SegmentTree():
             while l % 2 == 0: l >>= 1
             if not f(self.oper(sm, self.data[l])):
                 while l < self.size:
-                l = 2 * l
-                if f(self.oper(sm, self.data[l])):
-                    sm = self.oper(sm, self.data[l])
-                    l += 1
+                    l = 2 * l
+                    if f(self.oper(sm, self.data[l])):
+                        sm = self.oper(sm, self.data[l])
+                        l += 1
                 return l - self.size
             sm = self.oper(sm, self.data[l])
             l += 1
