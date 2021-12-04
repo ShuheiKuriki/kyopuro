@@ -13,17 +13,17 @@ class Grid:
 
     def bfs(self, sh, sw, gh=-1, gw=-1, ind=0):
         sh -= ind; sw -= ind; gh -= ind; gw -= ind;
-        d = deque([(sh,sw)])
+        que = deque([(sh,sw)])
         self.min_cost = [[-1]*W for _ in range(H)]; self.min_cost[sh][sw]=0
-        while len(d)>0:
-            h,w = d.popleft()
+        while len(que)>0:
+            h,w = que.popleft()
             for i in range(4):
                 h0 = h+self.dh[i]; w0 = w+self.dw[i]
                 if not (0<=h0<self.H and 0<=w0<self.W): continue
                 if (h0,w0) == (gh,gw): return self.min_cost[h][w]+1
                 if self.grid[h0][w0]=='.' and self.min_cost[h0][w0]==-1:
                     self.min_cost[h0][w0]=self.min_cost[h][w]+1
-                    d.append((h0,w0))
+                    que.append((h0,w0))
         return -1
 
     def dp(self, h, w):

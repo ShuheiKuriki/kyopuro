@@ -1,8 +1,7 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**7)
 from collections import deque
-import heapq
+from heapq import *
 INF = float('inf')
 class Graph:
     def __init__(self, N, M=-1):
@@ -78,30 +77,42 @@ class Graph:
                 self.dp[u] = max(self.dp[u], self.dp[v]+1)
   
     def bfs(self, start):
-        d = deque([start])
+        que = deque([start])
         self.min_cost = [-1]*self.V; self.min_cost[start]=0
-        while len(d)>0:
-            v = d.popleft()
-            for w in self.edge[v]:
-                if self.min_cost[w] == -1:
-                    self.min_cost[w] = self.min_cost[v]+1
-                    d.append(w)
+        while len(que)>0:
+            v = que.popleft()
+            for u in self.edge[v]:
+                if self.min_cost[u] == -1:
+                    self.min_cost[u] = self.min_cost[u]+1
+                    que.append(u)
 
-  #O(ElogV)
+    def bfs01(self, start):
+        que = deque([start])
+        self.min_cost = [-1]*self.V; self.min_cost[start]=0
+        while len(que)>0:
+            v = que.popleft()
+            for weight, u in self.edge[v]:
+                new_cost = self.min_cost[v] + weight
+                if new_cost < self.min_cost[u]:
+                    self.min_cost[u] = new_cost
+                    if weight == 0: que.appendleft(u)
+                    else: que.append(u)
+
+    #O(ElogV)
     def dijkstra_heap(self, s):
-        dists = [INF] * self.V
-        dists[s] = 0
+        self.dists = [INF] * self.V
+        self.dists[s] = 0
         que = [(0,s)] #que : [sからの暫定(未確定)最短距離,頂点]のリスト
         while len(que):
-            d,v = heapq.heappop(que)
+            cost, v = heappop(que)
+            if self.dists[v] < cost: continue
             #[d,v]:[sからの(確定)最短距離,頂点]
-            if dists[v] != d: continue
-            for d,w in self.edge[v]:
-                new_d = dists[v]+d
-                if new_d < dists[w]:
-                    dists[w] = new_d
-                    heapq.heappush(que,(new_d,w))
-    
+            for weight, u in self.edge[v]:
+                new_cost = self.dists[v]+weight
+                if new_cost < self.dists[u]:
+                    self.dists[u] = new_cost
+                    heappush(que,(new_cost,u))
+
     def bellman_ford(self, s):
         dist = [INF]*self.V
         dist[s] = 0
@@ -114,7 +125,6 @@ class Graph:
                 if dist[u] > dist[v]+d: return -1
 
 
-N, M, r = map(int, input().split())
+N, M = map(int, input().split())
 G = Graph(N,M)
 G.add_edges(ind=1, cost=False, bi=False, rev=False)
-
