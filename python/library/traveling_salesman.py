@@ -17,6 +17,6 @@ def solve():
             if (S>>u)&1:
                 for v,d in edge[u]:
                     if not (S>>v)&1:
-                    dp[S+(1<<v)][v] = min(dp[S+(1<<v)][v],dp[S][u]+d)
+                        dp[S+(1<<v)][v] = min(dp[S+(1<<v)][v],dp[S][u]+d)
     return dp[-1][0] if dp[-1][0]<float('inf') else -1
 print(solve())
