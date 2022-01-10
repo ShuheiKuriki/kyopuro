@@ -1,13 +1,14 @@
+# DP時の演算に逆元がないタイプの全方位木DP
 import sys
 input = sys.stdin.readline
 from collections import deque
 class Tree:
-    def __init__(self, N, merge, op, id):
+    def __init__(self, N, merge, add_root, id):
         self.V = N
         self.edge = [[] for _ in range(N)]
         self.order = []
         self.merge = merge
-        self.op = op
+        self.add_root = add_root
         self.id = id
     
     def add_edges(self, ind=1, bi=True):
@@ -36,7 +37,7 @@ class Tree:
         for v in self.order[::-1]:
             for u in self.edge[v]:
                 if u==self.parent[v]: continue
-                self.dp[v] = self.merge(self.dp[v], self.op(self.dp[u]))
+                self.dp[v] = self.merge(self.dp[v], self.add_root(self.dp[u]))
 
     def rerooting(self, start):
         p_value = [self.id]*self.V #親側の値
@@ -45,26 +46,26 @@ class Tree:
             cumR = [self.id]*(len(self.edge[v])+1)
             for i,u in enumerate(self.edge[v]):
                 if u==self.parent[v]:
-                    cumL[i+1] = self.merge(cumL[i], self.op(p_value[v]))
+                    cumL[i+1] = self.merge(cumL[i], self.add_root(p_value[v]))
                 else:
-                    cumL[i+1] = self.merge(cumL[i], self.op(self.dp[u]))
+                    cumL[i+1] = self.merge(cumL[i], self.add_root(self.dp[u]))
             for i,u in enumerate(self.edge[v][::-1]):
                 if u==self.parent[v]:
-                    cumR[-i-2] = self.merge(cumR[-i-1], self.op(p_value[v]))
+                    cumR[-i-2] = self.merge(cumR[-i-1], self.add_root(p_value[v]))
                 else:
-                    cumR[-i-2] = self.merge(cumR[-i-1], self.op(self.dp[u]))
+                    cumR[-i-2] = self.merge(cumR[-i-1], self.add_root(self.dp[u]))
             for i,u in enumerate(self.edge[v]):
                 if u==self.parent[v]: continue
                 p_value[u] = self.merge(cumL[i], cumR[i+1])
-                self.dp[u] = self.merge(self.dp[u], self.op(p_value[u]))
+                self.dp[u] = self.merge(self.dp[u], self.add_root(p_value[u]))
 
 def merge(a, b): return a+b
   
-def op(a): return a+1 #mergeの直前にする操作、rerootingのことを考えて平常時は寸止めしておく
+def add_root(a): return a+1 #mergeの直前にする操作、rerootingのことを考えて平常時は寸止めしておく
 
 id = (1,0)
 N = int(input())
-G = Tree(N, merge, op, id)
+G = Tree(N, merge, add_root, id)
 G.add_edges(ind=1, bi=True)
 G.dp(0)
 G.rerooting(0)
