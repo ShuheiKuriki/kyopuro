@@ -54,15 +54,15 @@ class Graph:
         updated = [0]*self.V
         for start in range(self.V):
             if self.to[start] or updated[start]: continue
-            stack = deque([start])
-            while stack:
-                v = stack.popleft()
+            que = deque([start])
+            while que:
+                v = que.popleft()
                 self.order.append(v)
                 updated[v] = 1
                 for u in self.edge[v]:
                     self.to[u] -= 1
                     if self.to[u]: continue
-                    stack.append(u)
+                    que.append(u)
     def dp(self): #トポソしてから
         # self.dp = [0]*self.V
         #行きがけ
