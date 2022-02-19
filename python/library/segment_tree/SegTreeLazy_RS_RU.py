@@ -156,6 +156,8 @@ input = sys.stdin.readline
 
 INF = 10**18
 mod = 1<<32
+
+# 実際の和 * mod + 要素数
 def op(x, y):
     x1, x2 = divmod(x,mod)
     y1, y2 = divmod(y,mod)

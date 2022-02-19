@@ -8,16 +8,26 @@ class Tree:
         self.edge = [[] for _ in range(N)]
         self.order = []
     
-    def add_edges(self, ind=1, bi=True):
-        for i in range(self.V-1):
-            a,b = map(int, input().split())
-            a -= ind; b -= ind
+    def add_edges(self, ind=1, bi=True, cost=False):
+        for _ in range(self.V-1):
+            if cost:
+                a,b,c = map(int, input().split())
+                a -= ind; b -= ind
+                self.edge[a].append((c,b))
+                if bi: self.edge[b].append((c,a))
+            else:
+                a,b = map(int, input().split())
+                a -= ind; b -= ind
+                self.edge[a].append(b)
+                if bi: self.edge[b].append(a)
+
+    def add_edge(self, a, b, cost=None, bi=True):
+        if cost is not None:
+            self.edge[a].append((cost,b))
+            if bi: self.edge[b].append((cost,a))
+        else:
             self.edge[a].append(b)
             if bi: self.edge[b].append(a)
-
-    def add_edge(self, a, b, bi=True):
-        self.edge[a].append(b)
-        if bi: self.edge[b].append(a)
 
     def dp(self, start):
         stack = deque([start])
