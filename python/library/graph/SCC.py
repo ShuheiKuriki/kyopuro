@@ -1,76 +1,81 @@
-# 強連結成分分解(SCC): グラフGに対するSCCを行う
-# 入力: <N>: 頂点サイズ, <G>: 順方向の有向グラフ, <RG>: 逆方向の有向グラフ
-# 出力: (<ラベル数>, <各頂点のラベル番号>)
-
+# 強連結成分分解(SCC）
+# upsolve: https://atcoder.jp/contests/practice2/tasks/practice2_g
+from collections import deque
 class SCC:
     def __init__(self, N, M):
         self.V = N
         self.E = M
-        self.edge = [deque([]) for _ in range(self.V)]
+        self.edge = [[] for _ in range(self.V)]
+        self.edge_que = [deque([]) for _ in range(self.V)]
         self.edge_rev = [[] for _ in range(self.V)]
         self.v_to_g = [None]*self.V
-        self.label = 0
     
     def add_edges(self, ind=1):
-        for i in range(self.E):
+        for _ in range(self.E):
             a,b = map(int, input().split())
             a -= ind; b -= ind
-            self.edge[a].append(b)
+            self.edge_que[a].append(b)
             self.edge_rev[b].append(a)
-    
+        self.edge = [list(es) for es in self.edge_que]
+
     def add_edge(self, a, b):
         self.edge[a].append(b)
+        self.edge_que[a].append(b)
         self.edge_rev[b].append(a)
     
     def scc(self):
         order = []
-        used = [0]*self.V
+        used = [False]*self.V
         def dfs(s):
-            stack = [s]; used[s] = 1
+            used[s] = True; stack = [s]
             while stack:
                 v = stack[-1]
-                while len(self.edge[v]):
-                    u = self.edge[v].popleft()
-                    if not used[u]:
-                        used[u] = 1; stack.append(u); break
-                    else:
-                        stack.pop(); order.append(v)
-        def rdfs(s, col):
-            stack = [s]; self.v_to_g[s] = col; used[s] = 1
+                while len(self.edge_que[v]):
+                    u = self.edge_que[v].popleft()
+                    if used[u]: continue
+                    used[u] = True; stack.append(u)
+                    break
+                else:
+                    stack.pop(); order.append(v)
+        def rdfs(s, gnum):
+            used[s] = True; stack = [s]
+            self.v_to_g[s] = gnum
             while stack:
                 v = stack.pop()
                 for u in self.edge_rev[v]:
-                    if not used[u]:
-                        self.v_to_g[u] = col; used[u] = 1; stack.append(u)
-        for i in range(self.V):
-            if not used[i]:
-                dfs(i)
+                    if used[u]: continue
+                    self.v_to_g[u] = gnum
+                    used[u] = True; stack.append(u)
+        for s in range(self.V):
+            if used[s]: continue
+            dfs(s)
         used = [0]*self.V
+        self.gnum = 0
         for s in order[::-1]:
-            if not used[s]:
-                rdfs(s, self.label); self.label += 1
+            if used[s]: continue
+            rdfs(s, self.gnum)
+            self.gnum += 1
 
-    # 縮約後のグラフを構築
-    def construct(self):
-        G0 = [set() for i in range(self.label)]
+        self.groups = [[] for _ in range(self.gnum)]
         for v in range(self.V):
-            lbs = self.v_to_g[v]
-            for w in self.edge[v]:
-                lbt = self.v_to_g[w]
-                if lbs == lbt:
-                    continue
-                G0[lbs].add(lbt)
-        return G0
+            gv = self.v_to_g[v]
+            self.groups[gv].append(v)
+
+    def constrcut(self):
+        # 縮約後のグラフgroupEdgeを構築
+        self.groupEdge = [set() for _ in range(self.gnum)]
+        for v in range(self.V):
+            gv = self.v_to_g[v]
+            for u in self.edge[v]:
+                gu = self.v_to_g[u]
+                if gv == gu: continue
+                self.groupEdge[gv].add(gu)
 
 import sys
 input = sys.stdin.readline
 N, M = map(int, input().split())
 G = SCC(N,M)
-G.add_edges(0)
+G.add_edges(ind=0)
 G.scc()
-print(G.label)
-ans = [[] for _ in range(G.label)]
-for v in range(N):
-    ans[G.v_to_g[v]].append(v)
-for a in ans:
-    print(len(a),*a)
+print(G.gnum)
+for g in G.groups: print(len(g),*g)
