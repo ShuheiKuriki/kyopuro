@@ -15,15 +15,12 @@ class LowLink:
     def add_edges(self, ind=1):
         for i in range(self.E):
             a,b = map(int, input().split())
-            a -= ind
-            b -= ind
-            self.edge[a].append(b)
-            self.edge[b].append(a)
+            a -= ind; b -= ind
+            self.edge[a].append(b); self.edge[b].append(a)
             self.edges[i] = (a,b)
 
     def add_edge(self, a, b):
-        self.edge[a].append(b)
-        self.edge[b].append(a)
+        self.edge[a].append(b); self.edge[b].append(a)
 
     def low_link(self, start):
         self.start = start
@@ -35,14 +32,12 @@ class LowLink:
         while stack:
             v = stack[-1]
             for u in self.edge[v]:
-                if u==self.parent[v]:
-                    continue
+                if u==self.parent[v]: continue
                 if self.order[u] < self.order[v]: #後退辺の処理
                     self.low[v] = min(self.low[v], self.order[u])
                 elif self.cnts[u] == 0: #行きがけ
                     self.order[u] = self.low[u] = order
-                    self.parent[u] = v
-                    stack.append(u)
+                    self.parent[u] = v; stack.append(u)
                     self.cnts[u] += 1
                     order += 1
                     break
@@ -56,19 +51,15 @@ class LowLink:
     def bridge(self):
         res = []
         for a,b in self.edges:
-            if G.order[a] > G.order[b]:
-                a,b = b,a
-            if G.low[b] > G.order[a]:
-                res.append((a,b))
+            if G.order[a] > G.order[b]: a,b = b,a
+            if G.low[b] > G.order[a]: res.append((a,b))
         return res
 
     def cycle(self):
         res = [0]*self.V
         for a,b in self.edges:
-            if G.order[a] > G.order[b]:
-                a,b = b,a
-            if G.low[b] <= G.order[a]:
-                res[a] = 1; res[b] = 1
+            if G.order[a] > G.order[b]: a,b = b,a
+            if G.low[b] <= G.order[a]: res[a] = 1; res[b] = 1
         return res
     
     def articulation(self):
@@ -81,8 +72,7 @@ class LowLink:
                 if self.order[v] <= self.low[u]:
                     cnt += 1
             if v == self.start:
-                if cnt >= 2:
-                res.append(v)
+                if cnt >= 2: res.append(v)
             elif cnt >= 1:
                 res.append(v)
         return res
@@ -93,5 +83,4 @@ G = LowLink(N, M)
 G.add_edges(0)
 G.low_link(0)
 ans = G.articulation()
-if len(ans):
-    print(*ans, sep='\n')
+if len(ans): print(*ans, sep='\n')

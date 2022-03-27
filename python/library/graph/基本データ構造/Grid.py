@@ -5,10 +5,8 @@ class Grid:
     def __init__(self, H, W, typ='str'):
         self.H = H; self.W = W
         self.dh = [0,1,0,-1]; self.dw = [1,0,-1,0]
-        if typ=='str':
-            self.grid = [input() for _ in range(H)]
-        elif typ=='int':
-            self.grid = [list(map(int, sys.stdin.buffer.readline().split())) for _ in range(H)]
+        if typ=='str': self.grid = [input() for _ in range(H)]
+        elif typ=='int': self.grid = [list(map(int, sys.stdin.buffer.readline().split())) for _ in range(H)]
         self.ans = [[0]*W for _ in range(H)]
 
     def bfs(self, sh, sw, gh=-1, gw=-1, ind=0):
