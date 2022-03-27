@@ -1,4 +1,4 @@
-# DP時の演算に逆元があるタイプの全方位木DP
+# DP時の演算に逆元がある群に対する全方位木DP
 import sys
 input = sys.stdin.readline
 from collections import deque

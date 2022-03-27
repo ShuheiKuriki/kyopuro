@@ -2,7 +2,7 @@
 # upsolve: https://atcoder.jp/contests/practice2/tasks/practice2_g
 from collections import deque
 class SCC:
-    def __init__(self, N, M):
+    def __init__(self, N, M=0):
         self.V = N
         self.E = M
         self.edge = [[] for _ in range(self.V)]

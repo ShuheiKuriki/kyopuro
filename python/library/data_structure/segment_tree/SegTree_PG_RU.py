@@ -44,8 +44,9 @@ import sys
 input = sys.stdin.readline
 
 N, Q = map(int, input().split())
+mapping = max
 id = (-1,(1<<31)-1)
-st = SegmentTree(N,max,id)
+st = SegmentTree(N,mapping,id)
 
 ans = []
 for q in range(Q):
