@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+# sys.setrecursionlimit(10**6)
 from collections import deque
 from heapq import *
 INF = float('inf')
@@ -75,43 +76,55 @@ class Graph:
             #配るDP
             for u in self.edge_rev[v]:
                 self.dp[u] = max(self.dp[u], self.dp[v]+1)
-  
-    def bfs(self, start):
-        que = deque([start])
-        self.min_cost = [-1]*self.V; self.min_cost[start]=0
-        while len(que)>0:
-            v = que.popleft()
-            for u in self.edge[v]:
-                if self.min_cost[u] == -1:
-                    self.min_cost[u] = self.min_cost[u]+1
-                    que.append(u)
 
-    def bfs01(self, start):
-        que = deque([start])
-        self.min_cost = [-1]*self.V; self.min_cost[start]=0
-        while len(que)>0:
+    def bfs(self, s, g=-1, std=True): #01BFSならstd=False
+        #step1(初期化)
+        que = deque([s])
+        self.dists = [INF]*self.V; self.dists[s]=0
+        #step2(ループ)
+        while len(que):
+            #step2-1(queから頂点を出す)
             v = que.popleft()
-            for weight, u in self.edge[v]:
-                new_cost = self.min_cost[v] + weight
-                if new_cost < self.min_cost[u]:
-                    self.min_cost[u] = new_cost
-                    if weight == 0: que.appendleft(u)
-                    else: que.append(u)
+            #step2-2(vがgと一致していたらgの最短距離が確定)
+            if v==g: return self.dists[v]
+            #step2-3(隣接頂点をループ)
+            for u in self.edge[v]:
+                #step2-3-1(ndistを計算)
+                weight = 1
+                ndist = self.dists[v] + weight
+                #step2-3-2(ndist>=dists配列値なら意味がないのでスキップ)
+                if ndist >= self.dists[u]: continue
+                #step2-3-3(dists配列にndistをset)
+                self.dists[u] = ndist
+                #step2-3-4(queに隣接頂点を入れる)
+                if std or weight: que.append(u)
+                else: que.appendleft(u)
+        return -1
 
     #O(ElogV)
-    def dijkstra_heap(self, s):
-        self.dists = [INF] * self.V
-        self.dists[s] = 0
-        que = [(0,s)] #que : [sからの暫定(未確定)最短距離,頂点]のリスト
+    def dijkstra_heap(self, s, g=-1):
+        #step1(初期化)
+        que = [(0,s)] #que:[sからの暫定最短距離,頂点]のリスト
+        self.dists = [INF]*self.V; self.dists[s] = 0
+        #step2(ループ)
         while len(que):
-            cost, v = heappop(que)
-            if self.dists[v] < cost: continue
-            #[d,v]:[sからの(確定)最短距離,頂点]
+            #step2-1(queから最短距離と頂点を出す)
+            dist, v = heappop(que)
+            #step2-1-1(dist>dists[v]なら古い情報なのでスキップ)
+            if dist > self.dists[v]: continue
+            #step2-2(vがgと一致していたらgの最短距離が確定)
+            if v==g: return self.dists[v]
+            #step2-3(隣接頂点をループ)
             for weight, u in self.edge[v]:
-                new_cost = self.dists[v]+weight
-                if new_cost < self.dists[u]:
-                    self.dists[u] = new_cost
-                    heappush(que,(new_cost,u))
+                #step2-3-1(ndistを計算)
+                ndist = self.dists[v] + weight
+                #step2-3-2(ndist>=dists配列値なら意味がないのでスキップ)
+                if ndist >= self.dists[u]: continue
+                #step2-3-3(dists配列にndistをset)
+                self.dists[u] = ndist
+                #step2-3-4(queに(ndist,隣接頂点)を入れる)
+                heappush(que,(ndist,u))
+        return -1
 
     def bellman_ford(self, s):
         dist = [INF]*self.V
