@@ -44,12 +44,23 @@ class Graph:
         if not bi: self.to[b] += 1
 
     def dfs_rec(self, v):
-        if self.visited[v]:
-            return self.dp[v]
-        for u in self.edge[v]:
-            self.dp[v] += self.dfs_rec(u, v)
+        if self.visited[v]: return self.dp[v]
         self.visited[v] = True
+        for u in self.edge[v]:
+            self.dp[v] += self.dfs_rec(u)
         return self.dp[v]
+    
+    def dfs(self, s):
+        que = deque([(-1,s)])
+        visited = [False]*self.V
+        while len(que):
+            w,v = que.pop()
+            if visited[v]: continue
+            if w>=0:
+                self.dp[w] += self.dp[v]
+            visited[v] = True
+            for u in self.edge[v]:
+                que.append((v,u))
 
     def topo_sort(self): #topological sort
         updated = [0]*self.V
