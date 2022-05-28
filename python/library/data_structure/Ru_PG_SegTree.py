@@ -1,3 +1,5 @@
+# 区間更新（純粋な更新のみ、maxで更新を代用）一点取得
+# https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D
 class SegmentTree():
     def __init__(self, n, mapping, id):
         self.n = n
@@ -50,8 +52,8 @@ st = SegmentTree(N,mapping,id)
 
 ans = []
 for q in range(Q):
-    com,*y = map(int, input().split())
-    if com==0:
+    t,*y = map(int, input().split())
+    if t==0:
         s,t,x = y
         st.range_apply(s,t+1,(q,x))
     else:

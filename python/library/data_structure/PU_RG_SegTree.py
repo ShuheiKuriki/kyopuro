@@ -1,3 +1,5 @@
+# 一点更新（更新方法は任意）区間取得（区間に比例しないモノイド作用素）
+# https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A
 class SegmentTree():
     def __init__(self, n, oper, e):
         self.n = n
@@ -92,12 +94,23 @@ import sys
 input = sys.stdin.readline
 
 def op(x, y):
-    return x,y
+    return min(x,y)
 
-e = 0
+e = (1<<31)-1
 
 N, Q = map(int, input().split())
-A = list(map(int, input().split()))
+A = [e for _ in range(N)]
 
 st = SegmentTree(N,op,e)
 st.build(A)
+
+ans = []
+for i in range(Q):
+    t,*B = map(int, input().split())
+    if t == 0:
+        x,y = B
+        st.set(x,y)
+    else:
+        x,y = B
+        ans.append(st.prod(x,y+1))
+print(*ans, sep='\n')

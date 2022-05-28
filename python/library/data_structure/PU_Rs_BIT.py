@@ -1,3 +1,4 @@
+# 一点更新（更新方法は任意）区間和取得
 # Binary Indexed Tree (Fenwick Tree, 1-indexed)
 class BIT:
     def __init__(self, n):

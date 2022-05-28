@@ -1,3 +1,4 @@
+# 区間更新（任意のモノイド作用素）区間取得（区間に比例しないモノイド要素）
 class LazySegmentTree():
     def __init__(self, n, op, e, mapping, composition, id):
         self.n = n
@@ -154,20 +155,29 @@ class LazySegmentTree():
 import sys
 input = sys.stdin.readline
 
-INF = 10**18
+e = (1<<31)-1
 def op(x, y):
-    return x,y
+    return min(x,y)
 
-def mapping(p, x): #pが作用素, xが更新する前の値
-    return x if p==INF else p
+id = 10**18
+def mapping(f, x): #fが作用素, xが更新する前の値
+    return x if f==id else f
 
-def composition(p, q): #pをqに作用させる(q,pの順に作用)
-    return q if p==INF else p
+def composition(f, g): #fをgに作用させる(f,gの順に作用)
+    return g if f==id else f
 
-e = 0
-id = INF
 N, Q = map(int, input().split())
-A = list(map(int, input().split()))
+# A = list(map(int, input().split()))
 
 lst = LazySegmentTree(N, op, e, mapping, composition, id)
-lst.build(A)
+# lst.build(A)
+ans = []
+for q in range(Q):
+    t,*X = map(int,input().split())
+    if t==0:
+        l,r,x = X
+        lst.range_apply(l,r+1,x)
+    else:
+        l,r = X
+        ans.append(lst.prod(l,r+1))
+print(*ans, sep='\n')

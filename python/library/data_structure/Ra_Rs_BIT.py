@@ -1,3 +1,4 @@
+# 区間加算区間和取得
 # Binary Indexed Tree (Fenwick Tree)
 class BIT:
     def __init__(self, n):
