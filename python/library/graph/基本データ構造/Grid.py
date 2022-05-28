@@ -11,7 +11,7 @@ class Grid:
         if typ=='str':
             self.grid = [input()[:-1] for _ in range(H)]
         elif typ=='int':
-            self.grid = [list(map(int, input())) for _ in range(H)]
+            self.grid = [list(map(int, input().split())) for _ in range(H)]
         self.ans = [[0]*W for _ in range(H)]
 
     #01BFSならstd=False
