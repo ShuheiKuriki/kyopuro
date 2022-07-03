@@ -3,6 +3,7 @@ input = sys.stdin.readline
 # sys.setrecursionlimit(10**6)
 from collections import deque
 from heapq import *
+from collections import defaultdict
 INF = float('inf')
 class Graph:
     def __init__(self, N, M=-1):
@@ -91,7 +92,9 @@ class Graph:
     def bfs(self, s, g=-1, std=True): #01BFSならstd=False
         #step1(初期化)
         que = deque([s])
-        self.dists = [INF]*self.V; self.dists[s]=0
+        self.dists = [INF]*self.V
+        # self.dists = defaultdict(lambda: 0)
+        self.dists[s]=0
         #step2(ループ)
         while len(que):
             #step2-1(queから頂点を出す)

@@ -51,30 +51,38 @@ class LowLink:
     def bridge(self):
         res = []
         for a,b in self.edges:
+            # order：a < bにする
             if G.order[a] > G.order[b]: a,b = b,a
+            # bのlowを取っても大小関係が逆転しないなら、
+            # 辺(a,b)以外でたどりつけないので橋となる
             if G.low[b] > G.order[a]: res.append((a,b))
         return res
 
     def cycle(self):
         res = [0]*self.V
         for a,b in self.edges:
+            # order：a < bにする
             if G.order[a] > G.order[b]: a,b = b,a
+            # bのlowを取っても大小関係が逆転するなら、
+            # 辺(a,b)は閉路に含まれる
             if G.low[b] <= G.order[a]: res[a] = 1; res[b] = 1
         return res
     
     def articulation(self):
         res = []
         for v in range(self.V):
-            cnt = 0
+            # 頂点vから出ている橋の数
+            num = 0
+            # order：v < u
             for u in self.edge[v]:
-                if self.parent[v] == u or self.parent[u] != v:
-                    continue
-                if self.order[v] <= self.low[u]:
-                    cnt += 1
+                if self.parent[v] == u or self.parent[u] != v: continue
+                if self.order[v] <= self.low[u]: num += 1
             if v == self.start:
-                if cnt >= 2: res.append(v)
-            elif cnt >= 1:
-                res.append(v)
+                # スタートから橋が2本以上出ていたら関節点
+                if num >= 2: res.append(v)
+            else:
+                # スタート以外から橋が１つでも出ていたら関節点
+                if num >= 1: res.append(v)
         return res
 
 
