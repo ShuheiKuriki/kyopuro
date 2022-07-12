@@ -2,7 +2,6 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 from heapq import *
-# sys.setrecursionlimit(10**6)
 INF = float('inf')
 class Tree:
     def __init__(self, N):
@@ -10,28 +9,20 @@ class Tree:
         self.edge = [[] for _ in range(N)]
         self.order = []
     
-    def add_edges(self, ind=1, bi=True, cost=False):
-        for _ in range(self.V-1):
-            if cost:
-                a,b,c = map(int, input().split())
-                a -= ind; b -= ind
-                self.edge[a].append((c,b))
-                if bi: self.edge[b].append((c,a))
-            else:
-                a,b = map(int, input().split())
-                a -= ind; b -= ind
-                self.edge[a].append(b)
-                if bi: self.edge[b].append(a)
+    def add_edges(self, ind=1, bi=False):
+        for a,*A in [list(map(int, input().split())) for _ in range(self.V-1)]:
+            a -= ind; b = A[0] - ind
+            atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
+            self.edge[a].append(atob)
+            if bi: self.edge[b].append(btoa)
 
-    def add_edge(self, a, b, cost=None, bi=True):
-        if cost is not None:
-            self.edge[a].append((cost,b))
-            if bi: self.edge[b].append((cost,a))
-        else:
-            self.edge[a].append(b)
-            if bi: self.edge[b].append(a)
+    def add_edge(self, a, b, cost=None, ind=1, bi=False):
+        a -= ind; b -= ind
+        atob,btoa = (b,a) if cost is None else ((cost,b),(cost,a))
+        self.edge[a].append(atob)
+        if bi: self.edge[b].append(btoa)
 
-    def dp(self, start):
+    def dfs_dp(self, start):
         stack = deque([start])
         self.parent = [self.V]*self.V; self.parent[start] = -1
         self.order.append(start)

@@ -12,7 +12,7 @@ class Tree:
         self.id = id
     
     def add_edges(self, ind=1, bi=True):
-        for i in range(self.V-1):
+        for _ in range(self.V-1):
             a,b = map(int, input().split())
             a -= ind; b -= ind
             self.edge[a].append(b)

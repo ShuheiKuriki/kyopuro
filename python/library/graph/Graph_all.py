@@ -3,7 +3,6 @@ input = sys.stdin.readline
 # sys.setrecursionlimit(10**6)
 from collections import deque
 from heapq import *
-from collections import defaultdict
 INF = float('inf')
 class Graph:
     def __init__(self, N, M=-1):
@@ -16,54 +15,45 @@ class Graph:
         self.visited = [False]*self.V
         self.dp = [0]*self.V
 
-    def add_edges(self, ind=1, cost=False, bi=False, rev=False):
-        for i in range(self.E):
-            if cost:
-                a,b,d = map(int, input().split())
-                a -= ind; b -= ind
-                self.edge[a].append((d,b))
-                if rev: self.edge_rev[b].append((d,a))
-                if not bi: self.to[b] += 1
-                if bi: self.edge[b].append((d,a))
-            else:
-                a,b = map(int, input().split())
-                a -= ind; b -= ind
-                self.edge[a].append(b)
-                if rev: self.edge_rev[b].append(a)
-                if not bi: self.to[b] += 1
-                if bi: self.edge[b].append(a)
+    def add_edges(self, ind=1, bi=False):
+        for a,*A in [list(map(int, input().split())) for _ in range(self.E)]:
+            a -= ind; b = A[0] - ind
+            atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
+            self.edge[a].append(atob)
+            if bi: self.edge[b].append(btoa)
 
-    def add_edge(self, a, b, cost=-1, bi=False, rev=False):
-        if cost>=0:
-            self.edge[a].append((cost, b))
-            if rev: self.edge_rev[b].append((cost, a))
-            if bi: self.edge[b].append((cost, a))
-        else:
-            self.edge[a].append(b)
-            if rev: self.edge_rev[b].append(a)
-            if bi: self.edge[b].append(a)
-        if not bi: self.to[b] += 1
+    def add_edge(self, a, b, cost=None, ind=1, bi=False):
+        a -= ind; b -= ind
+        atob,btoa = (b,a) if cost is None else ((cost,b),(cost,a))
+        self.edge[a].append(atob)
+        if bi: self.edge[b].append(btoa)
 
-    def dfs_rec(self, v):
+    def dp_dfs_rec(self, v):
         if self.visited[v]: return self.dp[v]
         self.visited[v] = True
         for u in self.edge[v]:
-            self.dp[v] += self.dfs_rec(u)
+            # 行きがけ
+            self.dp[u] += self.dp[v]
+            # 帰りがけ
+            self.dp[v] += self.dp_dfs_rec(u)
         return self.dp[v]
-    
-    def dfs(self, s):
+
+    def dp_dfs(self, s):
+        # 根が分かっている場合
         que = deque([(-1,s)])
         visited = [False]*self.V
         while len(que):
-            w,v = que.pop()
+            p,v = que.pop()
             if visited[v]: continue
-            if w>=0:
-                self.dp[w] += self.dp[v]
+            if p >= 0:
+                # 帰りがけ（post_order）
+                self.dp[p] += self.dp[v]
             visited[v] = True
-            for u in self.edge[v]:
-                que.append((v,u))
+            for c in self.edge[v]:
+                que.append((v,c))
 
-    def topo_sort(self): #topological sort
+    def topo_sort(self):
+        # トポロジカルソート
         updated = [0]*self.V
         for start in range(self.V):
             if self.to[start] or updated[start]: continue
@@ -76,7 +66,9 @@ class Graph:
                     self.to[u] -= 1
                     if self.to[u]: continue
                     que.append(u)
-    def dp(self): #トポソしてから
+    def dfs_dp(self):
+        # 根が分かっていない場合、トポソしてorderを定めてからdpする
+        self.topo_sort()
         # self.dp = [0]*self.V
         #行きがけ
         for v in self.order:
@@ -140,7 +132,7 @@ class Graph:
                 heappush(que,(ndist,u))
         return -1
 
-    def bellman_ford(self, s):
+    def bellmanford(self, s):
         dist = [INF]*self.V
         dist[s] = 0
         for _ in range(self.V):

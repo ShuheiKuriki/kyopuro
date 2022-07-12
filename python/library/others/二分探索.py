@@ -1,12 +1,9 @@
-def binary_search(low, high, func, get_mini=True):
+def binary_search(low, high, get_mini=True):
     #求めるのが最大値か最小値かでokとngが反転
-    if get_mini:    ok, ng = high, low-1
-    else:           ok, ng = low, high+1
-
+    ok, ng = (high, low-1) if get_mini else (low, high+1)
     mid = (ok+ng)//2
     while abs(ok-ng)>1:
-        if func(mid):   ok = mid
-        else:           ng = mid
+        ok, ng = (mid, ng) if is_ok(mid) else (ok, mid)
         mid = (ok+ng)//2
     return ok
 
