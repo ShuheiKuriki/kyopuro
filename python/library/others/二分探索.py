@@ -13,5 +13,5 @@ def is_ok(target):
 
 # 単純に下限と上限を指定
 low, high = 2, 10**18
-res = binary_search(low,high,is_ok,get_mini=False)
+res = binary_search(low,high,get_mini=False)
 print(res)
