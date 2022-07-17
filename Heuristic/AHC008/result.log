@@ -1,0 +1,606 @@
+0000
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 32333333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0001
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1076389
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0002
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 4214286
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0003
+    Finished release [optimized] target(s) in 0.09s
+     Running `target\release\tester.exe python src.py`
+Score = 8681944
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0004
+    Finished release [optimized] target(s) in 0.10s
+     Running `target\release\tester.exe python src.py`
+Score = 27547619
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0005
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3016667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0006
+    Finished release [optimized] target(s) in 0.26s
+     Running `target\release\tester.exe python src.py`
+Score = 1689815
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0007
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3236111
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0008
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 11333333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0009
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 479167
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0010
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 8008333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0011
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3623457
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0012
+    Finished release [optimized] target(s) in 0.08s
+     Running `target\release\tester.exe python src.py`
+Score = 5616319
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0013
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 7233333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0014
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 1870833
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0015
+    Finished release [optimized] target(s) in 0.11s
+     Running `target\release\tester.exe python src.py`
+Score = 7233333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0016
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 4041667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0017
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1583333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0018
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 4293210
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0019
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 7277778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0020
+    Finished release [optimized] target(s) in 0.08s
+     Running `target\release\tester.exe python src.py`
+Score = 8083333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0021
+    Finished release [optimized] target(s) in 0.14s
+     Running `target\release\tester.exe python src.py`
+Score = 4705556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0022
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 5595238
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0023
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 2473177
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0024
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 1689815
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0025
+    Finished release [optimized] target(s) in 0.10s
+     Running `target\release\tester.exe python src.py`
+Score = 5108333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0026
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 4383333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0027
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 20951968
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0028
+    Finished release [optimized] target(s) in 0.11s
+     Running `target\release\tester.exe python src.py`
+Score = 1466049
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0029
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3630556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0030
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 1142857
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0031
+    Finished release [optimized] target(s) in 0.08s
+     Running `target\release\tester.exe python src.py`
+Score = 25626543
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0032
+    Finished release [optimized] target(s) in 0.08s
+     Running `target\release\tester.exe python src.py`
+Score = 6104167
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0033
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 8083333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0034
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1503255
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0035
+    Finished release [optimized] target(s) in 0.09s
+     Running `target\release\tester.exe python src.py`
+Score = 4041667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0036
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 32333333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0037
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 16923611
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0038
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 8465278
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0039
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2883333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0040
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3523810
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0041
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 555556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0042
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 16500000
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0043
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 3852778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0044
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 4061111
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0045
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 354167
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0046
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 7108025
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0047
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 17777778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0048
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1137153
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0049
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 28052083
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0050
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 17162066
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0051
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 6013021
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0052
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 22465278
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0053
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 10879630
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0054
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 9822917
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0055
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2696759
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0056
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1005556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0057
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2488426
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0058
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3320833
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0059
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 778356
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0060
+    Finished release [optimized] target(s) in 0.08s
+     Running `target\release\tester.exe python src.py`
+Score = 8641667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0061
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 3852778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0062
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 15581597
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0063
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 666667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0064
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 3523810
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0065
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 7055556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0066
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 19593750
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0067
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 8083333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0068
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 7277778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0069
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 872222
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0070
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2027778
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0071
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 17988889
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0072
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 442708
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0073
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 14555556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0074
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 22413194
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0075
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 613542
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0076
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 5666667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0077
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 29111111
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0078
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 14555556
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0079
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 17080247
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0080
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 6196429
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0081
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1842014
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0082
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2245833
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0083
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 2546875
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0084
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 802083
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0085
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 13738095
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0086
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 4861111
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0087
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 8888889
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0088
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 19593750
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0089
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 5037500
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0090
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 10601852
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0091
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 3523810
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0092
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 3434524
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0093
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 1010417
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0094
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 24785714
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0095
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 11071429
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0096
+    Finished release [optimized] target(s) in 0.07s
+     Running `target\release\tester.exe python src.py`
+Score = 8083333
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0097
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 6472222
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0098
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 4041667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0099
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 4891927
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument
+0100
+    Finished release [optimized] target(s) in 0.06s
+     Running `target\release\tester.exe python src.py`
+Score = 5666667
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='cp932'>
+OSError: [Errno 22] Invalid argument

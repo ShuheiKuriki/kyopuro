@@ -12,4 +12,13 @@ other/certificate.pdf
 other/mekko.py
 .DS_Store
 other/Atcodersheet.xlsx
-Heuristic/
+python/library/data_structure/bit_max.py
+# ヒューリスティック
+Heuristic/*/in/
+Heuristic/*/out/
+Heuristic/*/src/
+Heuristic/*/target/
+*.lock
+*.toml
+seeds.txt
+vis.html
