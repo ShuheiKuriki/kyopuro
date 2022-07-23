@@ -4,6 +4,7 @@ class Dinic:
         https://atcoder.github.io/ac-library/production/document_ja/maxflow.html
         dinic法の非再帰実装
         verify:https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
+        計算量O(EV^2) or O(min(n^(2/3)m,m^(3/2)))（辺の容量が全て1）
     """
     _INF = float("inf")
 
