@@ -1,9 +1,8 @@
-import random
+from random import *
 import sys
 from copy import deepcopy
-from tabnanny import check
 
-random.seed(1)
+seed(1)
 
 class Result:
 
@@ -17,41 +16,53 @@ class Solver:
     di = [1, 0, -1, 0]
     dj = [0, 1, 0, -1]
 
-    def __init__(self, N, K, C):
+    def __init__(self, N, K, C, LIM):
         self.N = N
         self.K = K
         self.C = C
-        self.LIM = K * 100
+        self.LIM = LIM
 
     def _move(self, lim):
         moves = []
-        while len(moves) < lim:
-            i, j = random.randint(0, self.N-1), random.randint(0, self.N-1)
-            if self.C[i][j] == 0: continue
-
-            v = random.randint(0, 3)
-            ni, nj = i + self.di[v], j + self.dj[v]
-            while 0 <= ni < self.N and 0 <= nj < self.N and self.C[ni][nj] == 0 and self._count(ni,nj,v) > self._count(i,j,v):
-                ni += self.di[v]; nj += self.dj[v]
-            if not (0 <= ni < self.N and 0 <= nj < self.N): continue
-            if self.C[ni][nj] != 0: continue
-
-            # コンピュータを移動
-            self.C[i][j], self.C[ni][nj] = 0, self.C[i][j]
-            moves.append([i, j, ni, nj])
-
+        t = 0
+        while t < 10:
+            for i in range(self.N):
+                for j in range(self.N):
+                    k = self.C[i][j]-1 # 移動させたい行のmod
+                    if k == -1: continue
+                    iK = i % self.K # 今いる場所
+                    if iK > k:
+                        if i+self.K > self.N-1 or iK - k < (k+self.K) - iK:
+                            v, l = 2, iK - k
+                        elif iK - k > (k+self.K) - iK:
+                            v, l = 0, (k+self.K) - iK
+                        else:
+                            v, l = randint(0,1)*2, iK - k
+                    elif iK < k:
+                        if i-self.K < 0 or k - iK < iK - (k-self.K):
+                            v, l = 0, k - iK
+                        elif k - iK > iK - (k-self.K):
+                            v, l = 2, iK - (k-self.K)
+                        else:
+                            v, l = randint(0,1)*2, k - iK
+                    else:
+                        continue
+                    for ll in range(1,l+1):
+                        ni, nj = i + self.di[v]*ll, j + self.dj[v]*ll
+                        if not (0 <= ni < self.N and 0 <= nj < self.N): break
+                        if self.C[ni][nj] != 0: break
+                    else:
+                        # コンピュータを移動
+                        ni, nj = i, j
+                        for _ in range(l):
+                            nni, nnj = ni + self.di[v], nj + self.dj[v]
+                            self.C[ni][nj], self.C[nni][nnj] = 0, self.C[ni][nj]
+                            moves.append([ni, nj, nni, nnj])
+                            ni, nj = nni, nnj
+                    if len(moves) >= lim:
+                        return moves
+            t += 1
         return moves
-
-    def _count(self, i, j, vv):
-        cnt = 0
-        for v in range(4):
-            if (v+2)%4==vv: continue
-            ni, nj = i+self.di[v], j+self.dj[v]
-            while 0 <= ni < self.N and 0 <= nj < self.N:
-                if self.C[ni][nj] == 0: ni += self.di[v]; nj += self.dj[v]; continue
-                cnt += self.C[ni][nj] == self.C[i][j]
-                break
-        return cnt
 
     def _connect(self, lim: int):
         connects = []
@@ -149,16 +160,38 @@ def print_answer(res: Result):
     for arr in res.connects: print(*arr)
 
 
+def binary_search(low, high, N, K, C, get_mini=True):
+    #求めるのが最大値か最小値かでokとngが反転
+    ok, ng = (high, low-1) if get_mini else (low, high+1)
+    mid = (ok+ng)//2
+    while abs(ok-ng)>1:
+        ok, ng = (mid, ng) if is_ok(mid, N, K, C) else (ok, mid)
+        mid = (ok+ng)//2
+    return ok
+
+
+#判定問題の条件を満たすときTrueを返す関数
+def is_ok(target, N, K, C):
+    check_solver = Solver(N, K, deepcopy(C), K*200)
+    res = check_solver.solve(target)
+    l = len(res.moves) + len(res.connects)
+    print(target, l, file=sys.stderr)
+    print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
+    return l < K * 103
+
+
 def main():
     N, K = map(int, input().split())
     C = [list(map(int, list(input()))) for _ in range(N)]
 
-    check_solver = Solver(N, K, deepcopy(C))
-    connects = check_solver._connect(check_solver.LIM)
-    con = len(connects)
+    LIM = K*100
+    # 単純に下限と上限を指定
+    low, high = 0, LIM
+    move_lim = binary_search(low,high,N,K,C,get_mini=False)
 
-    solver = Solver(N, K, deepcopy(C))
-    res = solver.solve(K*100-con)
+    solver = Solver(N, K, deepcopy(C), LIM)
+    res = solver.solve(move_lim)
+    print(move_lim, len(res.moves) + len(res.connects), file=sys.stderr)
     print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
 
     print_answer(res)
