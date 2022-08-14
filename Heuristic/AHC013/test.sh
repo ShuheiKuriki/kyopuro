@@ -6,7 +6,7 @@ function run() {
 }
 
 function run_multi() {
-    for i in $(seq 0 99); do
+    for i in $(seq 0 ${2}); do
         seed=`printf "%04d\n" "${i}"`
         echo ${seed}
         run ${1} ${seed}
@@ -28,15 +28,15 @@ function score() {
 }
 
 function run_all() {
-    file=$1
-    run_multi ${file} >& result_${file}.log
+    file=${1}
+    run_multi ${file} ${2} >& result_${file}.log
     score ${file}
 }
 
 if [ ${1} = "all" ];
 then
-    run_all first
-    run_all src
+    run_all first ${2}
+    run_all src ${2}
 else
     echo first
     run first ${1}
