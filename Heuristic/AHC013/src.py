@@ -32,7 +32,7 @@ class Solver:
                 for i in range(self.N):
                     for j in range(self.N):
                         if self.C[i][j] != c: continue
-                        if goals[c-1] == i % self.K == j % self.K: continue
+                        if goals[c-1] == i % self.K: continue
                         v, l = self._decide_move(i, j, goals)
                         for ll in range(1,l+1):
                             ni, nj = i + self.di[v]*ll, j + self.dj[v]*ll
@@ -71,11 +71,11 @@ class Solver:
     def _decide_move(self, i, j, goals):
         gmod = goals[self.C[i][j]-1] # 移動させたい行のmod
         lis = [i % self.K, j % self.K]
-        ij = randint(0,1)
+        ij = 0
         smod = lis[ij]
-        if smod == gmod:
-            ij ^= 1
-            smod = lis[ij]
+        # if smod == gmod:
+        #     ij ^= 1
+        #     smod = lis[ij]
         assert smod != gmod
         if smod > gmod:
             if i+self.K > self.N-1 or smod - gmod < (gmod+self.K) - smod:
