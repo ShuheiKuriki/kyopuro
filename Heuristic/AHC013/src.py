@@ -1,6 +1,7 @@
 from random import *
 import sys
 from copy import deepcopy
+from itertools import permutations
 
 seed(1)
 
@@ -24,45 +25,79 @@ class Solver:
 
     def _move(self, lim):
         moves = []
+        goals = self._find_best()
         t = 0
         while t < 10:
+            for c in range(1,self.K+1):
+                for i in range(self.N):
+                    for j in range(self.N):
+                        if self.C[i][j] != c: continue
+                        if goals[c-1] == i % self.K == j % self.K: continue
+                        v, l = self._decide_move(i, j, goals)
+                        for ll in range(1,l+1):
+                            ni, nj = i + self.di[v]*ll, j + self.dj[v]*ll
+                            if not (0 <= ni < self.N and 0 <= nj < self.N): break
+                            if self.C[ni][nj] != 0: break
+                        else:
+                            # コンピュータを移動
+                            ni, nj = i, j
+                            for _ in range(l):
+                                nni, nnj = ni + self.di[v], nj + self.dj[v]
+                                self.C[ni][nj], self.C[nni][nnj] = 0, self.C[ni][nj]
+                                moves.append([ni, nj, nni, nnj])
+                                ni, nj = nni, nnj
+                        if len(moves) >= lim:
+                            # print("t", t, file=sys.stderr)
+                            return moves
+            t += 1
+        # print("t", t, file=sys.stderr)
+        return moves
+
+    def _find_best(self):
+        min_dist = 10**10
+        res = []
+        for perm in permutations(range(self.K), r=self.K):
+            lis = list(perm)
+            dist = 0
             for i in range(self.N):
                 for j in range(self.N):
-                    k = self.C[i][j]-1 # 移動させたい行のmod
-                    if k == -1: continue
-                    iK = i % self.K # 今いる場所
-                    if iK > k:
-                        if i+self.K > self.N-1 or iK - k < (k+self.K) - iK:
-                            v, l = 2, iK - k
-                        elif iK - k > (k+self.K) - iK:
-                            v, l = 0, (k+self.K) - iK
-                        else:
-                            v, l = randint(0,1)*2, iK - k
-                    elif iK < k:
-                        if i-self.K < 0 or k - iK < iK - (k-self.K):
-                            v, l = 0, k - iK
-                        elif k - iK > iK - (k-self.K):
-                            v, l = 2, iK - (k-self.K)
-                        else:
-                            v, l = randint(0,1)*2, k - iK
-                    else:
-                        continue
-                    for ll in range(1,l+1):
-                        ni, nj = i + self.di[v]*ll, j + self.dj[v]*ll
-                        if not (0 <= ni < self.N and 0 <= nj < self.N): break
-                        if self.C[ni][nj] != 0: break
-                    else:
-                        # コンピュータを移動
-                        ni, nj = i, j
-                        for _ in range(l):
-                            nni, nnj = ni + self.di[v], nj + self.dj[v]
-                            self.C[ni][nj], self.C[nni][nnj] = 0, self.C[ni][nj]
-                            moves.append([ni, nj, nni, nnj])
-                            ni, nj = nni, nnj
-                    if len(moves) >= lim:
-                        return moves
-            t += 1
-        return moves
+                    m = lis[self.C[i][j]-1]
+                    dist += min(abs(i % self.K - m), abs(i % self.K - (m+self.K)), abs(i % self.K - (m-self.K)))
+            if dist < min_dist:
+                res = lis
+                min_dist = dist
+        return res
+        
+    def _decide_move(self, i, j, goals):
+        gmod = goals[self.C[i][j]-1] # 移動させたい行のmod
+        lis = [i % self.K, j % self.K]
+        ij = randint(0,1)
+        smod = lis[ij]
+        if smod == gmod:
+            ij ^= 1
+            smod = lis[ij]
+        assert smod != gmod
+        if smod > gmod:
+            if i+self.K > self.N-1 or smod - gmod < (gmod+self.K) - smod:
+                # 下の方が近い場合
+                v, l = ij + 2, smod - gmod
+            elif smod - gmod > (gmod+self.K) - smod:
+                # 上の方が近い場合
+                v, l = ij, (gmod+self.K) - smod
+            else:
+                # 同じ場合
+                v, l = ij + randint(0,1)*2, smod - gmod
+        elif smod < gmod:
+            if i-self.K < 0 or gmod - smod < smod - (gmod-self.K):
+                # 上の方が近い場合
+                v, l = ij, gmod - smod
+            elif gmod - smod > smod - (gmod-self.K):
+                # 下の方が近い場合
+                v, l = ij+2, smod - (gmod-self.K)
+            else:
+                # 同じ場合
+                v, l = ij + randint(0,1)*2, gmod - smod
+        return v,l
 
     def _connect(self, lim: int):
         connects = []
@@ -85,13 +120,15 @@ class Solver:
                     raise AssertionError()
                 ni += self.di[v]; nj += self.dj[v]
 
-        for i in range(self.N):
-            for j in range(self.N):
-                if self.C[i][j] in (0, self.USED): continue
-                for v in range(2):
-                    if can_connect(i, j, v):
-                        do_connect(i, j, v)
-                        if len(connects) >= lim: return connects
+        for c in range(1,self.K+1):
+            for i in range(self.N):
+                for j in range(self.N):
+                    # if self.C[i][j] in (0, self.USED): continue
+                    if self.C[i][j] != c: continue
+                    for v in range(2):
+                        if can_connect(i, j, v):
+                            do_connect(i, j, v)
+                            if len(connects) >= lim: return connects
         return connects
 
     def solve(self, move_lim):
@@ -175,8 +212,8 @@ def is_ok(target, N, K, C):
     check_solver = Solver(N, K, deepcopy(C), K*200)
     res = check_solver.solve(target)
     l = len(res.moves) + len(res.connects)
-    print(target, l, file=sys.stderr)
-    print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
+    # print(target, l, file=sys.stderr)
+    # print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
     return l < K * 103
 
 
@@ -191,7 +228,7 @@ def main():
 
     solver = Solver(N, K, deepcopy(C), LIM)
     res = solver.solve(move_lim)
-    print(move_lim, len(res.moves) + len(res.connects), file=sys.stderr)
+    print(K, move_lim, len(res.moves), len(res.connects), file=sys.stderr)
     print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
 
     print_answer(res)
