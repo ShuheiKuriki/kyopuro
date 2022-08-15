@@ -20,11 +20,12 @@ class Solver:
     di = [1, 0, -1, 0]
     dj = [0, 1, 0, -1]
 
-    def __init__(self, N, K, C, LIM, TIME_LIMIT=False):
+    def __init__(self, N, K, C, LIM, WIDTH, TIME_LIMIT=-1, MAX_STEP=-1, s_temp=-1, e_temp=-1):
         self.N = N
         self.K = K
         self.C = C
         self.LIM = LIM
+        self.WIDTH = WIDTH
         self.moves = []
         self.rev_moves = defaultdict(lambda: [])
         self.can_remove = [[0]*N for _ in range(N)]
@@ -32,7 +33,10 @@ class Solver:
         self.out_cnt = [[0]*N for _ in range(N)]
         self.move_check = defaultdict(lambda: 0)
         self.connects = []
-        if TIME_LIMIT: self.TIME_LIMIT = TIME_LIMIT
+        if TIME_LIMIT >= 0: self.TIME_LIMIT = TIME_LIMIT
+        if MAX_STEP >= 0: self.max_step = MAX_STEP
+        if s_temp >= 0: self.s_temp = s_temp
+        if e_temp >= 0: self.e_temp = e_temp
 
     def solve(self, move_lim, hill=False):
 
@@ -114,41 +118,89 @@ class Solver:
                                 ni, nj = nni, nnj
                         if len(self.moves) >= lim:
                             # print("t", t, file=sys.stderr)
-                            return self.moves
+                            return
             t += 1
         # print("t", t, file=sys.stderr)
-        return self.moves
+        return
 
     def _connect(self, lim: int):
 
-        def can_connect(i, j, v):
-            ni, nj = i + self.di[v], j + self.dj[v]
-            while ni < self.N and nj < self.N:
-                if self.C[ni][nj] == 0: ni += self.di[v]; nj += self.dj[v]; continue
-                return self.C[ni][nj] == self.C[i][j]
-            return False
-
-        def do_connect(i, j, v):
-            ni, nj = i + self.di[v], j + self.dj[v]
-            while ni < self.N and nj < self.N:
-                if self.C[ni][nj] == 0:
-                    self.C[ni][nj] = self.USED
-                elif self.C[ni][nj] == self.C[i][j]:
-                    self.connects.append((i, j, ni, nj)); return
-                else:
-                    raise AssertionError()
-                ni += self.di[v]; nj += self.dj[v]
-
+        f = lambda i,j: i*self.N+j 
+        uf = UnionFind(self.N*self.N)
         for c in range(1,self.K+1):
+            row = [[j for j in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for i in range(self.N)]
+            col = [[i for i in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for j in range(self.N)]
             for i in range(self.N):
-                for j in range(self.N):
-                    # if self.C[i][j] in (0, self.USED): continue
-                    if self.C[i][j] != c: continue
-                    for v in range(2):
-                        if can_connect(i, j, v):
-                            do_connect(i, j, v)
-                            if len(self.connects) >= lim: return self.connects
-        return self.connects
+                for j1,j2 in zip(row[i][:-1],row[i][1:]):
+                    c1, c2 = self.C[i][j1], self.C[i][j2]
+                    if c1 > self.K: c1 -= self.K
+                    if c2 > self.K: c2 -= self.K
+                    if c1 != c2 or c1 != c: continue
+                    if self.USED in self.C[i][j1+1:j2]: continue
+                    if uf.same(f(i,j1), f(i,j2)): continue
+                    uf.union(f(i,j1), f(i,j2))
+                    self.C[i][j1+1:j2] = [self.USED]*(j2-(j1+1))
+                    self.connects.append((i,j1,i,j2))
+                    if len(self.connects) == lim: return
+            for j in range(self.N):
+                for i1,i2 in zip(col[j][:-1],col[j][1:]):
+                    c1, c2 = self.C[i1][j], self.C[i2][j]
+                    if c1 > self.K: c1 -= self.K
+                    if c2 > self.K: c2 -= self.K
+                    if c1 != c2 or c1 != c: continue
+                    if self.USED in [self.C[k][j] for k in range(i1+1,i2)]: continue
+                    if uf.same(f(i1,j), f(i2,j)): continue
+                    uf.union(f(i1,j), f(i2,j))
+                    for k in range(i1+1,i2): self.C[k][j] = self.USED
+                    self.connects.append((i1,j,i2,j))
+                    if len(self.connects) == lim: return
+            for i in range(self.N):
+                for j1,j2,j3 in zip(row[i][:-2],row[i][1:-1],row[i][2:]):
+                    c1, c2, c3 = self.C[i][j1], self.C[i][j2], self.C[i][j3]
+                    if c1 > self.K: c1 -= self.K
+                    if c2 > self.K: c2 -= self.K
+                    if c3 > self.K: c3 -= self.K
+                    if c1 != c: continue
+                    if c2 == c: continue
+                    if not 1 <= c2 <= self.K: continue
+                    if c3 != c: continue
+                    if self.USED in self.C[i][j1:j3]: continue
+                    if uf.same(f(i,j1),f(i,j2)) or uf.same(f(i,j1),f(i,j3)): continue
+                    s1, s2, s3 = uf.size(f(i,j1)), uf.size(f(i,j2)), uf.size(f(i,j3))
+                    if len(self.connects) >= lim-1: break
+                    if s1*s3 > s2*(s1+s3):
+                        self.connects.append((i,j1,i,j2))
+                        uf.union(f(i,j1),f(i,j2))
+                        self.C[i][j1+1:j3] = [self.USED]*(j3-(j1+1))
+                        self.connects.append((i,j2,i,j3))
+                        uf.union(f(i,j2),f(i,j3))
+                        self.C[i][j2+1:j3] = [self.USED]*(j3-(j2+1))
+                        self.C[i][j2] = self.K + c
+                        if len(self.connects) == lim: return
+            for j in range(self.N):
+                for i1,i2,i3 in zip(col[j][:-2],col[j][1:-1],col[j][2:]):
+                    c1, c2, c3 = self.C[i1][j], self.C[i2][j], self.C[i3][j]
+                    if c1 > self.K: c1 -= self.K
+                    if c2 > self.K: c2 -= self.K
+                    if c3 > self.K: c3 -= self.K
+                    if c1 != c: continue
+                    if c2 == c: continue
+                    if not 1 <= c2 <= self.K: continue
+                    if c3 != c: continue
+                    if self.USED in [self.C[k][j] for k in range(i1,i3)]: continue
+                    if uf.same(f(i1,j),f(i2,j)) or uf.same(f(i1,j),f(i3,j)): continue
+                    s1, s2, s3 = uf.size(f(i1,j)), uf.size(f(i2,j)), uf.size(f(i3,j))
+                    if len(self.connects) >= lim-1: break
+                    if s1*s3 > s2*(s1+s3):
+                        self.connects.append((i1,j,i2,j))
+                        uf.union(f(i1,j),f(i2,j))
+                        for k in range(i1+1,i2): self.C[k][j] = self.USED
+                        self.connects.append((i2,j,i3,j))
+                        uf.union(f(i2,j),f(i3,j))
+                        for k in range(i2+1,i3): self.C[k][j] = self.USED
+                        self.C[i2][j] = self.K + c
+                        if len(self.connects) == lim: return
+        return
 
     def _hill_climb(self):
 
@@ -193,7 +245,7 @@ class Solver:
             return diff, i, j, old_i, old_j
 
         def eval(i, j):
-            width = 3
+            width = self.WIDTH
             il, ir = max(0,i-width), min(self.N-1,i+width)
             jl, jr = max(0,j-width), min(self.N-1,j+width)
             score = 0
@@ -215,10 +267,7 @@ class Solver:
 
         global start
         update = 0
-        s_temp, e_temp = 0.5, 0.1
-        max_step = 20000
-        diff = 0
-        for step in range(max_step):
+        for step in range(self.max_step):
             if step % 1000 == 0:
                 now = time()-start
                 print(step, update, file=sys.stderr)
@@ -235,9 +284,10 @@ class Solver:
                 self._undo_move(add_ni, add_nj, add_i, add_j, last=False)
                 continue
 
-            temp = (s_temp*(max_step-step)+e_temp*step)/max_step
+            temp = (self.s_temp*(self.max_step-step)+self.e_temp*step)/self.max_step
             diff = del_diff + add_diff
-            if diff > 0 or exp((diff-2)/temp) > random():
+
+            if diff > 0 or (temp > 0 and exp((diff-1)/temp) > random()):
             # if diff > 0:
                 # 遷移を採用する
                 update += 1
@@ -299,8 +349,12 @@ class UnionFind():
     def same(self, x, y):
         return self.find(x) == self.find(y)
 
+    def size(self,x):
+        return abs(self.parents[self.find(x)])
+
 
 def calc_score(N, K, C, res: Result):
+    assert len(res.moves) + len(res.connects) <= K*100
     # 計算量O(10^5)
     for v in res.moves:
         i, j, ni, nj = v
@@ -339,16 +393,16 @@ def print_answer(res: Result):
     for arr in res.connects: print(*arr)
 
 
-def binary_search(low, high, N, K, C, get_mini=True):
+def binary_search(low, high, N, K, C, WIDTH, get_mini=True):
 
     #判定問題の条件を満たすときTrueを返す関数
     def is_ok(target, N, K, C):
-        check_solver = Solver(N, K, deepcopy(C), K*200)
+        check_solver = Solver(N, K, deepcopy(C), K*200, WIDTH)
         res = check_solver.solve(target)
         l = len(res.moves) + len(res.connects)
         # print(target, l, file=sys.stderr)
         # print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
-        return l < K * 120
+        return l < K * 110
 
     #求めるのが最大値か最小値かでokとngが反転
     ok, ng = (high, low-1) if get_mini else (low, high+1)
@@ -364,12 +418,15 @@ def main():
     C = [list(map(int, list(input()))) for _ in range(N)]
 
     LIM = K*100
+    WIDTH = 5
     # 単純に下限と上限を指定
     low, high = 0, LIM
-    move_lim = binary_search(low,high,N,K,C,get_mini=False)
+    move_lim = binary_search(low,high,N,K,C,WIDTH,get_mini=False)
 
     TIME_LIMIT = 2.3
-    solver = Solver(N, K, deepcopy(C), LIM, TIME_LIMIT)
+    MAX_STEP = 0
+    s_temp, e_temp = 0, 0
+    solver = Solver(N, K, deepcopy(C), LIM, WIDTH, TIME_LIMIT, MAX_STEP, s_temp, e_temp)
     res = solver.solve(move_lim, hill=True)
     print(K, move_lim, len(res.moves), len(res.connects), file=sys.stderr)
     print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
