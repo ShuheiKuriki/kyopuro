@@ -4,6 +4,7 @@ from copy import deepcopy
 from itertools import permutations
 from collections import defaultdict
 from time import time
+from math import exp
 
 seed(1)
 
@@ -161,12 +162,10 @@ class Solver:
                         or self.C[i][j] == 0 or self.C[ni][nj] != 0:
                     i, j, v = randint(0,self.N-1), randint(0,self.N-1), randint(0,3)
                     ni, nj = i + self.di[v], j + self.dj[v]
-                il, ir = max(0,i-5), min(self.N-1,i+5)
-                jl, jr = max(0,j-5), min(self.N-1,j+5)
-                bef_score = eval(il, ir, jl, jr)
+                bef_score = eval(i, j)
                 self._move_computer(i, j, ni, nj)
-                aft_score = eval(il, ir, jl, jr)
-                if aft_score > bef_score:
+                aft_score = eval(i, j)
+                if aft_score >= bef_score:
                     diff = aft_score - bef_score
                     return diff, i, j, ni, nj
                 else:
@@ -186,16 +185,17 @@ class Solver:
                 break
             else:
                 raise Exception
-            il, ir = max(0,i-5), min(self.N-1,i+5)
-            jl, jr = max(0,j-5), min(self.N-1,j+5)
-            bef_score = eval(il, ir, jl, jr)
+            bef_score = eval(i, j)
             # print(i,j,old_i,old_j,file=sys.stderr)
             self._undo_move(i, j, old_i, old_j, last=False)
-            aft_score = eval(il, ir, jl, jr)
+            aft_score = eval(i, j)
             diff = aft_score - bef_score
             return diff, i, j, old_i, old_j
 
-        def eval(il, ir, jl, jr):
+        def eval(i, j):
+            width = 3
+            il, ir = max(0,i-width), min(self.N-1,i+width)
+            jl, jr = max(0,j-width), min(self.N-1,j+width)
             score = 0
             for i in range(il,ir+1):
                 for j in range(jl,jr+1):
@@ -214,13 +214,14 @@ class Solver:
             return score
 
         global start
-        trial = update = 0
-        while trial <= 10000:
-            
-            trial += 1
-            if trial % 1000 == 0:
+        update = 0
+        s_temp, e_temp = 0.5, 0.1
+        max_step = 20000
+        diff = 0
+        for step in range(max_step):
+            if step % 1000 == 0:
                 now = time()-start
-                print(trial, update, file=sys.stderr)
+                print(step, update, file=sys.stderr)
                 if now >= self.TIME_LIMIT: break
 
             try:
@@ -234,11 +235,16 @@ class Solver:
                 self._undo_move(add_ni, add_nj, add_i, add_j, last=False)
                 continue
 
-            if add_diff + del_diff < 0:
-                self._undo_move(add_ni, add_nj, add_i, add_j, last=False)
-                self._move_computer(del_oi, del_oj, del_i, del_j)
-            else:
+            temp = (s_temp*(max_step-step)+e_temp*step)/max_step
+            diff = del_diff + add_diff
+            if diff > 0 or exp((diff-2)/temp) > random():
+            # if diff > 0:
+                # 遷移を採用する
                 update += 1
+            else:
+                # 遷移を取り消す
+                self._move_computer(del_oi, del_oj, del_i, del_j)
+                self._undo_move(add_ni, add_nj, add_i, add_j, last=False)
         return
 
     def _move_computer(self, i, j, ni, nj):
@@ -258,8 +264,10 @@ class Solver:
             self.moves.pop()
             self.rev_moves[(ni, nj)].pop()
         else:
-            # print(i,j,ni,nj,file=sys.stderr)
-            # print(self.moves, self.rev_moves, file=sys.stderr)
+            if (i,j,ni,nj) not in self.moves:
+                print(i,j,ni,nj,file=sys.stderr)
+                print(self.moves, self.rev_moves, file=sys.stderr)
+                pass
             self.moves.remove((i, j, ni, nj))
             self.rev_moves[(ni, nj)].remove((i, j))
         self.move_check[(i,j,ni,nj)] = 0
@@ -340,7 +348,7 @@ def binary_search(low, high, N, K, C, get_mini=True):
         l = len(res.moves) + len(res.connects)
         # print(target, l, file=sys.stderr)
         # print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
-        return l < K * 103
+        return l < K * 120
 
     #求めるのが最大値か最小値かでokとngが反転
     ok, ng = (high, low-1) if get_mini else (low, high+1)
@@ -360,7 +368,7 @@ def main():
     low, high = 0, LIM
     move_lim = binary_search(low,high,N,K,C,get_mini=False)
 
-    TIME_LIMIT = 10
+    TIME_LIMIT = 2.3
     solver = Solver(N, K, deepcopy(C), LIM, TIME_LIMIT)
     res = solver.solve(move_lim, hill=True)
     print(K, move_lim, len(res.moves), len(res.connects), file=sys.stderr)
