@@ -6,10 +6,14 @@ function run() {
 }
 
 function run_multi() {
-    for i in $(seq 0 ${2}); do
+    for i in $(seq 0 ${1}); do
         seed=`printf "%04d\n" "${i}"`
         echo ${seed}
-        run ${1} ${seed}
+        echo "src"
+        run "src" ${seed}
+        echo "first"
+        run "first" ${seed}
+        echo 
     done
 }
 
@@ -19,27 +23,22 @@ function score() {
     while read line
     do
         # echo $line
-        if [[ "$line" =~ "Score = " ]]; then
+        if [[ "$line" =~ "${file}_score = " ]]; then
             s=`echo ${line} | sed -r "s/Score = //"`
             score=$((score+s))
         fi
-    done < result_${file}.log
+    done < result.log
     echo "${file} ${score}" | tee -a scores.log
-}
-
-function run_all() {
-    file=${1}
-    run_multi ${file} ${2} >& result_${file}.log
-    score ${file}
 }
 
 if [ ${1} = "all" ];
 then
-    run_all first ${2}
-    run_all src ${2}
+    run_multi ${2} >& result.log
+    score "src"
+    score "first"
 else
-    echo first
-    run first ${1}
-    echo src
-    run src ${1}
+    echo "first"
+    run "first" ${1}
+    echo "src"
+    run "src" ${1}
 fi
