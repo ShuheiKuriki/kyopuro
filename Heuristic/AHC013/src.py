@@ -20,7 +20,7 @@ class Solver:
     di = [1, 0, -1, 0]
     dj = [0, 1, 0, -1]
 
-    def __init__(self, N, K, C, LIM, WIDTH, TIME_LIMIT=-1, MAX_STEP=-1, s_temp=-1, e_temp=-1):
+    def __init__(self, N, K, C, LIM, WIDTH, start=-1, TIME_LIMIT=-1, MAX_STEP=-1, s_temp=-1, e_temp=-1):
         self.N = N
         self.K = K
         self.C = C
@@ -33,6 +33,8 @@ class Solver:
         self.out_cnt = [[0]*N for _ in range(N)]
         self.move_check = defaultdict(lambda: 0)
         self.connects = []
+        self.src_ord = list(range(1,K+1))
+        if start >= 0: self.start = start
         if TIME_LIMIT >= 0: self.TIME_LIMIT = TIME_LIMIT
         if MAX_STEP >= 0: self.max_step = MAX_STEP
         if s_temp >= 0: self.s_temp = s_temp
@@ -42,28 +44,34 @@ class Solver:
 
         self._move(move_lim)
 
-        if hill: self._hill_climb()
+        step = update = 0
+
+        if hill: step, update = self._hill_climb()
         
         self._connect(self.LIM - len(self.moves))
 
-        return Result(self.moves, self.connects)
+        return step, update, Result(self.moves, self.connects)
 
     def _move(self, lim):
 
         def find_best():
             min_dist = 10**10
-            res = []
             for perm in permutations(range(self.K), r=self.K):
                 lis = list(perm)
-                dist = 0
+                dists = [0]*self.K
                 for i in range(self.N):
                     for j in range(self.N):
-                        m = lis[self.C[i][j]-1]
-                        dist += min(abs(i % self.K - m), abs(i % self.K - (m+self.K)), abs(i % self.K - (m-self.K)))
-                if dist < min_dist:
-                    res = lis
-                    min_dist = dist
-            return res
+                        c = self.C[i][j]
+                        if c == 0: continue
+                        c -= 1
+                        m = lis[c]
+                        dists[c] += min(abs(i % self.K - m), abs(i % self.K - (m+self.K)), abs(i % self.K - (m-self.K)))
+                if sum(dists) < min_dist:
+                    best_goals = lis[:]
+                    min_dist = sum(dists)
+                    min_dists = dists[:]
+            src_ord = list(map(lambda x:x[1], sorted((d,i+1) for i,d in enumerate(min_dists))))
+            return best_goals, src_ord
 
         def decide_move(i, j, goals):
             gmod = goals[self.C[i][j]-1] # 移動させたい行のmod
@@ -96,10 +104,11 @@ class Solver:
                     v, l = ij + randint(0,1)*2, gmod - smod
             return v,l
 
-        goals = find_best()
+        goals, src_ord = find_best()
+        self.src_ord = src_ord
         t = 0
         while t < 10:
-            for c in range(1,self.K+1):
+            for c in self.src_ord:
                 for i in range(self.N):
                     for j in range(self.N):
                         if self.C[i][j] != c: continue
@@ -127,7 +136,7 @@ class Solver:
 
         f = lambda i,j: i*self.N+j 
         uf = UnionFind(self.N*self.N)
-        for c in range(1,self.K+1):
+        for c in self.src_ord:
             row = [[j for j in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for i in range(self.N)]
             col = [[i for i in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for j in range(self.N)]
             for i in range(self.N):
@@ -265,12 +274,10 @@ class Solver:
             # print(il,ir,jl,jr,score,file=sys.stderr)
             return score
 
-        global start
         update = 0
         for step in range(self.max_step):
-            if step % 1000 == 0:
-                now = time()-start
-                print(step, update, file=sys.stderr)
+            if step % 100 == 0:
+                now = time()-self.start
                 if now >= self.TIME_LIMIT: break
 
             try:
@@ -295,7 +302,7 @@ class Solver:
                 # 遷移を取り消す
                 self._move_computer(del_oi, del_oj, del_i, del_j)
                 self._undo_move(add_ni, add_nj, add_i, add_j, last=False)
-        return
+        return step, update
 
     def _move_computer(self, i, j, ni, nj):
         self.C[i][j], self.C[ni][nj] = 0, self.C[i][j]
@@ -314,10 +321,6 @@ class Solver:
             self.moves.pop()
             self.rev_moves[(ni, nj)].pop()
         else:
-            if (i,j,ni,nj) not in self.moves:
-                print(i,j,ni,nj,file=sys.stderr)
-                print(self.moves, self.rev_moves, file=sys.stderr)
-                pass
             self.moves.remove((i, j, ni, nj))
             self.rev_moves[(ni, nj)].remove((i, j))
         self.move_check[(i,j,ni,nj)] = 0
@@ -359,8 +362,6 @@ def calc_score(N, K, C, res: Result):
     for v in res.moves:
         i, j, ni, nj = v
         # print(v, file=sys.stderr)
-        if not (1 <= C[i][j] <= K):
-            print(v,C[i][j],file=sys.stderr)
         assert 1 <= C[i][j] <= K
         assert C[ni][nj] == 0
         C[ni][nj], C[i][j] = C[i][j], 0
@@ -393,24 +394,24 @@ def print_answer(res: Result):
     for arr in res.connects: print(*arr)
 
 
-def binary_search(low, high, N, K, C, WIDTH, get_mini=True):
+def move_lim_search(N, K, C, WIDTH):
 
-    #判定問題の条件を満たすときTrueを返す関数
-    def is_ok(target, N, K, C):
-        check_solver = Solver(N, K, deepcopy(C), K*200, WIDTH)
-        res = check_solver.solve(target)
-        l = len(res.moves) + len(res.connects)
-        # print(target, l, file=sys.stderr)
-        # print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
-        return l < K * 110
-
-    #求めるのが最大値か最小値かでokとngが反転
-    ok, ng = (high, low-1) if get_mini else (low, high+1)
-    mid = (ok+ng)//2
-    while abs(ok-ng)>1:
-        ok, ng = (mid, ng) if is_ok(mid, N, K, C) else (ok, mid)
-        mid = (ok+ng)//2
-    return ok
+    LIM = K*100
+    best_score = 0
+    for move_lim in range(K*5, LIM+1, K*5):
+        search_solver = Solver(N, K, deepcopy(C), LIM, WIDTH)
+        _, _, res = search_solver.solve(move_lim)
+        move_l, con_l = len(res.moves), len(res.connects)
+        score = calc_score(N, K, deepcopy(C), res)
+        print(f"move_lim = {move_lim}, total_l = {move_l + con_l}, move_l = {move_l}, con_l = {con_l}, score = {score}", file=sys.stderr)
+        if score > best_score:
+            best_score = score
+            best_lim = move_lim
+            best_res = res
+    print(file=sys.stderr)
+    print(f"best_lim = {best_lim}, best_score = {best_score}", file=sys.stderr)
+    print(file=sys.stderr)
+    return best_lim, best_score, best_res
 
 
 def main():
@@ -419,21 +420,56 @@ def main():
 
     LIM = K*100
     WIDTH = 5
-    # 単純に下限と上限を指定
-    low, high = 0, LIM
-    move_lim = binary_search(low,high,N,K,C,WIDTH,get_mini=False)
 
-    TIME_LIMIT = 2.3
-    MAX_STEP = 0
+    move_lim, search_score, search_res = move_lim_search(N,K,C,WIDTH)
+
+    TIME_LIMIT = 2
+    MAX_STEP = 100000
+
+    hill = 3
+    temps = [0.0001, 0.0004, 0.001, 0.004, 0.01, 0.04, 0.1]
+    L = hill + len(temps)
+    # 山登り
+    hill_score = 0
     s_temp, e_temp = 0, 0
-    solver = Solver(N, K, deepcopy(C), LIM, WIDTH, TIME_LIMIT, MAX_STEP, s_temp, e_temp)
-    res = solver.solve(move_lim, hill=True)
-    print(K, move_lim, len(res.moves), len(res.connects), file=sys.stderr)
-    print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
+    for _ in range(hill):
+        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / L, MAX_STEP, s_temp, e_temp)
+        step, upd, res = solver.solve(move_lim, hill=True)
+        score = calc_score(N, K, deepcopy(C), res)
+        print(f"s_temp = {s_temp}, e_temp = {e_temp}, step = {step}, update = {upd}, score = {score}", file=sys.stderr)
+        if score > hill_score:
+            hill_score = score
+            hill_res = res
+    print(file=sys.stderr)
+
+    # 焼き鈍し
+    anneal_score = 0
+    for temp in temps:
+        s_temp, e_temp = temp*5, temp
+        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / L, MAX_STEP, s_temp, e_temp)
+        step, upd, res = solver.solve(move_lim, hill=True)
+        score = calc_score(N, K, deepcopy(C), res)
+        print(f"s_temp = {s_temp}, e_temp = {e_temp}, step = {step}, update = {upd}, score = {score}", file=sys.stderr)
+        if score > anneal_score:
+            anneal_score = score
+            anneal_res = res
+
+    print(file=sys.stderr)
+    print(f"search_score = {search_score}, hill_score = {hill_score}, anneal_score = {anneal_score}", file=sys.stderr)
+
+    max_score = max(search_score, hill_score, anneal_score)
+    if search_score == max_score: res = search_res
+    if hill_score == max_score: res = hill_res
+    if anneal_score == max_score: res = anneal_res
+
+    print(file=sys.stderr)
+    print(f"src_ord = {solver.src_ord}",file=sys.stderr)
+    print(f"K = {K}, move_l = {len(res.moves)}, con_l = {len(res.connects)}", file=sys.stderr)
+    print(f"src_score = {max_score}", file=sys.stderr)
+    print(file=sys.stderr)
 
     print_answer(res)
 
 
 if __name__ == "__main__":
-    start = time()
     main()
