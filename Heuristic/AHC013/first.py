@@ -1,6 +1,7 @@
 import random
 import sys
 from copy import deepcopy
+from random import randint
 
 random.seed(1)
 
@@ -27,10 +28,10 @@ class Solver:
         moves = []
         for _ in range(lim):
 
-            i, j = random.randint(0, self.N-1), random.randint(0, self.N-1)
+            i, j = randint(0, self.N-1), randint(0, self.N-1)
             if self.C[i][j] == 0: continue
 
-            v = random.randint(0, 3)
+            v = randint(0, 3)
             ni, nj = i + self.di[v], j + self.dj[v]
             if not (0 <= ni < self.N and 0 <= nj < self.N): continue
             if self.C[ni][nj] != 0: continue
@@ -159,7 +160,7 @@ def main():
 
     solver = Solver(N, K, deepcopy(C))
     res = solver.solve()
-    print(f"Score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
+    print(f"first_score = {calc_score(N, K, deepcopy(C), res)}", file=sys.stderr)
 
     print_answer(res)
 
