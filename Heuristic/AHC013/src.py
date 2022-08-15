@@ -5,6 +5,7 @@ from itertools import permutations
 from collections import defaultdict
 from time import time
 from math import exp
+from itertools import groupby
 
 seed(1)
 
@@ -134,81 +135,128 @@ class Solver:
 
     def _connect(self, lim: int):
 
-        f = lambda i,j: i*self.N+j 
-        uf = UnionFind(self.N*self.N)
+        f = lambda i,j: i*self.N+j
+        rle = lambda s: [(gs[0], len(list(gs[1]))) for gs in groupby(s)]
+
+        uf = UnionFind(self.N*self.N, self.K)
+
+        rrle = [rle(self.C[i][j] for j in range(self.N) if 1 <= self.C[i][j] <= self.K) for i in range(self.N)]
+        crle = [rle(self.C[i][j] for i in range(self.N) if 1 <= self.C[i][j] <= self.K) for j in range(self.N)]
+
+        cnts = [0]*(self.K+1)
+        for i in range(self.N):
+            for k,v in rrle[i]: cnts[k] += v-1        
+        for j in range(self.N):
+            for k,v in crle[j]: cnts[k] += v-1
+        cnts = sorted((c,i+1) for i,c in enumerate(cnts[1:]))[::-1]
+        self.src_ord = [c for _,c in cnts]
+
+        def connect_dots(i1,j1,i2,j2,c,assertion=True):
+            lj, rj = min(j1,j2)+1, max(j1,j2)
+            li, ri = min(i1,i2)+1, max(i1,i2)
+            if assertion:
+                c1, c2 = self.C[i1][j1], self.C[i2][j2]
+                if c1 > self.K: c1 -= self.K
+                if c2 > self.K: c2 -= self.K
+                if c1 != c2 or c1 != c: raise AssertionError
+                lis = self.C[i1][lj:rj] if i1 == i2 else [self.C[i][j1] for i in range(li,ri)]
+                if self.USED in lis: raise AssertionError
+                if uf.same(f(i1,j1), f(i2,j2)): raise AssertionError
+            uf.union(f(i1,j1), f(i2,j2))
+            self.connects.append((i1,j1,i2,j2))
+            if i1 == i2:
+                for j in range(lj,rj): self.C[i1][j] = self.USED
+            else:
+                for i in range(li,ri): self.C[i][j1] = self.USED
+
+        def build_bridge(i1,j1,i2,j2,i3,j3,c):
+            if len(self.connects) >= lim-1: raise AssertionError
+            c1, c2, c3 = self.C[i1][j1], self.C[i2][j2], self.C[i3][j3]
+            if c1 > self.K: c1 -= self.K
+            if c2 > self.K: c2 -= self.K
+            if c3 > self.K: c3 -= self.K
+            if c1 != c or c2 in [self.USED,0,c] or c3 != c: raise AssertionError
+            lis1 = self.C[i1][min(j1,j2)+1:max(j1,j2)] if i1 == i2 else [self.C[i][j1] for i in range(min(i1,i2)+1,max(i1,i2))]
+            lis2 = self.C[i2][min(j2,j3)+1:max(j2,j3)] if i2 == i3 else [self.C[i][j2] for i in range(min(i2,i3)+1,max(i2,i3))]
+            if self.USED in lis1 + lis2: raise AssertionError
+            if uf.same(f(i1,j1), f(i2,j2)) or uf.same(f(i1,j1), f(i3,j3)): raise AssertionError
+            s1, s2, s3 = uf.size(f(i1,j1)), uf.size(f(i2,j2)), uf.size(f(i3,j3))
+            d1, d2, d3 = uf.get_dummy(f(i1,j1)), uf.get_dummy(f(i2,j2)), uf.get_dummy(f(i3,j3))
+            n1, n2, n3 = s1-d1, s2-d2, s3-d3
+            if n1*n3 > s2*(n1+n3):
+                connect_dots(i1,j1,i2,j2,c,assertion=False)
+                connect_dots(i2,j2,i3,j3,c,assertion=False)
+                if self.C[i2][j2] <= self.K:
+                    uf.set_dummy(f(i2,j2), 1)
+                    self.C[i2][j2] = self.K + c
+
         for c in self.src_ord:
             row = [[j for j in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for i in range(self.N)]
             col = [[i for i in range(self.N) if 1 <= self.C[i][j] <= self.K*2] for j in range(self.N)]
+
             for i in range(self.N):
                 for j1,j2 in zip(row[i][:-1],row[i][1:]):
-                    c1, c2 = self.C[i][j1], self.C[i][j2]
-                    if c1 > self.K: c1 -= self.K
-                    if c2 > self.K: c2 -= self.K
-                    if c1 != c2 or c1 != c: continue
-                    if self.USED in self.C[i][j1+1:j2]: continue
-                    if uf.same(f(i,j1), f(i,j2)): continue
-                    uf.union(f(i,j1), f(i,j2))
-                    self.C[i][j1+1:j2] = [self.USED]*(j2-(j1+1))
-                    self.connects.append((i,j1,i,j2))
+                    try:
+                        connect_dots(i,j1,i,j2,c)
+                    except AssertionError:
+                        continue
                     if len(self.connects) == lim: return
+
             for j in range(self.N):
                 for i1,i2 in zip(col[j][:-1],col[j][1:]):
-                    c1, c2 = self.C[i1][j], self.C[i2][j]
-                    if c1 > self.K: c1 -= self.K
-                    if c2 > self.K: c2 -= self.K
-                    if c1 != c2 or c1 != c: continue
-                    if self.USED in [self.C[k][j] for k in range(i1+1,i2)]: continue
-                    if uf.same(f(i1,j), f(i2,j)): continue
-                    uf.union(f(i1,j), f(i2,j))
-                    for k in range(i1+1,i2): self.C[k][j] = self.USED
-                    self.connects.append((i1,j,i2,j))
+                    try:
+                        connect_dots(i1,j,i2,j,c)
+                    except AssertionError:
+                        continue
                     if len(self.connects) == lim: return
+
             for i in range(self.N):
                 for j1,j2,j3 in zip(row[i][:-2],row[i][1:-1],row[i][2:]):
-                    c1, c2, c3 = self.C[i][j1], self.C[i][j2], self.C[i][j3]
-                    if c1 > self.K: c1 -= self.K
-                    if c2 > self.K: c2 -= self.K
-                    if c3 > self.K: c3 -= self.K
-                    if c1 != c: continue
-                    if c2 == c: continue
-                    if not 1 <= c2 <= self.K: continue
-                    if c3 != c: continue
-                    if self.USED in self.C[i][j1:j3]: continue
-                    if uf.same(f(i,j1),f(i,j2)) or uf.same(f(i,j1),f(i,j3)): continue
-                    s1, s2, s3 = uf.size(f(i,j1)), uf.size(f(i,j2)), uf.size(f(i,j3))
-                    if len(self.connects) >= lim-1: break
-                    if s1*s3 > s2*(s1+s3):
-                        self.connects.append((i,j1,i,j2))
-                        uf.union(f(i,j1),f(i,j2))
-                        self.C[i][j1+1:j3] = [self.USED]*(j3-(j1+1))
-                        self.connects.append((i,j2,i,j3))
-                        uf.union(f(i,j2),f(i,j3))
-                        self.C[i][j2+1:j3] = [self.USED]*(j3-(j2+1))
-                        self.C[i][j2] = self.K + c
+                    try:
+                        build_bridge(i,j1,i,j2,i,j3,c)
+                    except AssertionError:
+                        pass
+                    else:
                         if len(self.connects) == lim: return
+
+                    ind = col[j2].index(i)
+
+                    if ind > 0:
+                        i1 = col[j2][ind-1]
+                        try:
+                            build_bridge(i,j1,i,j2,i1,j2,c)
+                        except AssertionError:
+                            pass
+                        else:
+                            if len(self.connects) == lim: return
+
+                    if ind < len(col[j2]) - 1:
+                        i1 = col[j2][ind+1]
+                        try:
+                            build_bridge(i,j1,i,j2,i1,j2,c)
+                        except AssertionError:
+                            pass
+                        else:
+                            if len(self.connects) == lim: return
+
             for j in range(self.N):
                 for i1,i2,i3 in zip(col[j][:-2],col[j][1:-1],col[j][2:]):
-                    c1, c2, c3 = self.C[i1][j], self.C[i2][j], self.C[i3][j]
-                    if c1 > self.K: c1 -= self.K
-                    if c2 > self.K: c2 -= self.K
-                    if c3 > self.K: c3 -= self.K
-                    if c1 != c: continue
-                    if c2 == c: continue
-                    if not 1 <= c2 <= self.K: continue
-                    if c3 != c: continue
-                    if self.USED in [self.C[k][j] for k in range(i1,i3)]: continue
-                    if uf.same(f(i1,j),f(i2,j)) or uf.same(f(i1,j),f(i3,j)): continue
-                    s1, s2, s3 = uf.size(f(i1,j)), uf.size(f(i2,j)), uf.size(f(i3,j))
-                    if len(self.connects) >= lim-1: break
-                    if s1*s3 > s2*(s1+s3):
-                        self.connects.append((i1,j,i2,j))
-                        uf.union(f(i1,j),f(i2,j))
-                        for k in range(i1+1,i2): self.C[k][j] = self.USED
-                        self.connects.append((i2,j,i3,j))
-                        uf.union(f(i2,j),f(i3,j))
-                        for k in range(i2+1,i3): self.C[k][j] = self.USED
-                        self.C[i2][j] = self.K + c
+                    try:
+                        build_bridge(i1,j,i2,j,i3,j,c)
+                    except AssertionError:
+                        continue
+                    else:
                         if len(self.connects) == lim: return
+
+                    ind = row[i2].index(j)
+                    if ind < len(row[i2]) - 1:
+                        j1 = row[i2][ind+1]
+                        try:
+                            build_bridge(i1,j,i2,j,i2,j1,c)
+                        except AssertionError:
+                            pass
+                        else:
+                            if len(self.connects) == lim: return
         return
 
     def _hill_climb(self):
@@ -331,9 +379,11 @@ class Solver:
 
 
 class UnionFind():
-    def __init__(self, n):
+    def __init__(self, n, k):
         self.n = n
+        self.k = k
         self.parents = [-1] * n
+        self.dummy = [0]*n
 
     def find(self, x):
         if self.parents[x] < 0: return x
@@ -347,14 +397,20 @@ class UnionFind():
         # マージテク
         if self.parents[x] > self.parents[y]: x,y = y,x
         self.parents[x] += self.parents[y]
+        self.dummy[x] += self.dummy[y]
         self.parents[y] = x
 
     def same(self, x, y):
         return self.find(x) == self.find(y)
 
-    def size(self,x):
+    def size(self, x):
         return abs(self.parents[self.find(x)])
 
+    def set_dummy(self, x, d):
+        self.dummy[self.find(x)] += d
+
+    def get_dummy(self, x):
+        return self.dummy[self.find(x)]
 
 def calc_score(N, K, C, res: Result):
     assert len(res.moves) + len(res.connects) <= K*100
@@ -366,7 +422,7 @@ def calc_score(N, K, C, res: Result):
         assert C[ni][nj] == 0
         C[ni][nj], C[i][j] = C[i][j], 0
 
-    uf = UnionFind(N*N)
+    uf = UnionFind(N*N, K)
     for v in res.connects:
         i, j, ni, nj = v
         p1, p2 = i*N+j, ni*N+nj
