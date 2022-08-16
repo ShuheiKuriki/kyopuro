@@ -479,7 +479,8 @@ def main():
 
     move_lim, search_score, search_res = move_lim_search(N,K,C,WIDTH)
 
-    TIME_LIMIT = 2
+    TOTAL_LIMIT = 2.5
+    TIME_LIMIT = 1.5
     MAX_STEP = 100000
 
     hill = 3
@@ -489,7 +490,7 @@ def main():
     hill_score = 0
     s_temp, e_temp = 0, 0
     for _ in range(hill):
-        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / L, MAX_STEP, s_temp, e_temp)
+        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / (L+2), MAX_STEP, s_temp, e_temp)
         step, upd, res = solver.solve(move_lim, hill=True)
         score = calc_score(N, K, deepcopy(C), res)
         print(f"s_temp = {s_temp}, e_temp = {e_temp}, step = {step}, update = {upd}, score = {score}", file=sys.stderr)
@@ -502,13 +503,15 @@ def main():
     anneal_score = 0
     for temp in temps:
         s_temp, e_temp = temp*5, temp
-        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / L, MAX_STEP, s_temp, e_temp)
+        solver = Solver(N, K, deepcopy(C), LIM, WIDTH, time(), TIME_LIMIT / (L+2), MAX_STEP, s_temp, e_temp)
         step, upd, res = solver.solve(move_lim, hill=True)
         score = calc_score(N, K, deepcopy(C), res)
         print(f"s_temp = {s_temp}, e_temp = {e_temp}, step = {step}, update = {upd}, score = {score}", file=sys.stderr)
         if score > anneal_score:
             anneal_score = score
             anneal_res = res
+        if time() - start > TOTAL_LIMIT:
+            break
 
     print(file=sys.stderr)
     print(f"search_score = {search_score}, hill_score = {hill_score}, anneal_score = {anneal_score}", file=sys.stderr)
@@ -528,4 +531,5 @@ def main():
 
 
 if __name__ == "__main__":
+    start = time()
     main()
