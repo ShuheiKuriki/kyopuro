@@ -9,9 +9,8 @@ from random import *
 for t in range(T):
     N = randint(1,100)
     A = choices(range(101), k=N)
-    a = solve(N,A); b = gutyoku(N,A)
-    if a!=b:
-        print(N)
-        print(*A)
-        print(a,b)
+    sol = solve(N,A); ac = gutyoku(N,A)
+    if ac!=sol:
+        print(N,A)
+        print(ac,sol)
 
