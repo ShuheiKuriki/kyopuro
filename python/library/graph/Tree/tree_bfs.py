@@ -1,5 +1,5 @@
 """
-BFS:未verify
+BFS:verify
 01-BFS:未verify
 """
 import sys

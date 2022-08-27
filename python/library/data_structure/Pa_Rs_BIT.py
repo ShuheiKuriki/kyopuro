@@ -5,7 +5,7 @@ class BIT:
         self.n = n
         self.bit = [0]*(n+1)
         self.el = [0]*(n+1)
-    def sum(self, i): # sum of [1,i]
+    def cumsum(self, i): # sum of [1,i]
         s = 0
         while i > 0:
             s += self.bit[i]
@@ -17,10 +17,11 @@ class BIT:
         while i <= self.n:
             self.bit[i] += x
             i += i & -i
-    def get(self, i, j=None):
-        if j is None:
-            return self.el[i]
-        return self.sum(j) - self.sum(i-1)
+    def get(self, i): return self.el[i]
+    def get_range_sum(self, i, j): return self.cumsum(j) - self.cumsum(i-1)
+    def set(self, i, x):
+        # assert i > 0
+        self.add(i, x-self.el[i])
     def lower_bound(self,x):
         w = i = 0
         k = 1<<((self.n).bit_length())
