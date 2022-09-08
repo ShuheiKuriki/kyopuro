@@ -4,7 +4,7 @@ BFS:未verify
 """
 import sys; input = sys.stdin.readline
 from collections import deque
-INF = float("inf")
+INF = 10**10
 class Grid:
     def __init__(self, H, W, typ='str'):
         self.H = H; self.W = W

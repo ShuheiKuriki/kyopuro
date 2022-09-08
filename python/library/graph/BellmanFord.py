@@ -4,7 +4,7 @@ https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/1/GRL_1_B
 """
 import sys
 input = sys.stdin.readline
-INF = float('inf')
+INF = 10**18
 class BellmanFord:
     def __init__(self, N, M=-1):
         self.V = N

@@ -4,7 +4,7 @@
 import sys
 input = sys.stdin.readline
 from heapq import *
-INF = float('inf')
+INF = 10**18
 class Dijkstra:
     def __init__(self, N):
         self.V = N

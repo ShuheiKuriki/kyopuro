@@ -2,7 +2,7 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 from heapq import *
-INF = float('inf')
+INF = 10**18
 class Tree:
     def __init__(self, N):
         self.V = N

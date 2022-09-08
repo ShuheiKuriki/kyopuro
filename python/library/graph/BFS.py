@@ -5,7 +5,7 @@ BFS:https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C
 import sys
 input = sys.stdin.readline
 from collections import deque
-INF = float('inf')
+INF = 10**10
 class BFS:
     def __init__(self, N, M=-1):
         self.V = N

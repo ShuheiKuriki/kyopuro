@@ -1,9 +1,9 @@
 from collections import defaultdict
 def sieve(n):
-    fact = [float('inf')]*(n+1)
+    fact = [10**18]*(n+1)
     fact[1] = 1
     for i in range(2, n+1):
-        if fact[i]==float('inf'):
+        if fact[i]==10**18:
             j = i
             while j <= n:
                 fact[j] = min(fact[j], i)

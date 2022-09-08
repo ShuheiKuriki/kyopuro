@@ -1,6 +1,6 @@
 # ワーシャルフロイド法、計算量O(N^3)
 N, M = map(int, input().split())
-d = [[float('inf')]*N for _ in range(N)]
+d = [[10**18]*N for _ in range(N)]
 for i in range(M): #ひとまず枝があるペアは枝の長さをセット
     a,b,t = map(int, input().split())
     d[a-1][b-1] = t

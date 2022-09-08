@@ -4,7 +4,7 @@
 import sys
 input = sys.stdin.readline
 from heapq import *
-INF = float("inf")
+INF = 10**18
 class Grid:
     def __init__(self, H, W, typ='str'):
         self.H = H; self.W = W

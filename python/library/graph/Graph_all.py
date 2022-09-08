@@ -3,7 +3,7 @@ input = sys.stdin.readline
 # sys.setrecursionlimit(10**6)
 from collections import deque
 from heapq import *
-INF = float('inf')
+INF = 10**18
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N

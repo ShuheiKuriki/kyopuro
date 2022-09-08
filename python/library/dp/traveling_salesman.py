@@ -9,7 +9,7 @@ for i in range(E):
     u,v,d = map(int, input().split())
     edge[u].append((v,d))
 s = 0
-INF = float("inf")
+INF = 10**18
 dp = [[INF]*V for _ in range(1<<V)]
 for v,d in edge[s]: dp[1<<v][v] = min(dp[1<<v][v],d)
 for bit in range(1,1<<V):

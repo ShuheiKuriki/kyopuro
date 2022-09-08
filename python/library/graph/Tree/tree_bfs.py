@@ -5,7 +5,7 @@ BFS:verify
 import sys
 input = sys.stdin.readline
 from collections import deque
-INF = float('inf')
+INF = 10**18
 class Tree:
     def __init__(self, N):
         self.V = N
