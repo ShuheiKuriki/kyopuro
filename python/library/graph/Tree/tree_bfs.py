@@ -24,9 +24,9 @@ class Tree:
         self.edge[a].append(atob)
         if bi: self.edge[b].append(btoa)
 
-    def bfs(self, s, g=-1, std=True):
+    def bfs(self, s, g=-1, zero_one=False):
         """
-        std=Trueなら通常のBFS、std=Falseなら01-BFS
+        zero_one=Falseなら通常のBFS、Trueなら01-BFS
         """
         #step1(初期化)
         que = deque([s])
@@ -47,11 +47,16 @@ class Tree:
                 #step2-3-3(dists配列にndistをset)
                 self.dists[u] = ndist
                 #step2-3-4(queに隣接頂点を入れる)
-                if std or weight: que.append(u)
-                else: que.appendleft(u)
+                if zero_one:
+                    if weight:
+                        que.append(u)
+                    else:
+                        que.appendleft(u)
+                else:
+                    que.append(u)
         return -1
 
 N = int(input())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)
-G.bfs(0)
+G.bfs(0, ind=0, zero_one=False)

@@ -62,7 +62,7 @@ class SCC:
             self.groups[gv].append(v)
 
     def constrcut(self):
-        # 縮約後のグラフgroupEdgeを構築
+        # 縮約後のグラフgroupEdgeを構築、トポロジカルソートされる
         self.groupEdge = [set() for _ in range(self.gnum)]
         for v in range(self.V):
             gv = self.v_to_g[v]

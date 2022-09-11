@@ -1,6 +1,6 @@
 """
 BFS:未verify
-01-BFS:未verify
+01-BFS:verify(https://atcoder.jp/contests/abc213/tasks/abc213_e)
 """
 import sys; input = sys.stdin.readline
 from collections import deque
@@ -13,9 +13,9 @@ class Grid:
         elif typ=='int': self.grid = [list(map(int, input().split())) for _ in range(H)]
 
     #01BFSならstd=False
-    def bfs(self,sh, sw, gh=-1, gw=-1, ind=0, std=True):
+    def bfs(self,sh, sw, gh=-1, gw=-1, ind=0, zero_one=False):
         """
-        std=Trueなら通常のBFS、std=Falseなら01-BFS
+        zero_one=Falseなら通常のBFS、Trueなら01-BFS
         """
         #step1(初期化)
         sh-=ind; sw-=ind; gh-=ind; gw-=ind;
@@ -42,11 +42,16 @@ class Grid:
                 #step2-3-3(dists配列にndistをset)
                 self.dists[h0][w0]=ndist
                 #step2-3-4(queに隣接頂点を入れる)
-                if std or weight: que.append((h0,w0))
-                else: que.appendleft((h0,w0))
+                if zero_one:
+                    if weight:
+                        que.append((h0,w0))
+                    else:
+                        que.appendleft((h0,w0))
+                else:
+                    que.append((h0,w0))
         return -1
 
 H, W = map(int, input().split())
 sh, sw, gh, gw = map(int, input().split())
 G = Grid(H,W)
-G.bfs(sh,sw,gh,gw)
+G.bfs(sh,sw,gh,gw,ind=0,zero_one=False)
