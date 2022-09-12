@@ -1,31 +1,20 @@
-import sys
-I = sys.stdin.readline;f=lambda:map(int,I().split())
+import sys;I=sys.stdin.readline;f=lambda:map(int,I().split())
 MOD = 10**9+7
 T = int(I())
 ans = [""]*T
-M = 3000
-from collections import defaultdict
 for t in range(1,T+1):
-    tree_a = defaultdict(lambda: 0)
-    tree_b = defaultdict(lambda: 0)
-    well_x = defaultdict(lambda: 0)
-    well_y = defaultdict(lambda: 0)
-    for i in range(int(I())):
-        a,b = f()
-        tree_a[a]+=1; tree_b[b]+=1
-    for i in range(int(I())):
-        x,y = f()
-        well_x[x]+=1; well_y[y]+=1
-    res = 0
-    X = list(well_x.items())
-    Y = list(well_y.items())
-    for a,c1 in tree_a.items():
-        for x,c2 in X:
-            res += (a-x)**2%MOD*c1%MOD*c2%MOD
-            res %= MOD
-    for b,c1 in tree_b.items():
-        for y,c2 in Y:
-            res += (b-y)**2%MOD*c1%MOD*c2%MOD
-            res %= MOD
-    ans[t-1] = f"Case #{t}: {res}"
+    N = int(I())
+    A,B = [0]*N,[0]*N
+    for i in range(N): A[i],B[i] = f()
+    a1,b1 = sum(A)%MOD, sum(B)%MOD
+    a2,b2 = sum(a*a for a in A)%MOD, sum(b*b for b in B)%MOD
+
+    Q = int(I())
+    X,Y = [0]*Q,[0]*Q
+    for i in range(Q): X[i],Y[i] = f()
+    x1,y1 = sum(X)%MOD, sum(Y)%MOD
+    x2,y2 = sum(x*x for x in X)%MOD, sum(y*y for y in Y)%MOD
+
+    res = Q*(a2+b2)+N*(x2+y2)-2*(a1*x1+b1*y1)
+    ans[t-1] = f"Case #{t}: {res%MOD}"
 print(*ans, sep='\n')
