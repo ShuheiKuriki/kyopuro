@@ -1,8 +1,7 @@
-import sys,os,io
-input = sys.stdin.readline
-#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 N = int(input())
-A = [list(map(int, input().split())) for _ in range(N)]
+A = [list(f()) for _ in range(N)]
 A.sort()
 
 # 正なら反時計回り、負なら時計回り

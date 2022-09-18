@@ -1,11 +1,10 @@
-import sys
-input = sys.stdin.readline
-#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 N = int(input())
 parent = [0]*N
 edge = [[] for _ in range(N)]
 for i in range(N):
-    A = list(map(int, input().split()))
+    A = list(f())
     edge[i] = A[1:]
     for a in A[1:]:
         parent[a] = i
@@ -37,7 +36,7 @@ def go_up(v,x):
         x >>= 1
     return v
 for i in range(Q):
-    u,v = map(int, input().split())
+    u,v = f()
     d = depth[u]-depth[v]
     if d >= 0:
         u = go_up(u,d)

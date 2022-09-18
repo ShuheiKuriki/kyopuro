@@ -1,10 +1,12 @@
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 MOD = 998244353
-N, M = map(int, input().split())
+N, M = f()
 A = [[0]*M for _ in range(N)]
 for i in range(N):
     input()
-    for a in map(int, input().split()): A[i][a-1] = 1
-S = list(map(int, input().split()))
+    for a in f(): A[i][a-1] = 1
+S = list(f())
 
 from operator import xor
 cur = 0

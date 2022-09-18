@@ -2,8 +2,8 @@
 BFS:https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C
 01-BFS:未verify
 """
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 from collections import deque
 INF = 10**10
 class BFS:
@@ -13,7 +13,7 @@ class BFS:
         self.edge = [[] for _ in range(self.V)]
 
     def add_edges(self, ind=1, bi=False):
-        for a,*A in [list(map(int, input().split())) for _ in range(self.E)]:
+        for a,*A in [list(f()) for _ in range(self.E)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -62,7 +62,7 @@ class BFS:
 N = int(input())
 G = BFS(N)
 for i in range(N):
-    u,k,*V = list(map(int, input().split()))
+    u,k,*V = list(f())
     for v in V: G.add_edge(u,v)
 G.bfs(0, ind=0, zero_one=False)
 for v in range(N):

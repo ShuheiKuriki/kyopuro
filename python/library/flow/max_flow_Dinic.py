@@ -174,13 +174,13 @@ class Dinic:
             que, next_que = next_que, que
         return visited
 
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
-N, M = map(int, input().split())
+N, M = f()
 dinic = Dinic(N)
 for i in range(M):
-    u, v, c = map(int, input().split())
+    u, v, c = f()
     dinic.add_edge(u, v, c)
 ans = dinic.flow(0, N-1)
 print(ans)

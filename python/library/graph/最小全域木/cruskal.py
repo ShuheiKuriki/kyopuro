@@ -40,10 +40,12 @@ class UnionFind():
             groups[r_to_g[self.find(i)]].append(i)
         return groups
 
-N, M = map(int, input().split())
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+N, M = f()
 edges = []*M
 for i in range(M):
-    a,b,w = map(int, input().split())
+    a,b,w = f()
     edges.append((w,a,b))
 
 edges.sort()

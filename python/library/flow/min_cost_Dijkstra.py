@@ -14,7 +14,7 @@ class MinCostFlow:
 		self.G[fr].append(forward)
 		self.G[to].append(backward)
 
-	def minCostFlow(self, s, t, f):
+	def minCostFlow(self, s, t, flow):
 		N = self.N; G = self.G
 		INF = MinCostFlow.INF
 
@@ -26,7 +26,7 @@ class MinCostFlow:
 		d0 = [INF]*N
 		dist = [INF]*N
 
-		while f:
+		while flow:
 			dist[:] = d0
 			dist[s] = 0
 			que = [(0, s)]
@@ -48,11 +48,11 @@ class MinCostFlow:
 			for i in range(N):
 				H[i] += dist[i]
 
-			d = f; v = t
+			d = flow; v = t
 			while v != s:
 				d = min(d, prv_e[v][1])
 				v = prv_v[v]
-			f -= d
+			flow -= d
 			res += d * H[t]
 			v = t
 			while v != s:
@@ -66,12 +66,12 @@ class MinCostFlow:
 				v = prv_v[v]
 		return res
 
-import sys,os,io
-input = sys.stdin.readline
-#input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
-n, m, f = map(int, input().split())
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+
+n, m, flow = f()
 graph = MinCostFlow(n)
 for i in range(m):
-	u, v, c, d = map(int, input().split())
+	u, v, c, d = f()
 	graph.add_edge(u, v, c, d)
-print(graph.minCostFlow(0, n-1, f))
+print(graph.minCostFlow(0, n-1, flow))

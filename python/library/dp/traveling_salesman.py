@@ -3,10 +3,12 @@
 #配るDP
 #スタートは既に訪れた頂点に含まない
 #既にスタートを訪れている場合は考える必要がない
-V, E = map(int, input().split())
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+V, E = f()
 edge = [[] for _ in range(V)]
 for i in range(E):
-    u,v,d = map(int, input().split())
+    u,v,d = f()
     edge[u].append((v,d))
 s = 0
 INF = 10**18

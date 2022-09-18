@@ -2,8 +2,8 @@
 ベルマンフォード法：負の重み、負閉路検出可能、計算量O(VE)
 https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/1/GRL_1_B
 """
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 INF = 10**18
 class BellmanFord:
     def __init__(self, N, M=-1):
@@ -12,7 +12,7 @@ class BellmanFord:
         self.edge = [[] for _ in range(self.V)]
 
     def add_edges(self, ind=1, bi=False):
-        for a,*A in [list(map(int, input().split())) for _ in range(self.E)]:
+        for a,*A in [list(f()) for _ in range(self.E)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -37,7 +37,7 @@ class BellmanFord:
                 if self.dists[v]+d < self.dists[u]: return False
         return True
 
-N, M, r = map(int, input().split())
+N, M, r = f()
 G = BellmanFord(N,M)
 G.add_edges(ind=0, bi=False)
 if G.bellman_ford(r):

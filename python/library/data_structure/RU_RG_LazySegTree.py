@@ -166,14 +166,16 @@ def mapping(f, x): #fが作用素, xが更新する前の値
 def composition(f, g): #fをgに作用させる(f,gの順に作用)
     return g if f==id else f
 
-N, Q = map(int, input().split())
-# A = list(map(int, input().split()))
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+N,Q = f()
+# A = list(f())
 
 lst = LazySegmentTree(N, op, e, mapping, composition, id)
 # lst.build(A)
 ans = []
 for q in range(Q):
-    t,*X = map(int,input().split())
+    t,*X = f()
     if t==0:
         l,r,x = X
         lst.range_apply(l,r+1,x)

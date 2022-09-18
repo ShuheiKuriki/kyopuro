@@ -1,7 +1,7 @@
-import sys
-input = sys.stdin.readline
-N, T = map(int, input().split())
-A = list(map(int, input().split()))
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+N, T = f()
+A = list(f())
 n1 = N//2
 n2 = N-n1
 A1 = A[:n1]

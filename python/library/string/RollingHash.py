@@ -13,6 +13,7 @@ class RollingHash():
         for i in range(l): pw[i+1] = v = v * base % mod
 
     def get(self, l, r):
+        # 半開区間[l,r)
         return (self.h[r] - self.h[l] * self.pw[r-l]) % self.mod
     
     def all(self):

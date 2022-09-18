@@ -12,7 +12,7 @@ class SCC:
     
     def add_edges(self, ind=1):
         for _ in range(self.E):
-            a,b = map(int, input().split())
+            a,b = f()
             a -= ind; b -= ind
             self.edge_que[a].append(b)
             self.edge_rev[b].append(a)
@@ -55,12 +55,13 @@ class SCC:
             if used[s]: continue
             rdfs(s, self.gnum)
             self.gnum += 1
-import sys
-input = sys.stdin.readline
-N, D = map(int, input().split())
+
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+N, D = f()
 X,Y = [0]*N,[0]*N
 for i in range(N):
-    X[i],Y[i] = map(int, input().split())
+    X[i],Y[i] = f()
 G = SCC(2*N)
 for i in range(N):
     for j in range(N):

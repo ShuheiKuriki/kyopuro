@@ -1,6 +1,6 @@
 # DP時の演算に逆元がないモノイドに対する全方位木DP
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 from collections import deque
 class Tree:
     def __init__(self, N, merge, add_root, id):
@@ -13,7 +13,7 @@ class Tree:
     
     def add_edges(self, ind=1, bi=True):
         for _ in range(self.V-1):
-            a,b = map(int, input().split())
+            a,b = f()
             a -= ind; b -= ind
             self.edge[a].append(b)
             if bi: self.edge[b].append(a)

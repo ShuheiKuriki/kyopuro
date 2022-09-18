@@ -22,16 +22,16 @@ class BIT:
             return self.el[i]
         return self.sum(j) - self.sum(i-1)
 
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
 def solve():
     ans = []
-    N, Q = map(int, input().split())
+    N, Q = f()
     data0 = BIT(N+1)
     data1 = BIT(N+1)
     for i in range(Q):
-        p,*y = map(int, input().split())
+        p,*y = f()
         if p==0:
             l,r,x = y
             data0.add(l,-x*(l-1))

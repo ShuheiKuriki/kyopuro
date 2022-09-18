@@ -132,14 +132,14 @@ class SortedSet(Generic[T]):
         return ans
 
 
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
-L, Q = map(int, input().split())
+L, Q = f()
 S = SortedSet([0,L])
 ans = []
 for i in range(Q):
-    c,x = map(int, input().split())
+    c,x = f()
     if c==1:
         S.add(x)
     else:

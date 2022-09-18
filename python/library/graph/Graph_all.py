@@ -1,5 +1,5 @@
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 # sys.setrecursionlimit(10**6)
 from collections import deque
 from heapq import *
@@ -16,7 +16,7 @@ class Graph:
         self.dp = [0]*self.V
 
     def add_edges(self, ind=1, bi=False):
-        for a,*A in [list(map(int, input().split())) for _ in range(self.E)]:
+        for a,*A in [list(f()) for _ in range(self.E)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -144,6 +144,6 @@ class Graph:
                 if dist[u] > dist[v]+d: return -1
 
 
-N, M = map(int, input().split())
+N, M = f()
 G = Graph(N,M)
 G.add_edges(ind=1, cost=False, bi=False, rev=False)

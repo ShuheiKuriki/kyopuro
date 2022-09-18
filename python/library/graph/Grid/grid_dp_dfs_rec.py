@@ -1,12 +1,12 @@
-import sys
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 sys.setrecursionlimit(10**7)
-input = sys.stdin.readline
 class Grid:
     def __init__(self, H, W, typ='str'):
         self.H = H; self.W = W
         self.dh = [0,1,0,-1]; self.dw = [1,0,-1,0]
         if typ=='str': self.grid = [input()[:-1] for _ in range(H)]
-        elif typ=='int': self.grid = [list(map(int, input().split())) for _ in range(H)]
+        elif typ=='int': self.grid = [list(f()) for _ in range(H)]
         self.ans = [[0]*W for _ in range(H)]
 
     def dp_dfs_rec(self, h, w):
@@ -20,6 +20,6 @@ class Grid:
                 self.ans[h][w] += self.dp_dfs_rec(h0,w0)
         return self.ans[h][w]
 
-H, W = map(int, input().split())
+H, W = f()
 G = Grid(H,W)
 G.dp_dfs_rec(0,0)

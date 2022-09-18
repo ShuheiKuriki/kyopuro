@@ -1,10 +1,12 @@
 #最小全域木問題、プリム法
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 from heapq import *
 def solve():
-    N, M = map(int, input().split())
+    N, M = f()
     edge = [[] for _ in range(N)]
     for _ in range(M):
-        a,b,w = map(int, input().split())
+        a,b,w = f()
         edge[a].append((w,b))
         edge[b].append((w,a))
     bridges = []

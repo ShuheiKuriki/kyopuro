@@ -42,10 +42,10 @@ class SegmentTree():
             l >>= 1
             r >>= 1
 
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
-N, Q = map(int, input().split())
+N, Q = f()
 # 可換作用素のみ可
 def mapping(a,b): return a+b
 id = 0
@@ -53,7 +53,7 @@ st = SegmentTree(N+1,mapping,id)
 
 ans = []
 for _ in range(Q):
-    t,*X = map(int, input().split())
+    t,*X = f()
     if t==0:
         l,r,x = X
         st.range_apply(l,r+1,x)

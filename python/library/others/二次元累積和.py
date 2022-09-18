@@ -1,6 +1,8 @@
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 from itertools import combinations
-H, W = map(int, input().split())
-A = [list(map(int, input().split())) for _ in range(H)]
+H, W = f()
+A = [list(f()) for _ in range(H)]
 cum = [[0]*(W+1) for _ in range(H+1)]
 for i in range(1,H+1):
     for j in range(1,W+1):

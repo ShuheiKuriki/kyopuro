@@ -152,8 +152,8 @@ class LazySegmentTree():
             sm = self.op(self.data[r], sm)
             if (r & -r) == r: return 0
 
-import sys
-input = sys.stdin.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
 INF = 10**18
 mod = 1<<32
@@ -174,13 +174,13 @@ def composition(p, q): #pをqに作用させる(q,pの順に作用)
 
 e = 0
 id = INF
-N, Q = map(int, input().split())
+N, Q = f()
 
 lst = LazySegmentTree(N, op, e, mapping, composition, id)
 lst.build([1]*N)
 ans = []
 for i in range(Q):
-    t,*y = map(int, input().split())
+    t,*y = f()
     if t==0:
         l,r,x = y
         lst.range_apply(l,r+1,1+x*mod)

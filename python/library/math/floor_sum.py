@@ -17,14 +17,14 @@ def floor_sum(n, m, a, b):
         n, m, a, b = y_max, a, m, diff%a
     return res
 
-import sys
-input = sys.stdin.buffer.readline
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
 
 T = int(input())
 ans = [0]*T
 
 for i in range(T):
-    n, m, a, b = map(int, input().split())
+    n, m, a, b = f()
     ans[i] = floor_sum(n, m, a, b)
 
 print(*ans, sep='\n')
