@@ -39,3 +39,9 @@ class UnionFind():
         for i in range(self.n):
             groups[r_to_g[self.find(i)]].append(i)
         return groups
+
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+
+N = int(input())
+uf = UnionFind(N)

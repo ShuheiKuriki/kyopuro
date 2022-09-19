@@ -31,3 +31,8 @@ class BIT:
                 i += k
             k >>= 1
         return i+1
+
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+N = int(input())
+bit = BIT(N)

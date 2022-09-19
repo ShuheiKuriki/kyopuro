@@ -26,33 +26,34 @@ class LazySegmentTree():
         self.lazy[k] = self.id
 
     def build(self, arr):
-        #assert len(arr) == self.n
+        # assert len(arr) == self.n
         for i, a in enumerate(arr):
             self.data[self.size + i] = a
         for i in range(self.size-1,0,-1):
             self.update(i)
 
     def set(self, p, x):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         p += self.size
-        #事前に関係のある遅延配列を全て反映させてしまう
+        # 事前に関係のある遅延配列を全て反映させてしまう
         for i in range(self.log, 0, -1):
             self.push(p >> i)
         self.data[p] = x #値を更新する
-        #関係のある区間の値も更新する
+        # 関係のある区間の値も更新する
         for i in range(1, self.log + 1):
             self.update(p >> i)
 
     def get(self, p):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         p += self.size
-        #関係のある遅延配列を全て反映させる
+        # 関係のある遅延配列を全て反映させる
         for i in range(self.log, 0, -1):
             self.push(p >> i)
         return self.data[p]
 
     def prod(self, l, r):
-        #assert 0 <= l <= r <= self.n
+        # 半開区間[l,r)
+        # assert 0 <= l <= r <= self.n
         if l == r: return self.e
         l += self.size
         r += self.size
@@ -75,7 +76,7 @@ class LazySegmentTree():
         return self.data[1]
 
     def apply(self, p, f):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         p += self.size
         for i in range(self.log, 0, -1):
             self.push(p >> i)
@@ -84,7 +85,7 @@ class LazySegmentTree():
             self.update(p >> i)
 
     def range_apply(self, l, r, f):
-        #assert 0 <= l <= r <= self.n
+        # assert 0 <= l <= r <= self.n
         if l == r: return
         l += self.size
         r += self.size
@@ -109,8 +110,8 @@ class LazySegmentTree():
             if ((r >> i) << i) != r: self.update((r - 1) >> i)
 
     def max_right(self, l, g):
-        #assert 0 <= l <= self.n
-        #assert g(self.e)
+        # assert 0 <= l <= self.n
+        # assert g(self.e)
         if l == self.n: return self.n
         l += self.size
         for i in range(self.log, 0, -1):
@@ -131,8 +132,8 @@ class LazySegmentTree():
             if (l & -l) == l: return self.n
 
     def min_left(self, r, g):
-        #assert 0 <= r <= self.n
-        #assert g(self.e)
+        # assert 0 <= r <= self.n
+        # assert g(self.e)
         if r == 0: return 0
         r += self.size
         for i in range(self.log, 0, -1):

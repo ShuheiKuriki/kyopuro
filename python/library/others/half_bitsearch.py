@@ -6,7 +6,7 @@ n1 = N//2
 n2 = N-n1
 A1 = A[:n1]
 A2 = A[n1:]
-from itertools import groupby, accumulate, product, permutations, combinations
+from itertools import *
 def make(m,B):
     res = set()
     for pro in product([0,1], repeat = m):

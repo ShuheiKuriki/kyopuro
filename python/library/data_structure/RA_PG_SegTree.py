@@ -10,7 +10,7 @@ class SegmentTree():
         self.mapping = mapping
     
     def get(self, p):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         res = self.id
         p += self.size
         for _ in range(self.log+1):
@@ -19,17 +19,18 @@ class SegmentTree():
         return res
 
     def set(self, p, x):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         p += self.size
         self.data[p] = x
 
     def build(self, arr):
-        #assert len(arr) <= self.n
+        # assert len(arr) <= self.n
         for i in range(self.n):
             self.data[self.size + i] = arr[i]
 
     def range_apply(self, l, r, x):
-        #assert 0 <= l <= r <= self.n
+        # 半開区間[l,r)
+        # assert 0 <= l <= r <= self.n
         l += self.size
         r += self.size
         while l < r:

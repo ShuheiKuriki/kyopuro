@@ -45,5 +45,5 @@ class Graph:
 
 N, M = f()
 G = Graph(N,M)
-G.add_edges(ind=1, cost=False, bi=False, rev=False)
+G.add_edges(ind=1, bi=False)
 G.dp_dfs(0)

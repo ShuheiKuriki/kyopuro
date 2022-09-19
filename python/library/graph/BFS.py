@@ -61,9 +61,6 @@ class BFS:
 
 N = int(input())
 G = BFS(N)
-for i in range(N):
-    u,k,*V = list(f())
-    for v in V: G.add_edge(u,v)
-G.bfs(0, ind=0, zero_one=False)
-for v in range(N):
-    print(v+1, G.dists[v] if G.dists[v] < INF else -1)
+G.add_edges(ind=1,bi=True)
+G.bfs(s=0, zero_one=False)
+for d in G.dists: print(d if d < INF else -1)

@@ -13,14 +13,14 @@ class SegmentTree():
         self.data[k] = self.oper(self.data[2 * k], self.data[2 * k + 1])
 
     def build(self, arr):
-        #assert len(arr) <= self.n
+        # assert len(arr) <= self.n
         for i in range(self.n):
             self.data[self.size + i] = arr[i]
         for i in range(self.size-1,0,-1):
             self.update(i)
 
     def set(self, p, x):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         p += self.size
         self.data[p] = x
         for i in range(self.log):
@@ -28,11 +28,12 @@ class SegmentTree():
             self.update(p)
 
     def get(self, p):
-        #assert 0 <= p < self.n
+        # assert 0 <= p < self.n
         return self.data[p + self.size]
 
     def prod(self, l, r):
-        #assert 0 <= l <= r <= self.n
+        # 半開区間[l,r)
+        # assert 0 <= l <= r <= self.n
         sml = smr = self.e
         l += self.size
         r += self.size
@@ -51,8 +52,8 @@ class SegmentTree():
         return self.data[1]
 
     def max_right(self, l, f):
-        #assert 0 <= l <= self.n
-        #assert f(self.)
+        # assert 0 <= l <= self.n
+        # assert f(self.)
         if l == self.n: return self.n
         l += self.size
         sm = self.e
@@ -71,8 +72,8 @@ class SegmentTree():
         return self.n
 
     def min_left(self, r, f):
-        #assert 0 <= r <= self.n
-        #assert f(self.)
+        # assert 0 <= r <= self.n
+        # assert f(self.)
         if r == 0: return 0
         r += self.size
         sm = self.e
