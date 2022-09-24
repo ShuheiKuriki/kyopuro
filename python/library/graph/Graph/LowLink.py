@@ -85,7 +85,6 @@ class LowLink:
                 if num >= 1: res.append(v)
         return res
 
-
 N, M = f()
 G = LowLink(N, M)
 G.add_edges(0)

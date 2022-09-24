@@ -6,7 +6,7 @@ import sys; input = sys.stdin.readline
 f = lambda:map(int,input().split())
 from collections import deque
 INF = 10**10
-class BFS:
+class Bfs:
     def __init__(self, N, M=-1):
         self.V = N
         if M>=0: self.E = M
@@ -60,7 +60,7 @@ class BFS:
         return -1
 
 N = int(input())
-G = BFS(N)
+G = Bfs(N)
 G.add_edges(ind=1,bi=True)
 G.bfs(s=0, zero_one=False)
 for d in G.dists: print(d if d < INF else -1)

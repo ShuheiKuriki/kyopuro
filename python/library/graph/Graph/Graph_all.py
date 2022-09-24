@@ -81,11 +81,14 @@ class Graph:
             for u in self.edge_rev[v]:
                 self.dp[u] = max(self.dp[u], self.dp[v]+1)
 
-    def bfs(self, s, g=-1, std=True): #01BFSならstd=False
+    def bfs(self, s, g=-1, zero_one=False):
+        """
+        zero_one=Falseなら通常のBFS、Trueなら01-BFS
+        """
         #step1(初期化)
         que = deque([s])
         self.dists = [INF]*self.V
-        # self.dists = defaultdict(lambda: 0)
+        # self.dists = defaultdict(lambda: INF)
         self.dists[s]=0
         #step2(ループ)
         while len(que):
@@ -103,8 +106,13 @@ class Graph:
                 #step2-3-3(dists配列にndistをset)
                 self.dists[u] = ndist
                 #step2-3-4(queに隣接頂点を入れる)
-                if std or weight: que.append(u)
-                else: que.appendleft(u)
+                if zero_one:
+                    if weight:
+                        que.append(u)
+                    else:
+                        que.appendleft(u)
+                else:
+                    que.append(u)
         return -1
 
     #O(ElogV)
@@ -146,4 +154,4 @@ class Graph:
 
 N, M = f()
 G = Graph(N,M)
-G.add_edges(ind=1, cost=False, bi=False, rev=False)
+G.add_edges(ind=1, bi=False)

@@ -4,13 +4,11 @@ dfsの訪問順でdpする
 """
 import sys; input = sys.stdin.readline
 f = lambda:map(int,input().split())
-from collections import deque
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N
         if M>=0: self.E = M
         self.edge = [[] for _ in range(self.V)]
-        self.order = []
 
     def add_edges(self, ind=1, bi=False):
         for a,*A in [list(f()) for _ in range(self.E)]:
@@ -26,9 +24,9 @@ class Graph:
         if bi: self.edge[b].append(btoa)
 
     def dp_dfs(self, start):
-        stack = deque([start])
+        stack = [start]
         self.parent = [self.V]*self.V; self.parent[start] = -1
-        self.order.append(start)
+        self.order = [start]
         self.dp = [1]*self.V
         while stack:
             # 行きがけ(pre-order)
