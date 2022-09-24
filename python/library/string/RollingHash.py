@@ -1,42 +1,26 @@
 # 1-dimension Rolling Hash
-import random
-
-class RH:    
-    mask30 = (1 << 30) - 1
-    mask31 = (1 << 31) - 1
-    MOD = (1 << 61) - 1
-    Base = None
-    power = [1]
-    
-    def __init__(self, S):
-        if RH.Base is None:
-            RH.Base = random.randrange(129, 1 << 30)
-        for i in range(len(RH.power), len(S) + 1):
-            RH.power.append(RH.calcMod(RH.mul(RH.power[i - 1], self.__class__.Base)))
-        
-        self.hash = [0] * (len(S) + 1)
-        for i, s in enumerate(S, 1):
-            self.hash[i] = RH.calcMod(RH.mul(self.hash[i - 1], RH.Base) + ord(s))
+# 参考 https://tjkendev.github.io/procon-library/python/string/rolling_hash.html
+class RollingHash():
+    def __init__(self, s, base, mod):
+        self.mod = mod
+        self.pw = pw = [1]*(len(s)+1)
+        self.length = l = len(s)
+        self.h = h = [0]*(l+1)
+        v = 0
+        for i in range(l): h[i+1] = v = (v * base + ord(s[i])) % mod
+        v = 1
+        for i in range(l): pw[i+1] = v = v * base % mod
 
     def get(self, l, r):
-        return RH.calcMod(self.hash[r] - RH.mul(self.hash[l], RH.power[r - l]))
+        # 閉区間[l,r]
+        return (self.h[r] - self.h[l-1] * self.pw[r-l+1]) % self.mod
+    
+    def all(self):
+        return self.get(0, self.length)
 
-    def mul(l, r):
-        lu = l >> 31
-        ld = l & RH.mask31
-        ru = r >> 31
-        rd = r & RH.mask31
-        middlebit = ld * ru + lu * rd
-        return ((lu * ru) << 1) + ld * rd + ((middlebit & RH.mask30) << 31) + (middlebit >> 30)
-
-    def calcMod(val):
-        if val < 0:
-            val %= RH.MOD
-        val = (val & RH.MOD) + (val >> 61)
-        if val > RH.MOD:
-            val -= RH.MOD
-        return val
-
-N = int(input())
-S = input()
-RHS = RH(S)
+import sys; input = sys.stdin.readline
+f = lambda:map(int,input().split())
+base = 10**9+7; mod = (1<<61)-1
+N = int(*f())
+S = input()[:-1]
+RHS = RollingHash(S,base,mod)
