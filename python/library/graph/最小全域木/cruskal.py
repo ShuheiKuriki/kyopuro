@@ -1,3 +1,6 @@
+"""
+    verify: https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bo
+"""
 class UnionFind():
     def __init__(self, n):
         self.n = n
@@ -43,18 +46,19 @@ class UnionFind():
 import sys; input = sys.stdin.readline
 f = lambda:map(int,input().split())
 N, M = f()
-edges = []*M
+from collections import defaultdict
+edges = defaultdict(lambda:[])
 for i in range(M):
     a,b,w = f()
-    edges.append((w,a,b))
+    edges[w].append((a-1,b-1))
 
-edges.sort()
+weights = sorted(edges.keys())
 
 uf = UnionFind(N)
 ans = 0
-for i in range(M):
-    u,x,y = edges[i]
-    if not uf.same(x,y):
+for w in weights:
+    for x,y in edges[w]:
+        if uf.same(x,y):continue
         uf.union(x,y)
-        ans += u
+        ans += w
 print(ans)

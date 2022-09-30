@@ -7,7 +7,7 @@ n2 = N-n1
 A1 = A[:n1]
 A2 = A[n1:]
 from itertools import *
-def make(m,B):
+def bit_search(m,B):
     res = set()
     for pro in product([0,1], repeat = m):
         cnt = 0
@@ -18,8 +18,8 @@ def make(m,B):
     res = sorted(list(res))
     return res
 from bisect import *
-lis1 = make(n1,A1)
-lis2 = make(n2,A2)
+lis1 = bit_search(n1,A1)
+lis2 = bit_search(n2,A2)
 ans = 0
 for r1 in lis1:
     if r1>T:
