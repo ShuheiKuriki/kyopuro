@@ -1,5 +1,10 @@
 # Suffix Array (Manber & Myers) : O(n(logn)^2)
 class SuffixArray:
+    """
+        sa: S[i:]をソートした順番を表す開始indexの順列
+        lcp:s[sa[i]:]とs[sa[i+1]:]の最長共通接頭辞長
+        以上をO(N(logN)^2)で求める
+    """
     def __init__(self, s):
         self.s = s
         self.n = len(s)

@@ -1,6 +1,11 @@
 def SA_IS(s, with_lcp = False):
+    """
+        sa: S[i:]をソートした順番を表す開始indexの順列
+        lcp:s[sa[i]:]とs[sa[i+1]:]の最長共通接頭辞長
+        以上をO(N)で求める
+    """
+    # assert( max(s) >= 1 )
     a = s + [0]
-    # a = [aa+1 for aa in a] + [0] # <- 元の列にZeroが含まれるときはこっち
     k = max(a) + 1
     n = len(a)
     
@@ -104,7 +109,7 @@ def SA_IS(s, with_lcp = False):
         lcp[rank[i] - 1] = h
     return sa, lcp
 
-S = [ord(a)-96 for a in input()]
-N = len(S)
+# 文字列を数列に変換する
+S = [ord(a)-ord('a')+1 for a in input()]
 sa, lcp = SA_IS(S, True)
 print(sa,lcp)
