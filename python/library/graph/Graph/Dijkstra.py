@@ -4,7 +4,7 @@
 import sys; input = sys.stdin.readline
 f = lambda:map(int,input().split())
 from heapq import *
-INF = 10**10
+INF = 10**18
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N

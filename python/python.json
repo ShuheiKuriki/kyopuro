@@ -937,7 +937,7 @@
   "inf定義": {
     "prefix": "inf",
     "body": [
-      "inf = 10**10"
+      "inf = 10**18"
     ],
     "description": "inf定義"
   },

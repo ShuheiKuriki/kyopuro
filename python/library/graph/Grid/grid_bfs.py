@@ -5,7 +5,7 @@ BFS:未verify
 import sys; input = sys.stdin.readline
 f = lambda:map(int,input().split())
 from collections import deque
-INF = 10**10
+INF = 10**18
 class Grid:
     def __init__(self, H, W, typ='str'):
         self.H = H; self.W = W

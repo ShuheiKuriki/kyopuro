@@ -4,7 +4,7 @@
 import sys
 input = sys.stdin.readline
 from collections import deque
-INF = 10**10
+INF = 10**18
 
 class UnionFind():
     def __init__(self, n):
