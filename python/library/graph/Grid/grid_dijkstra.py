@@ -2,7 +2,7 @@
 ダイクストラ法:単一始点最短経路問題、非負辺、計算量O(ElogV)
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 from heapq import *
 INF = 10**18
 class Grid:
@@ -10,7 +10,7 @@ class Grid:
         self.H = H; self.W = W
         self.dh = [0,1,0,-1]; self.dw = [1,0,-1,0]
         if typ=='str': self.grid = [input()[:-1] for _ in range(H)]
-        elif typ=='int': self.grid = [list(f()) for _ in range(H)]
+        elif typ=='int': self.grid = [list(I()) for _ in range(H)]
 
     def dijkstra_heap(self, sh, sw, gh=-1, gw=-1, ind=0):
         #step1(初期化)
@@ -43,7 +43,7 @@ class Grid:
                 heappush(que,(ndist,h0,w0))
         return -1
 
-H, W = f()
-sh, sw = f()
+H, W = I()
+sh, sw = I()
 G = Grid(H,W)
 G.dijkstra_heap(sh,sw)

@@ -175,11 +175,11 @@ class Dinic:
         return visited
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
-N, M = f()
+N, M = I()
 dinic = Dinic(N)
 for i in range(M):
-    u,v,c = f()
+    u,v,c = I()
     dinic.add_edge(u,v,c)
 print(dinic.flow(0,N-1))

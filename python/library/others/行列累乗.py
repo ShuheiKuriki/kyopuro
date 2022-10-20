@@ -43,9 +43,9 @@ def mv(A,x,mod):
     return ans
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 def solve():
-    N, M = f()
+    N, M = I()
     init = [1,0]
     mat = [[1,1],[1,0]]
     ans = mv(power(mat,N-2,M),init,M)

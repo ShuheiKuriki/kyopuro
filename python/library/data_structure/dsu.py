@@ -41,7 +41,7 @@ class UnionFind():
         return groups
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
 N = int(input())
 uf = UnionFind(N)

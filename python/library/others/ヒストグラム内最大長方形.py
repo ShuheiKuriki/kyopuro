@@ -1,7 +1,7 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 N = int(input())
-A = list(f())
+A = list(I())
 L = [0]*N; R = [N-1]*N
 stack = []
 for i in range(N):

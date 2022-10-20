@@ -3,13 +3,13 @@
     verify: https://atcoder.jp/contests/abc242/tasks/abc242_g
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N,A,Q = int(*f()),list(f()),int(*f())
+I = lambda:map(int,input().split())
+N,A,Q = int(*I()),list(I()),int(*I())
 M = int(N**.5)+1
 from collections import *
 Mo = [defaultdict(lambda:[])for _ in range(M)]
 for i in range(Q):
-    l,r = f()
+    l,r = I()
     Mo[(l-1)//M][r-1].append((i,l-1))
 ans = [0]*Q
 for i in range(M):

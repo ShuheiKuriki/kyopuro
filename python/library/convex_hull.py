@@ -1,7 +1,7 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 N = int(input())
-A = [list(f()) for _ in range(N)]
+A = [list(I()) for _ in range(N)]
 A.sort()
 
 # 正なら反時計回り、負なら時計回り

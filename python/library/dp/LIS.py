@@ -1,5 +1,5 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 # LIS（最長増加部分列DP）
 from bisect import bisect_left
 def get_LIS(A):
@@ -13,5 +13,5 @@ def get_LIS(A):
     return len(lis)
 
 N = int(input())
-A = list(f())
+A = list(I())
 ans = get_LIS(A)

@@ -67,11 +67,11 @@ class MinCostFlow:
 		return res
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
-n, m, flow = f()
+n, m, flow = I()
 graph = MinCostFlow(n)
 for i in range(m):
-	u, v, c, d = f()
+	u, v, c, d = I()
 	graph.add_edge(u, v, c, d)
 print(graph.minCostFlow(0, n-1, flow))

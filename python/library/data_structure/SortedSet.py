@@ -133,13 +133,13 @@ class SortedSet(Generic[T]):
 
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
-L, Q = f()
+L, Q = I()
 S = SortedSet([0,L])
 ans = []
 for i in range(Q):
-    c,x = f()
+    c,x = I()
     if c==1:
         S.add(x)
     else:

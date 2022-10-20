@@ -23,15 +23,15 @@ class BIT:
         return self.sum(j) - self.sum(i-1)
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
 def solve():
     ans = []
-    N, Q = f()
+    N, Q = I()
     data0 = BIT(N+1)
     data1 = BIT(N+1)
     for i in range(Q):
-        p,*y = f()
+        p,*y = I()
         if p==0:
             l,r,x = y
             data0.add(l,-x*(l-1))

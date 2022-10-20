@@ -44,9 +44,9 @@ class SegmentTree():
             r >>= 1
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
-N, Q = f()
+N, Q = I()
 # 可換作用素のみ可
 def mapping(a,b): return a+b
 id = 0
@@ -54,7 +54,7 @@ st = SegmentTree(N+1,mapping,id)
 
 ans = []
 for _ in range(Q):
-    t,*X = f()
+    t,*X = I()
     if t==0:
         l,r,x = X
         st.range_apply(l,r+1,x)

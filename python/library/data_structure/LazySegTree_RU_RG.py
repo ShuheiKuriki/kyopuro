@@ -168,15 +168,15 @@ def composition(f, g): #fをgに作用させる(f,gの順に作用)
     return g if f==id else f
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N,Q = f()
-# A = list(f())
+I = lambda:map(int,input().split())
+N,Q = I()
+# A = list(I())
 
 lst = LazySegmentTree(N, op, e, mapping, composition, id)
 # lst.build(A)
 ans = []
 for q in range(Q):
-    t,*X = f()
+    t,*X = I()
     if t==0:
         l,r,x = X
         lst.range_apply(l,r+1,x)

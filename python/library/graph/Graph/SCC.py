@@ -12,7 +12,7 @@ class SCC:
     
     def add_edges(self, ind=1):
         for _ in range(self.E):
-            a,b = f()
+            a,b = I()
             a -= ind; b -= ind
             self.edge_que[a].append(b)
             self.edge_rev[b].append(a)
@@ -72,8 +72,8 @@ class SCC:
                 self.groupEdge[gv].add(gu)
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N, M = f()
+I = lambda:map(int,input().split())
+N, M = I()
 G = SCC(N,M)
 G.add_edges(ind=0)
 G.scc()

@@ -4,7 +4,7 @@ dfsの訪問順でdpする
 pythonは再帰処理が遅いので最終手段
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 sys.setrecursionlimit(10**6)
 class Graph:
     def __init__(self, N, M=-1):
@@ -15,7 +15,7 @@ class Graph:
         self.dp = [0]*self.V
 
     def add_edges(self, ind=1, bi=False):
-        for a,*A in [list(f()) for _ in range(self.E)]:
+        for a,*A in [list(I()) for _ in range(self.E)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -37,7 +37,7 @@ class Graph:
             self.dp[v] += self.dp_dfs_rec(u)
         return self.dp[v]
 
-N, M = f()
+N, M = I()
 G = Graph(N,M)
 G.add_edges(ind=1, bi=False)
 G.dp_dfs_rec(0)

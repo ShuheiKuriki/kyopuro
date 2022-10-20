@@ -1,5 +1,5 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 from collections import deque
 class LowLink:
     def __init__(self, N, M):
@@ -14,7 +14,7 @@ class LowLink:
     
     def add_edges(self, ind=1):
         for i in range(self.E):
-            a,b = f()
+            a,b = I()
             a -= ind; b -= ind
             self.edge[a].append(b); self.edge[b].append(a)
             self.edges[i] = (a,b)
@@ -85,7 +85,7 @@ class LowLink:
                 if num >= 1: res.append(v)
         return res
 
-N, M = f()
+N, M = I()
 G = LowLink(N, M)
 G.add_edges(0)
 G.low_link(0)

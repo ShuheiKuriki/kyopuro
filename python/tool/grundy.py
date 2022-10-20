@@ -1,5 +1,5 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 # grundy数が0の状態で回ってきたプレイヤーが負け
 def solve():
     grundy = 0

@@ -18,13 +18,13 @@ def floor_sum(n, m, a, b):
     return res
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
 T = int(input())
 ans = [0]*T
 
 for i in range(T):
-    n, m, a, b = f()
+    n, m, a, b = I()
     ans[i] = floor_sum(n, m, a, b)
 
 print(*ans, sep='\n')

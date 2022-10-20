@@ -23,8 +23,8 @@ class Doubling:
         return res
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N,K = f()
-A = list(f())
+I = lambda:map(int,input().split())
+N,K = I()
+A = list(I())
 db = Doubling(N,A,10**18)
 db.move(0,K)

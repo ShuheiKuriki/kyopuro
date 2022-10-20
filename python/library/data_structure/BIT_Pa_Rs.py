@@ -33,6 +33,6 @@ class BIT:
         return i+1
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 N = int(input())
 bit = BIT(N)

@@ -3,7 +3,7 @@ BFS:未verify
 01-BFS:verify(https://atcoder.jp/contests/abc213/tasks/abc213_e)
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 from collections import deque
 INF = 10**18
 class Grid:
@@ -11,10 +11,10 @@ class Grid:
         self.H = H; self.W = W
         self.dh = [0,1,0,-1]; self.dw = [1,0,-1,0]
         if typ=='str': self.grid = [input()[:-1] for _ in range(H)]
-        elif typ=='int': self.grid = [list(f()) for _ in range(H)]
+        elif typ=='int': self.grid = [list(I()) for _ in range(H)]
 
     #01BFSならstd=False
-    def bfs(self,sh, sw, gh=-1, gw=-1, ind=0, zero_one=False):
+    def bfs(self, sh, sw, gh=-1, gw=-1, ind=0, zero_one=False):
         """
         zero_one=Falseなら通常のBFS、Trueなら01-BFS
         """
@@ -52,7 +52,7 @@ class Grid:
                     que.append((h0,w0))
         return -1
 
-H, W = f()
-sh, sw, gh, gw = f()
+H, W = I()
+sh, sw, gh, gw = I()
 G = Grid(H,W)
 G.bfs(sh,sw,gh,gw,ind=0,zero_one=False)

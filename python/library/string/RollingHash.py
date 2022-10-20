@@ -19,8 +19,8 @@ class RollingHash():
         return self.get(0, self.length)
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 base = 10**9+7; mod = (1<<61)-1
-N = int(*f())
+N = int(*I())
 S = input()[:-1]
 RHS = RollingHash(S,base,mod)

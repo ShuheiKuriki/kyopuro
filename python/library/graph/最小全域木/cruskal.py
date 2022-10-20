@@ -44,12 +44,12 @@ class UnionFind():
         return groups
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N, M = f()
+I = lambda:map(int,input().split())
+N, M = I()
 from collections import defaultdict
 edges = defaultdict(lambda:[])
 for i in range(M):
-    a,b,w = f()
+    a,b,w = I()
     edges[w].append((a-1,b-1))
 
 weights = sorted(edges.keys())

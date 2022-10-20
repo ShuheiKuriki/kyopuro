@@ -1,5 +1,5 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 # sys.setrecursionlimit(10**7)
 from collections import deque
 from heapq import *
@@ -11,7 +11,7 @@ class Grid:
         if typ=='str':
             self.grid = [input()[:-1] for _ in range(H)]
         elif typ=='int':
-            self.grid = [list(f()) for _ in range(H)]
+            self.grid = [list(I()) for _ in range(H)]
         self.ans = [[0]*W for _ in range(H)]
 
     #01BFSならstd=False
@@ -88,5 +88,5 @@ class Grid:
         return self.ans[h][w]
 
 
-H, W = f()
+H, W = I()
 G = Grid(H,W)

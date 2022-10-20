@@ -3,7 +3,7 @@ dfsの訪問順でdpする
 グラフ条件:根が分かっている、有向も無向も想定
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N
@@ -11,7 +11,7 @@ class Graph:
         self.edge = [[] for _ in range(self.V)]
 
     def add_edges(self, ind=1, bi=False):
-        for a,*A in [list(f()) for _ in range(self.E)]:
+        for a,*A in [list(I()) for _ in range(self.E)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -41,7 +41,7 @@ class Graph:
                 if u==self.parent[v]: continue
                 self.dp[v] += self.dp[u]
 
-N, M = f()
+N, M = I()
 G = Graph(N,M)
 G.add_edges(ind=1, bi=False)
 G.dp_dfs(0)

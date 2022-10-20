@@ -92,14 +92,14 @@ class SegmentTree():
         return 0
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
 def op(x, y):
     return min(x,y)
 
 e = (1<<31)-1
 
-N, Q = f()
+N, Q = I()
 A = [e for _ in range(N)]
 
 st = SegmentTree(N,op,e)
@@ -107,7 +107,7 @@ st.build(A)
 
 ans = []
 for i in range(Q):
-    t,*B = f()
+    t,*B = I()
     if t == 0:
         x,y = B
         st.set(x,y)

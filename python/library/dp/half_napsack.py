@@ -1,13 +1,13 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-N, Wlim = f()
+I = lambda:map(int,input().split())
+N, Wlim = I()
 n1 = N//2
 n2 = N-n1
 V1,V2,W1,W2 = [0]*n1,[0]*n2,[0]*n1,[0]*n2
 for i in range(n1):
-    V1[i],W1[i] = f()
+    V1[i],W1[i] = I()
 for i in range(n2):
-    V2[i],W2[i] = f()
+    V2[i],W2[i] = I()
 from collections import defaultdict
 from bisect import *
 def make(V,W,n):

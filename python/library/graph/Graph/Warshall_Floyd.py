@@ -1,11 +1,11 @@
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 # ワーシャルフロイド法、計算量O(N^3)
-N, M = f()
+N, M = I()
 INF = 10**18
 d = [[INF]*N for _ in range(N)]
 for i in range(M): #ひとまず枝があるペアは枝の長さをセット
-    a,b,t = f()
+    a,b,t = I()
     d[a-1][b-1] = t
     d[b-1][a-1] = t
 

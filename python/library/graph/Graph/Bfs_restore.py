@@ -3,7 +3,7 @@
 https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_ei
 """
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 from collections import deque
 INF = 10**18
 class BFS:
@@ -14,7 +14,7 @@ class BFS:
         # self.edge_dic = {}
 
     def add_edges(self, ind=1, bi=False):
-        for i,(a,*A) in enumerate(list(f()) for _ in range(self.E)):
+        for i,(a,*A) in enumerate(list(I()) for _ in range(self.E)):
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
@@ -65,7 +65,7 @@ class BFS:
                 self.prev[u]=v
         return -1
 
-N,M = f()
+N,M = I()
 G = BFS(N,M)
 G.add_edges(ind=1,bi=True)
 G.bfs(s=0, g=N-1, zero_one=False)

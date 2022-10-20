@@ -44,16 +44,16 @@ class SegmentTree():
             r >>= 1
 
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
+I = lambda:map(int,input().split())
 
-N, Q = f()
+N, Q = I()
 mapping = max
 id = (-1,(1<<31)-1)
 st = SegmentTree(N,mapping,id)
 
 ans = []
 for q in range(Q):
-    t,*y = f()
+    t,*y = I()
     if t==0:
         s,t,x = y
         st.range_apply(s,t+1,(q,x))

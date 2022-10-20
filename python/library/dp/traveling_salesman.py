@@ -4,11 +4,11 @@
 #スタートは既に訪れた頂点に含まない
 #既にスタートを訪れている場合は考える必要がない
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-V, E = f()
+I = lambda:map(int,input().split())
+V, E = I()
 edge = [[] for _ in range(V)]
 for i in range(E):
-    u,v,d = f()
+    u,v,d = I()
     edge[u].append((v,d))
 s = 0
 INF = 10**18
