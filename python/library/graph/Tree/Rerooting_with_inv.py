@@ -1,7 +1,7 @@
 # DP時の演算に逆元がある群に対する全方位木DP
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-from collections import deque
+I = lambda:map(int,input().split())
+from collections import *
 class Tree:
     def __init__(self, N, merge, divide, add_root, id):
         self.V = N
@@ -13,17 +13,19 @@ class Tree:
         self.id = id
     
     def add_edges(self, ind=1, bi=True):
-        for _ in range(self.V-1):
-            a,b = f()
-            a -= ind; b -= ind
-            self.edge[a].append(b)
-            if bi: self.edge[b].append(a)
+        for a,*A in [list(I()) for _ in range(N-1)]:
+            a -= ind; b = A[0] - ind
+            atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
+            self.edge[a].append(atob)
+            if bi: self.edge[b].append(btoa)
 
-    def add_edge(self, a, b, bi=True):
-        self.edge[a].append(b)
-        if bi: self.edge[b].append(a)
+    def add_edge(self, a, b, cost=None, ind=1, bi=True):
+        a -= ind; b -= ind
+        atob,btoa = (b,a) if cost is None else ((cost,b),(cost,a))
+        self.edge[a].append(atob)
+        if bi: self.edge[b].append(btoa)
 
-    def dp(self, start):
+    def rerooting(self, start):
         stack = deque([start])
         self.parent = [self.V]*self.V; self.parent[start] = -1
         self.order.append(start)
@@ -38,9 +40,8 @@ class Tree:
         for v in self.order[::-1]:
             for u in self.edge[v]:
                 if u==self.parent[v]: continue
-                self.dp[v] = self.merge(self.dp[v], self.add_root(self.dp[u])) #帰りがけ処理
-    
-    def rerooting(self, start):
+                #帰りがけ処理
+                self.dp[v] = self.merge(self.dp[v], self.add_root(self.dp[u]))
         for v in self.order:
             for u in self.edge[v]:
                 if u==self.parent[v]: continue

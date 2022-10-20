@@ -1,7 +1,7 @@
 # DP時の演算に逆元がないモノイドに対する全方位木DP
 import sys; input = sys.stdin.readline
-f = lambda:map(int,input().split())
-from collections import deque
+I = lambda:map(int,input().split())
+from collections import *
 class Tree:
     def __init__(self, N, merge, add_root, id):
         self.V = N
@@ -12,17 +12,19 @@ class Tree:
         self.id = id
     
     def add_edges(self, ind=1, bi=True):
-        for _ in range(self.V-1):
-            a,b = f()
-            a -= ind; b -= ind
-            self.edge[a].append(b)
-            if bi: self.edge[b].append(a)
+        for a,*A in [list(I()) for _ in range(N-1)]:
+            a -= ind; b = A[0] - ind
+            atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
+            self.edge[a].append(atob)
+            if bi: self.edge[b].append(btoa)
 
-    def add_edge(self, a, b, bi=True):
-        self.edge[a].append(b)
-        if bi: self.edge[b].append(a)
+    def add_edge(self, a, b, cost=None, ind=1, bi=True):
+        a -= ind; b -= ind
+        atob,btoa = (b,a) if cost is None else ((cost,b),(cost,a))
+        self.edge[a].append(atob)
+        if bi: self.edge[b].append(btoa)
 
-    def dp(self, start):
+    def rerooting(self, start):
         stack = deque([start])
         self.parent = [self.V]*self.V; self.parent[start] = -1
         self.order.append(start)
@@ -38,8 +40,6 @@ class Tree:
             for u in self.edge[v]:
                 if u==self.parent[v]: continue
                 self.dp[v] = self.merge(self.dp[v], self.add_root(self.dp[u]))
-
-    def rerooting(self, start):
         p_value = [self.id]*self.V #親側の値
         for v in self.order:
             cumL = [self.id]*(len(self.edge[v])+1)
@@ -60,13 +60,13 @@ class Tree:
                 self.dp[u] = self.merge(self.dp[u], self.add_root(p_value[u]))
 
 def merge(a, b): return a+b
-  
-def add_root(a): return a+1 #mergeの直前にする操作、rerootingのことを考えて平常時は寸止めしておく
 
-id = (1,0)
+#mergeの直前にする操作、rerootingのためにmerge前は寸止めしておく
+def add_root(a): return a+1
+
+id = 0
 N = int(input())
 G = Tree(N, merge, add_root, id)
 G.add_edges(ind=1, bi=True)
-G.dp(0)
 G.rerooting(0)
 print(*G.dp, sep='\n')
