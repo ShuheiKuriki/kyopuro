@@ -12,7 +12,7 @@ class Tree:
         self.edge = [[] for _ in range(N)]
 
     def add_edges(self, ind=1, bi=True):
-        for a,*A in [list(I()) for _ in range(self.V-1)]:
+        for a,*A in [tuple(I()) for _ in range(self.V-1)]:
             a -= ind; b = A[0] - ind
             atob,btoa = (b,a) if len(A) == 1 else ((A[1],b),(A[1],a))
             self.edge[a].append(atob)
