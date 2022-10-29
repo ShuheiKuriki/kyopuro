@@ -58,6 +58,5 @@ id = 0
 N = int(input())
 G = Tree(N, merge, divide, add_root, id)
 G.add_edges(ind=1, bi=True)
-G.dp(0)
 G.rerooting(0)
 print(*G.dp, sep='\n')
