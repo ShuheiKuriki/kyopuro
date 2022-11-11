@@ -38,14 +38,14 @@ def ifft(F, N):
         f[i] /= N
     return f
 
-import sys
-readline = sys.stdin.readline
+import sys; input = sys.stdin.readline
+I = lambda:map(int,input().split())
 
-n = int(input())
+n = int(*I())
 f = []
 g = []
 for i in range(n):
-    a, b = map(float, readline().split())
+    a, b = map(float, input().split())
     f.append(a); g.append(b)
 
 

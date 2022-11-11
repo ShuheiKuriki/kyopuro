@@ -59,7 +59,7 @@ class Bfs:
                     que.append(u)
         return -1
 
-N = int(input())
+N = int(*I())
 G = Bfs(N)
 G.add_edges(ind=1,bi=True)
 G.bfs(s=0, zero_one=False)

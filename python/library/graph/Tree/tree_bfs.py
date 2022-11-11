@@ -56,7 +56,7 @@ class Tree:
                     que.append(u)
         return -1
 
-N = int(input())
+N = int(*I())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)
 G.bfs(0, ind=0, zero_one=False)

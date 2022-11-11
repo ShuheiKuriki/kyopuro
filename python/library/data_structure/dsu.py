@@ -31,17 +31,14 @@ class UnionFind():
         return abs(self.parents[self.find(x)])
 
     def groups(self):
-        roots = self.roots()
-        r_to_g = {}
-        for i, r in enumerate(roots):
-            r_to_g[r] = i
-        groups = [[] for _ in roots]
-        for i in range(self.n):
-            groups[r_to_g[self.find(i)]].append(i)
+        roots = [i for i, x in enumerate(self.parents) if x < 0]
+        r_to_g = {r:i for i,r in enumerate(roots)}
+        groups = [[]for _ in roots]
+        for i in range(self.n):groups[r_to_g[self.find(i)]].append(i)
         return groups
 
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
 
-N = int(input())
+N = int(*I())
 uf = UnionFind(N)

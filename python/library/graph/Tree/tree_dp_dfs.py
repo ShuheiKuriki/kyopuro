@@ -38,7 +38,7 @@ class Tree:
                 if u==self.parent[v]: continue
                 self.dp[v] += self.dp[u]
 
-N = int(input())
+N = int(*I())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)
 G.dp_dfs(0)

@@ -88,6 +88,6 @@ class Tree:
                 heappush(que,(ndist,u))
         return -1
 
-N = int(input())
+N = int(*I())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)

@@ -34,5 +34,5 @@ class BIT:
 
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-N = int(input())
+N = int(*I())
 bit = BIT(N)

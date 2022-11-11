@@ -47,7 +47,7 @@ class Dijkstra:
                 heappush(que,(ndist,u))
         return -1
 
-N = int(input())
+N = int(*I())
 G = Dijkstra(N)
 G.add_edges(ind=1, bi=True)
 G.dijkstra_heap(0)

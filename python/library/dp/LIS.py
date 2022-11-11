@@ -12,6 +12,6 @@ def get_LIS(A):
             lis[ind] = A[i]
     return len(lis)
 
-N = int(input())
+N = int(*I())
 A = list(I())
 ans = get_LIS(A)

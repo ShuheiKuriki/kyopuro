@@ -1,6 +1,6 @@
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-N = int(input())
+N = int(*I())
 A = [list(I()) for _ in range(N)]
 A.sort()
 

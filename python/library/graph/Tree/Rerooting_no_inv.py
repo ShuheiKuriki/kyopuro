@@ -66,7 +66,7 @@ def merge(a, b): return a+b
 def add_root(a): return a+1
 
 id = 0
-N = int(input())
+N = int(*I())
 G = Tree(N, merge, add_root, id)
 G.add_edges(ind=1, bi=True)
 G.rerooting(0)
