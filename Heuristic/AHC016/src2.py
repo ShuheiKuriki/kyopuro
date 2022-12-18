@@ -2,7 +2,7 @@ from collections import*
 from itertools import*
 from random import*
 from math import exp
-from operator import xor
+from operator import xor,and_
 from functools import reduce
 from time import time
 from heapq import*
@@ -72,12 +72,12 @@ def get_multinomial_table():
     p = eps/100
     prob = [[1]*(n+1)for n in range(N*N+1)]
     calc_t = time()
-    # inf = 1e-60
+    inf = 1e-30
     for n in range(1,N*N+1):
         prob[n][0] = prob[n-1][0]*(1-p)
         prob[n][n] = prob[n-1][n-1]*p
         prob[n][1:n] = [prob[n-1][k-1]*p+prob[n-1][k]*(1-p)for k in range(1,n)]
-        # prob[n] = [0 if p < inf else p for p in prob[n]]
+        prob[n] = [0 if p < inf else p for p in prob[n]]
     print("#",time()-calc_t,file=sys.stderr)
     return prob
 
@@ -92,8 +92,8 @@ def add_multi_prob(P):
 class Graph:
     def __init__(self,arr=None):
         self.matrix1 = [0]*N
-        if N>BIT_MAX:self.matrix2 = [0]*N
-        self.best_score = 0
+        if N > BIT_MAX: self.matrix2 = [0]*N
+        self.best_prob = -1
         self.best_arr = []
         if arr is not None:
             self.arr = arr
@@ -136,44 +136,61 @@ class Graph:
         lg = len(self.groups)
         self.arr = sorted(len(self.groups[g])for g in range(lg)if self.groups[g])
         print("#",self.arr)
-        score = add_multi_prob(self.get_score_of_group(g)for g in range(lg))
-        print(f"# score = {score}")
-        if score >= self.best_score:
-            self.best_score = score
+        print("#",[self.get_prob_of_group(g)for g in range(lg)])
+        prob = add_multi_prob(self.get_prob_of_group(g)for g in range(lg))
+        print(f"# prob = {prob}")
+        if prob > self.best_prob:
+            self.best_prob = prob
             self.best_arr = self.arr[:]
 
-    def get_score_of_group(self,g,group=None):
+    def get_prob_of_group(self,g,group=None):
         if group is None: group = self.groups[g]
         l = len(group)
         if l==0: return 1
         if N<=BIT_MAX:
-            bit = reduce(xor,[1<<u for u in group])
-            wrong = sum(popcount(bit^self.matrix1[v])for v in group)
+            in_bit = reduce(xor,[1<<u for u in group],0)
+            in_cnt = sum(popcount(in_bit&self.matrix1[v])for v in group)
+            out_bit = ((1<<N)-1)^in_bit
+            out_cnt = sum(popcount(out_bit&self.matrix1[v])for v in group)
         else:
-            bit1 = bit2 = 0
+            in_bit1 = in_bit2 = 0
             for u in group:
-                if u<BIT_MAX:bit1^=1<<u
-                else:bit2^=1<<(u-BIT_MAX)
-            wrong = sum(popcount(bit1^self.matrix1[v])+popcount(bit2^self.matrix2[v])for v in group)
-        score = MULTINOMIAL_PROB[l*(N-1)][wrong-l]*SCORE_COEFFICIENT(l)
-        return score
+                if u < BIT_MAX:in_bit1 ^= 1<<u
+                else:in_bit2 ^= 1<<(u-BIT_MAX)
+            out_bit1 = ((1<<BIT_MAX)-1)^in_bit1
+            out_bit2 = ((1<<(N-BIT_MAX))-1)^in_bit2
+            in_cnt1 = sum(popcount(in_bit1&self.matrix1[v])for v in group)
+            in_cnt2 = sum(popcount(in_bit2&self.matrix2[v])for v in group)
+            in_cnt = in_cnt1 + in_cnt2
+            out_cnt1 = sum(popcount(out_bit1&self.matrix1[v])for v in group)
+            out_cnt2 = sum(popcount(out_bit2&self.matrix2[v])for v in group)
+            out_cnt = out_cnt1 + out_cnt2
+        in_prob = MULTINOMIAL_PROB[l*(l-1)][-in_cnt-1]
+        out_prob = MULTINOMIAL_PROB[l*(N-l)][out_cnt]
+        prob = add_prob(in_prob,out_prob)*PROB_COEFFICIENTS[l]
+        return prob
 
     def get_prob_of_v_and_g(self,v,g,group=None):
         if group is None: group = self.groups[g]
         l = len(group)
-        in_group = v in group
-        if l-in_group==0: return 1
+        in_group_flg = v in group
         if N<=BIT_MAX:
-            bit = reduce(xor,[1<<u for u in group])
-            wrong = popcount(bit^self.matrix1[v])
+            in_bit = reduce(xor,[1<<u for u in group],0)
+            in_cnt = popcount(in_bit&self.matrix1[v])
+            out_bit = ((1<<N)-1)^in_bit
+            out_cnt = popcount(out_bit&self.matrix1[v])
         else:
-            bit1 = (1<<BIT_MAX)-1
-            bit2 = (1<<(N-BIT_MAX))-1
+            in_bit1 = in_bit2 = 0
             for u in group:
-                if u<BIT_MAX:bit1^=1<<u
-                else:bit2^=1<<(u-BIT_MAX)
-            wrong = popcount(bit1^self.matrix1[v])+popcount(bit2^self.matrix2[v])
-        prob = MULTINOMIAL_PROB[N-1][wrong-in_group]
+                if u < BIT_MAX:in_bit1 ^= 1<<u
+                else:in_bit2 ^= 1<<(u-BIT_MAX)
+            out_bit1 = ((1<<BIT_MAX)-1)^in_bit1
+            out_bit2 = ((1<<(N-BIT_MAX))-1)^in_bit2
+            in_cnt = popcount(in_bit1&self.matrix1[v]) + popcount(in_bit2&self.matrix2[v])
+            out_cnt = popcount(out_bit1&self.matrix1[v]) + popcount(out_bit2&self.matrix2[v])
+        in_prob = MULTINOMIAL_PROB[l-in_group_flg][-in_cnt-1]
+        out_prob = MULTINOMIAL_PROB[N-l-(1^in_group_flg)][out_cnt]
+        prob = add_prob(in_prob,out_prob)
         return prob
 
     def reset_group(self):
@@ -187,10 +204,10 @@ class Graph:
         lg = len(self.groups)
         for v in range(N):
             pre_g = self.v_to_g[v]
-            max_prob = 0
+            max_prob = -1
             for g in range(lg):
                 prob = self.get_prob_of_v_and_g(v,g)
-                if prob > max_prob:
+                if prob > max_prob or (prob==max_prob and randint(0,1)):
                     self.v_to_g[v] = g
                     max_prob = prob
             self.groups[pre_g].discard(v)
@@ -203,21 +220,21 @@ class Graph:
         g1 = self.v_to_g[v]
         lg = len(self.groups)
         l1 = len(self.groups[g1])
-        prob1 = self.get_prob_of_v_and_g(v,g1)
-        prob2 = -1
+        score1 = self.get_prob_of_v_and_g(v,g1)
+        score2 = -1
         move_to = -1
         for g2 in range(lg):
             if g2==g1:continue
             l2 = len(self.groups[g2])
             if l2==0:continue
-            prob = self.get_prob_of_v_and_g(v,g2)
-            if prob > prob2:
+            score = self.get_prob_of_v_and_g(v,g2)
+            if score > score2:
                 move_to = g2
-                prob2 = prob
+                score2 = score
         if move_to == -1: return
         temp = ((LOOP-1-t)*START_TEMP_FOR_MOVE + t*END_TEMP_FOR_MOVE) / (LOOP-1)
-        if prob1 > 0:
-            diff = (prob2-prob1)/prob1
+        if score1 > 0:
+            diff = (score2 - score1) / score1
         else:
             diff = 1
         if adopt(diff, temp):
@@ -233,28 +250,27 @@ class Graph:
             vs = group1|group2
             new_groups = [set(),set()]
             for v in vs:
-                max_prob = -1
+                best_score = -1
                 for g in range(2):
-                    prob = self.get_prob_of_v_and_g(v,g=-1,group=[group1,group2][g])
-                    if prob > max_prob:
+                    score = self.get_prob_of_v_and_g(v,g=-1,group=[group1,group2][g])
+                    if score > best_score:
                         v_to_g[v] = g
-                        max_prob = prob
+                        best_score = score
                 new_groups[v_to_g[v]].add(v)
             return new_groups
-        def divide_small_group(g,prob1):
+        def divide_small_group(g,score1):
             group = list(self.groups[g])
             l = len(group)
             res1,res2 = set(group),set()
-            max_prob = prob1
+            best_score = score1
             for bit in range(0,(1<<(l-1))-1):
                 vs1,vs2 = {group[0]},set()
                 for i in range(l-1):
                     if (bit>>i)%2:vs1.add(group[i+1])
                     else:vs2.add(group[i+1])
-                new_prob = add_prob(self.get_score_of_group(g=-1,group=vs1) \
-                                    ,self.get_score_of_group(g=-1,group=vs2))
-                if new_prob > max_prob:
-                    max_prob = new_prob
+                new_score = self.get_prob_of_group(g=-1,group=vs1)*self.get_prob_of_group(g=-1,group=vs2)
+                if new_score > best_score:
+                    best_score = new_score
                     res1,res2 = vs1,vs2
             return res1,res2
         lg = len(self.groups)
@@ -265,14 +281,13 @@ class Graph:
             if l <= 1:
                 continue
             elif l <= MAX_BITSERCH_SIZE:
-                prob1 = self.get_score_of_group(g=-1,group=self.groups[g])
-                if prob1 == 1: continue
-                vs1, vs2 = divide_small_group(g,prob1)
+                score1 = self.get_prob_of_group(g=-1,group=self.groups[g])
+                vs1, vs2 = divide_small_group(g,score1)
                 if len(vs2):
                     self.groups[g] = vs1
                     self.groups.append(vs2)
             else:
-                old_score = self.get_score_of_group(g)
+                old_score = self.get_prob_of_group(g)
                 lis2 = lis[:]
                 shuffle(lis2)
                 vs1,vs2 = {lis2[0]},{lis2[1]}
@@ -289,27 +304,29 @@ class Graph:
                     break
                 for v in lis:
                     if v in vs1:continue
-                    prob1 = self.get_prob_of_v_and_g(v,g=-1,group=vs1)
+                    score1 = self.get_prob_of_v_and_g(v,g=-1,group=vs1)
                     if len(vs2)>=1:
-                        prob2 = self.get_prob_of_v_and_g(v,g=-1,group=vs2)
-                        if prob1 > prob2:
+                        score2 = self.get_prob_of_v_and_g(v,g=-1,group=vs2)
+                        if score1 > score2:
                             vs1.add(v)
                         else:
                             vs2.add(v)
                     else:
-                        if randint(0,1):vs1.add(v)
-                        else:vs2.add(v)
+                        if randint(0,1):
+                            vs1.add(v)
+                        else:
+                            vs2.add(v)
                 if len(vs2):
                     # print("#",vs1,vs2)
                     divided_groups = arrange_two_groups(vs1,vs2)
                     # print("#",divided_groups)
-                    new_score = add_multi_prob(self.get_score_of_group(g=-1,group=divided_groups[i])for i in range(2))
+                    new_score = add_multi_prob([self.get_prob_of_group(g=-1,group=divided_groups[i])for i in range(2)])
                     # print("# divide_new_score",new_score)
                     if old_score > 0:
-                        diff = (new_score-old_score)/old_score
+                        diff = (new_score - old_score) / old_score
                     else:
                         diff = 1
-                    # print("# divide_diff")
+                    # print("# divide_diff",diff)
                     if adopt(diff, temp):
                         print(f"# divide {diff} " \
                             f"element: {len(divided_groups[0])}+{len(divided_groups[1])}")
@@ -322,29 +339,31 @@ class Graph:
         temp = ((LOOP-1-t)*START_TEMP_FOR_MERGE + t*END_TEMP_FOR_MERGE) / (LOOP-1)
         for _ in range(lg-1):
             g1 = randint(0,lg-1)
-            if len(self.groups[g1])==0:continue
-            score1 = self.get_score_of_group(g1)
+            l1 = len(self.groups[g1])
+            if l1==0:continue
+            score1 = self.get_prob_of_group(g1)
             max_diff_score = -1
             merge_g = -1
             for g2 in range(lg):
-                if g2==g1 or len(self.groups[g2])==0: continue
-                score2 = self.get_score_of_group(g2)
+                l2 = len(self.groups[g2])
+                if g2==g1 or l2==0: continue
+                score2 = self.get_prob_of_group(g2)
                 old_score = add_prob(score1,score2)
-                new_score = self.get_score_of_group(-1, group=self.groups[g1]|self.groups[g2])
-                if old_score > 0 and (new_score-old_score)/old_score > max_diff_score:
-                    max_diff_score = (new_score-old_score)/old_score
+                new_score = self.get_prob_of_group(-1, group=self.groups[g1]|self.groups[g2])
+                print("#",len(self.groups[g1]),len(self.groups[g2]),old_score,new_score)
+                if old_score > 0 and (new_score - old_score) / old_score > max_diff_score:
+                    max_diff_score = (new_score - old_score) / old_score
                     merge_g = g2
             if merge_g == -1: continue
             # print("# merge_diff",max_diff_score)
             if adopt(max_diff_score, temp):
-                print(f"# merge {max_diff_score} " \
-                      f"element: {len(self.groups[g1])}+{len(self.groups[merge_g])}")
+                print(f"# merge {max_diff_score} element: {len(self.groups[g1])}+{len(self.groups[merge_g])}")
                 self.groups[g1] |= self.groups[merge_g]
                 self.groups[merge_g] = set()
         self.reset_group()
 
     def recover_graph(self):
-        for _ in range(REPEAT_NUM):
+        for r in range(REPEAT_NUM):
             self.groups = [{v}for v in range(N)]
             self.v_to_g = list(range(N))
             for t in range(LOOP):
@@ -361,7 +380,8 @@ class Graph:
                 for _ in range(MERGE_NUM):
                     self.merge_group(t)
                     self.get_arr_from_groups()
-        print(f"# best = {self.best_score}, {self.best_arr}")
+                print("#",t,time()-start)
+        print(f"# best = {self.best_prob}, {self.best_arr}")
 
 if __name__ == '__main__':
     start = time()
@@ -370,7 +390,7 @@ if __name__ == '__main__':
     M, eps = int(M),round(float(eps)*100)
 
     # MIN_DISTを決定
-    DIC_FOR_MIN_DIST = {(0,22):1,(22,28):3,(28,41):3}
+    DIC_FOR_MIN_DIST = {(0,22):1,(22,28):1,(28,41):3}
     MIN_DISTS = [0]*41
     for (l,r),m in DIC_FOR_MIN_DIST.items():
         MIN_DISTS[l:r] = [m]*(r-l)
@@ -409,7 +429,7 @@ if __name__ == '__main__':
             [8]*41+[9]*60, #eps=0.22
             [9]*41+[10]*60, #eps=0.23
             [9]*41+[10]*35+[11]*35, #eps=0.24
-            [10]*21+[11]*20+[12]*20+[13]*40, #eps=0.25
+            [8]*21+[9]*20+[10]*20+[11]*40, #eps=0.25
             [13]*61+[14]*40, #eps=0.26
             [14]*41+[15]*45+[16]*15, #eps=0.27
             [14]*41+[15]*30+[16]*30, #eps=0.28
@@ -440,17 +460,17 @@ if __name__ == '__main__':
                 N = n; break
 
     # グローバル変数
-    adopt = lambda diff,temp: diff > 0 or (temp>0 and exp(diff/temp)) > random()
-    SCORE_COEFFICIENT = lambda l: pow(min(1,(l/MIN)),20)
-    LOOP = 10
+    adopt = lambda diff,temp: diff >= 0 or (temp>0 and exp(diff/temp)) > random()
+    PROB_COEFFICIENTS = [pow(min(1,(l/MIN)),10)for l in range(N+1)]
+    LOOP = 20
     REPEAT_NUM = 1
-    MOVE_NUM = lambda t: (LOOP-1-t)*5
-    DIVIDE_NUM = MERGE_NUM = 2
-    if MIN <= 3: DIVIDE_NUM = MERGE_NUM = 4
-    ANNEALING = 0.01
+    ANNEALING = 0.05
     START_TEMP_FOR_MOVE, END_TEMP_FOR_MOVE = ANNEALING, 0
     START_TEMP_FOR_DIVIDE, END_TEMP_FOR_DIVIDE = ANNEALING, 0
     START_TEMP_FOR_MERGE, END_TEMP_FOR_MERGE = ANNEALING, 0
+    MOVE_NUM = lambda t: (LOOP-1-t)*5
+    DIVIDE_NUM = MERGE_NUM = 2
+    if MIN <= 3: DIVIDE_NUM = MERGE_NUM = 4
     EXCHANGE_LOOP = 0
     START_TEMP_FOR_EXCHANGE,END_TEMP_FOR_EXCHANGE = 0,0
     DICT_FOR_MAX_BITSEARCH_SIZE = {(0,1):13,(1,10):10,(10,41):4}
@@ -459,8 +479,10 @@ if __name__ == '__main__':
         MAX_BITSERCH_SIZES[l:r] = [v]*(r-l)
     MAX_BITSERCH_SIZE = MAX_BITSERCH_SIZES[eps]
     BIT_MAX = 50
-    SMALL = 0 if eps == 0 else 0
+    SMALL = 0.01 if eps == 0 else 0
     MULTINOMIAL_PROB = get_multinomial_table()
+    # for n in range(N*N+1):
+    #     print("#",n,MULTINOMIAL_PROB[n])
 
     # メイン処理
     print(f"MIN = {MIN}",file=sys.stderr)

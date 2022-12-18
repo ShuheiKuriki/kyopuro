@@ -1,14 +1,22 @@
-def get_diff(degree1, degree2):
-    return sum(abs(degree1[i]-degree2[i])for i in range(N))
-def get_degrees(s):
+def get_diff(matrix1, matrix2):
+    return sum(abs(matrix1[i][j]-matrix2[i][j])for i in range(N)for j in range(N))
+def get_matrix(s):
     ind = 0
     matrix = [[0]*N for _ in range(N)]
+    cnts = [0]*N
     for i in range(N):
         for j in range(i+1,N):
-            matrix[i][j] = matrix[j][i] = s[ind]
+            matrix[i][j] = matrix[j][i] = int(s[ind])
             ind += 1
-    cnts = sorted(matrix[i].count("1")for i in range(N))
-    return cnts
+        cnts[i] = (matrix[i].count(1),i)
+    P = [0]*N
+    for i,(_,ind) in enumerate(sorted(cnts)):
+        P[ind] = i
+    res = [[0]*N for _ in range(N)]
+    for i in range(N):
+        for j in range(N):
+            res[P[i]][P[j]] = matrix[i][j]
+    return res
 from random import *
 from time import *
 # import sys
@@ -16,35 +24,23 @@ start = time()
 INF = 10**18
 M, eps = input().split()
 M, eps = int(M),float(eps)
-N = 10
+N = 15
 print(N)
 L = N*(N-1)//2
 max_diff = -1
-degrees = [0]*M
-res = [0]*M
-for _ in range(10):
-    new_degrees = [0]*M
-    new_res = [0]*M
-    for k in range(M):
-        s = "".join(choices(["0","1"],k=N*(N-1)//2))
-        new_res[k] = s
-        new_degrees[k] = get_degrees(s)
-    diff = min(get_diff(new_degrees[i],new_degrees[j])for i in range(M)for j in range(i+1,M))
-    # print("#",diff)
-    if diff > max_diff:
-        degrees = new_degrees
-        max_diff = diff
-        res = new_res
-# print("#",max_diff)
-for k in range(M):print(res[k])
+matrix = [[[0]*N for _ in range(N)]for _ in range(M)]
+for k in range(M):
+    s = "".join(choices(["0","1"],k=N*(N-1)//2))
+    matrix[k] = get_matrix(s)
+    print(s)
 for q in range(100):
     H = input()
-    D = get_degrees(H)
+    Ma = get_matrix(H)
     # print("#",D)
     min_diff = INF
     min_ind = -1
     for i in range(M):
-        diff = get_diff(D,degrees[i])
+        diff = get_diff(Ma,matrix[i])
         # print("#",i,diff)
         if diff < min_diff:
             min_diff = diff
