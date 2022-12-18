@@ -15,12 +15,14 @@ other/Atcodersheet.xlsx
 python/library/data_structure/bit_max.py
 # ヒューリスティック
 Heuristic/*/in/
-Heuristic/*/out/
+Heuristic/*/out*/
 Heuristic/*/out_src/
 Heuristic/*/out_first/
 Heuristic/*/src/
 Heuristic/*/target/
 Heuristic/*/*.log
+Heuristic/*/in*/*.txt
+Heuristic/*/eps*/
 *.lock
 *.toml
 seeds.txt
