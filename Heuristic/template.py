@@ -9,6 +9,9 @@ def calc_score():
 def modify():
     return
 
+def adopt(diff, temp):
+    return diff > 0 or (temp>0 and exp(diff/temp) > random())
+
 def annealing():
     t_limit = 1.8
     s_temp, e_temp = 1000, 100
@@ -18,7 +21,7 @@ def annealing():
         temp = (s_temp*(max_step-step)+e_temp*step)//max_step
         modify()
         new_score = calc_score()
-        if new_score > score or exp((new_score-score)/temp) > random():
+        if adopt(new_score-score, temp) > random():
             # 遷移を採用する
             score = new_score
         n_time = time() - s_time
