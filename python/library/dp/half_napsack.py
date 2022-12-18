@@ -8,8 +8,8 @@ for i in range(n1):
     V1[i],W1[i] = I()
 for i in range(n2):
     V2[i],W2[i] = I()
-from collections import defaultdict
-from bisect import *
+from collections import*
+from bisect import*
 def make(V,W,n):
     Ws = {0}
     value = defaultdict(lambda: 0)

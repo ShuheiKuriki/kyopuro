@@ -4,7 +4,7 @@ https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_ei
 """
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import deque
+from collections import*
 INF = 10**18
 class BFS:
     def __init__(self, N, M=-1):

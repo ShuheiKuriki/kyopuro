@@ -6,7 +6,7 @@ import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
 N,A,Q = int(*I()),list(I()),int(*I())
 M = int(N**.5)+1
-from collections import *
+from collections import*
 Mo = [defaultdict(lambda:[])for _ in range(M)]
 for i in range(Q):
     l,r = I()

@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import*
 def sieve(n):
     fact = [10**18]*(n+1)
     fact[1] = 1

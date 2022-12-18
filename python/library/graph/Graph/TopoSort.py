@@ -4,7 +4,7 @@
 """
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import deque
+from collections import*
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N

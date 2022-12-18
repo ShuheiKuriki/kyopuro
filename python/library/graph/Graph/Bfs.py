@@ -4,7 +4,7 @@ BFS:https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C
 """
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import deque
+from collections import*
 INF = 10**18
 class Bfs:
     def __init__(self, N, M=-1):

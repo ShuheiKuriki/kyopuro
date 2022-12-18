@@ -1,7 +1,7 @@
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import deque
-from heapq import *
+from collections import*
+from heapq import*
 INF = 10**18
 class Tree:
     def __init__(self, N):

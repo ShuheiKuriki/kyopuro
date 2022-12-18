@@ -1,6 +1,6 @@
 # 強連結成分分解(SCC）
 # upsolve: https://atcoder.jp/contests/practice2/tasks/practice2_g
-from collections import deque
+from collections import*
 class SCC:
     def __init__(self, N, M=0):
         self.V = N

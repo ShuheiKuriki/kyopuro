@@ -1,6 +1,6 @@
 # 2-SAT
 # upsolve：https://atcoder.jp/contests/practice2/tasks/practice2_h
-from collections import deque
+from collections import*
 class SCC:
     def __init__(self, N, M=0):
         self.V = N

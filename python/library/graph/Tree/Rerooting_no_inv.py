@@ -2,7 +2,7 @@
 # verify: https://atcoder.jp/contests/dp/tasks/dp_v
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import *
+from collections import*
 class Tree:
     def __init__(self, N, merge, add_root, id):
         self.V = N

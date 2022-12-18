@@ -3,7 +3,7 @@
 """
 import sys
 input = sys.stdin.readline
-from collections import deque
+from collections import*
 INF = 10**18
 
 class UnionFind():

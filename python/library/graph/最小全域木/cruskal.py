@@ -46,7 +46,7 @@ class UnionFind():
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
 N, M = I()
-from collections import defaultdict
+from collections import*
 edges = defaultdict(lambda:[])
 for i in range(M):
     a,b,w = I()

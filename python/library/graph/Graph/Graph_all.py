@@ -1,8 +1,8 @@
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
 # sys.setrecursionlimit(10**6)
-from collections import deque
-from heapq import *
+from collections import*
+from heapq import*
 INF = 10**18
 class Graph:
     def __init__(self, N, M=-1):

@@ -4,7 +4,7 @@ BFS:未verify
 """
 import sys; input = sys.stdin.readline
 I = lambda:map(int,input().split())
-from collections import deque
+from collections import*
 INF = 10**18
 class Grid:
     def __init__(self, H, W, typ='str'):
