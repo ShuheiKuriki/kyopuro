@@ -11,11 +11,11 @@ class UnionFind():
 
     def union(self, x, y):
         x = self.find(x); y = self.find(y)
-        if x == y: return
-        # マージテク
-        if self.parents[x] > self.parents[y]: x,y = y,x
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
+        if x != y:
+            if self.parents[x] > self.parents[y]:
+                x,y = y,x # マージテク
+            self.parents[x] += self.parents[y]
+            self.parents[y] = x
 
     def same(self, x, y):
         return self.find(x) == self.find(y)
