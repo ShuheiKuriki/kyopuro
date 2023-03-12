@@ -18,8 +18,7 @@ def dot(A,B,mod):
     r = len(B)
     s = len(B[0])
     if q!=r:
-        print('掛け算できません')
-        return
+        raise Exception('掛け算できません')
     ans = [[0]*s for _ in range(p)]
     for i in range(p):
         for j in range(s):
@@ -33,8 +32,7 @@ def mv(A,x,mod):
     q = len(A[0])
     r = len(x)
     if q!=r:
-        print('掛け算できません')
-        return
+        raise Exception('掛け算できません')
     ans = [0]*p
     for i in range(p):
         for k in range(q):

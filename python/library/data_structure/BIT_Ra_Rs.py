@@ -1,5 +1,6 @@
-# 区間加算区間和取得
+# 区間加算区間和取得(RSQ and RAQ)
 # Binary Indexed Tree (Fenwick Tree)
+# verify https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_G
 class BIT:
     def __init__(self, n):
         self.n = n
@@ -30,7 +31,7 @@ def solve():
     N, Q = I()
     data0 = BIT(N+1)
     data1 = BIT(N+1)
-    for i in range(Q):
+    for _ in range(Q):
         p,*y = I()
         if p==0:
             l,r,x = y
