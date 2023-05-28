@@ -2,8 +2,7 @@
 トポロジカルソートしてorderを定めてからdpする
 グラフ条件:DAG(有向非巡回グラフ、閉路がなく根が分かっていない)
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 class Graph:
     def __init__(self, N, M=-1):

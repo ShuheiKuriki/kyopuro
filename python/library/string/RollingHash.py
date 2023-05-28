@@ -18,8 +18,7 @@ class RollingHash():
     def all(self):
         return self.get(0, self.length)
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 base = 10**9+7; mod = (1<<61)-1
 N = int(*I())
 S = input()[:-1]

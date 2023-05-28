@@ -40,8 +40,7 @@ def mv(A,x,mod):
             ans[i] %= mod
     return ans
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 def solve():
     N, M = I()
     init = [1,0]

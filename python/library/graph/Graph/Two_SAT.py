@@ -56,8 +56,7 @@ class SCC:
             rdfs(s, self.gnum)
             self.gnum += 1
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 N, D = I()
 X,Y = [0]*N,[0]*N
 for i in range(N):

@@ -152,8 +152,7 @@ class LazySegmentTree():
             sm = self.op(self.data[r], sm)
             if (r & -r) == r: return 0
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 INF = 10**18
 mod = 1<<32

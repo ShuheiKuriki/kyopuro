@@ -2,8 +2,7 @@
     Mo's Algorithm O(NB+NQ/B), B=√Qとすると O(N√Q)
     verify: https://atcoder.jp/contests/abc242/tasks/abc242_g
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 N,A,Q = int(*I()),list(I()),int(*I())
 B = max(int(Q**.5),1) # バケットサイズ O(√Q)
 M = N//B+1 # 1バケットあたりの幅 O(N/√Q)

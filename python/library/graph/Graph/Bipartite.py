@@ -1,8 +1,7 @@
 """
 二部グラフ判定（非連結対応）: https://atcoder.jp/contests/abc282/tasks/abc282_d
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 INF = 10**18
 class Bipartite:
@@ -26,7 +25,7 @@ class Bipartite:
 
     def is_bipartite(self):
         """
-        グラフ全体が二部グラフか判定する（非連結の場合も考慮）
+            グラフ全体が二部グラフか判定する（非連結の場合も考慮）
         """
         self.colors = [INF]*self.V
         base_color = 0

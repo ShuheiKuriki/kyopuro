@@ -155,12 +155,11 @@ class Convolution:
             a[i] %= mod
         return a
 
-import sys
-readline = sys.stdin.readline
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
-n,m = map(int,readline().split())
-a = list(map(int,readline().split()))
-b = list(map(int,readline().split()))
+n,m = I()
+a = list(I())
+b = list(I())
 mod = 998244353
 
 cv = Convolution(mod)

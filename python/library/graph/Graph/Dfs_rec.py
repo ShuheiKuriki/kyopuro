@@ -3,8 +3,7 @@ dfsの訪問順でdpする
 グラフ条件:根が分かっている、有向も無向も想定
 pythonは再帰処理が遅いので最終手段
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 sys.setrecursionlimit(10**6)
 class Graph:
     def __init__(self, N, M=-1):

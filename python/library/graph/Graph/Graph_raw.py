@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 class Graph:
     def __init__(self, N, M=-1):
         self.V = N

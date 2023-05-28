@@ -66,8 +66,7 @@ class MinCostFlow:
 				v = prv_v[v]
 		return res
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 n, m, flow = I()
 graph = MinCostFlow(n)

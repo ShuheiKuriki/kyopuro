@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 N, Wlim = I()
 n1 = N//2
 n2 = N-n1

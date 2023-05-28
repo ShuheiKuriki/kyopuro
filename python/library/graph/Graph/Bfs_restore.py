@@ -2,8 +2,7 @@
 復元ありBFS
 https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_ei
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 INF = 10**18
 class BFS:

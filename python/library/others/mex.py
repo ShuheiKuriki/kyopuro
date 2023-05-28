@@ -1,9 +1,7 @@
 def mex(lis):
-    # setの状態で受け取る
-    lis = list(lis)
-    lis.sort()
+    # setまたはlistの状態で受け取る
     now = 0
-    for l in lis:
+    for l in sorted(lis):
         if now==l:
             now += 1
         else:

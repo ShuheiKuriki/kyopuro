@@ -43,8 +43,7 @@ class SegmentTree():
             l >>= 1
             r >>= 1
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 N, Q = I()
 mapping = max

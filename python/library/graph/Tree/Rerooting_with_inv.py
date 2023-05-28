@@ -1,6 +1,5 @@
 # DP時の演算に逆元がある群に対する全方位木DP
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 class Tree:
     def __init__(self, N, merge, divide, add_root, id):

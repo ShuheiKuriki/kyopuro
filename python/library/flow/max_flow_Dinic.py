@@ -174,8 +174,7 @@ class Dinic:
             que, next_que = next_que, que
         return visited
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 N, M = I()
 dinic = Dinic(N)

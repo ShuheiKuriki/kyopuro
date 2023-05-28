@@ -23,8 +23,7 @@ class BIT:
             return self.el[i]
         return self.sum(j) - self.sum(i-1)
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 def solve():
     ans = []

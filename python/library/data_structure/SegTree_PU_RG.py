@@ -91,8 +91,7 @@ class SegmentTree():
             if (r & -r) == r: break
         return 0
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 def op(x, y):
     return min(x,y)

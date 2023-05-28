@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 class Tree:
     def __init__(self, N):
         self.V = N

@@ -2,8 +2,7 @@
 BFS:https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C
 01-BFS:未verify
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 INF = 10**18
 class Bfs:

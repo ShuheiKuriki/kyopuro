@@ -38,8 +38,7 @@ def ifft(F, N):
         f[i] /= N
     return f
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 n = int(*I())
 f = []

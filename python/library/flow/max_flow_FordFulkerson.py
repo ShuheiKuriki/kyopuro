@@ -45,14 +45,13 @@ class FordFulkerson:
 			flow += f
 		return flow
 
-import sys
-readline = sys.stdin.readline
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 sys.setrecursionlimit(10**6)
 
-N, M = map(int, readline().split())
+N, M = I()
 ff = FordFulkerson(N)
 for i in range(M):
-	u, v, c = map(int, readline().split())
+	u, v, c = I()
 	ff.add_edge(u, v, c)
 ans = ff.flow(0, N-1)
 print(ans)

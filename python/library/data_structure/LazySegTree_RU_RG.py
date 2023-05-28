@@ -153,8 +153,7 @@ class LazySegmentTree():
             sm = self.op(self.data[r], sm)
             if (r & -r) == r: return 0
 
-import sys
-input = sys.stdin.readline
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 e = (1<<31)-1
 def op(x, y):
@@ -167,8 +166,6 @@ def mapping(f, x): #fが作用素, xが更新する前の値
 def composition(f, g): #fをgに作用させる(f,gの順に作用)
     return g if f==id else f
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
 N,Q = I()
 # A = list(I())
 

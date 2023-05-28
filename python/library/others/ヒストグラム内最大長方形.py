@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 N = int(*I())
 A = list(I())
 L = [0]*N; R = [N-1]*N

@@ -2,9 +2,8 @@
     LCA（最小共通祖先）ライブラリ
     verify: https://atcoder.jp/contests/abc014/tasks/abc014_4
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
-from collections import *
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
+from collections import*
 class LCA:
     def __init__(self, N):
         self.edge = [[] for _ in range(N)]

@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 MOD = 998244353
 N, M = I()
 A = [[0]*M for _ in range(N)]

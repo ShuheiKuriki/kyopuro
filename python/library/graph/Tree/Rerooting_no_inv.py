@@ -1,7 +1,6 @@
 # DP時の演算に逆元がないモノイドに対する全方位木DP
 # verify: https://atcoder.jp/contests/dp/tasks/dp_v
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 class Tree:
     def __init__(self, N, merge, add_root, id):

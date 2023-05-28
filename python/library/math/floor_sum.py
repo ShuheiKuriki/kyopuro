@@ -17,8 +17,7 @@ def floor_sum(n, m, a, b):
         n, m, a, b = y_max, a, m, diff%a
     return res
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 
 T = int(input())
 ans = [0]*T

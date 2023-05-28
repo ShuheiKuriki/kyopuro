@@ -1,5 +1,4 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 # ワーシャルフロイド法、計算量O(N^3)
 N, M = I()
 INF = 10**18

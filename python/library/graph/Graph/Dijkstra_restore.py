@@ -1,9 +1,8 @@
 """
 ダイクストラ法:単一始点最短経路問題、非負辺、計算量O(ElogV)
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
-from heapq import *
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
+from heapq import*
 INF = 10**18
 class Graph:
     def __init__(self, N, M=-1):

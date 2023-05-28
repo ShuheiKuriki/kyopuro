@@ -1,6 +1,3 @@
-import sys
-input = sys.stdin.readline
-
 class Doubling:
     def __init__(self, N, A, sup):
         rep = sup.bit_length()
@@ -22,8 +19,7 @@ class Doubling:
             K >>= 1
         return res
 
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 N,K = I()
 A = list(I())
 db = Doubling(N,A,10**18)

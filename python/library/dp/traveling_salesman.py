@@ -3,8 +3,7 @@
 #配るDP
 #スタートは既に訪れた頂点に含まない
 #既にスタートを訪れている場合は考える必要がない
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 V, E = I()
 edge = [[] for _ in range(V)]
 for i in range(E):

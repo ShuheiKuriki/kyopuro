@@ -2,8 +2,7 @@
 ベルマンフォード法：負の重み、負閉路検出可能、計算量O(VE)
 https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/1/GRL_1_B
 """
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 INF = 10**18
 class BellmanFord:
     def __init__(self, N, M=-1):

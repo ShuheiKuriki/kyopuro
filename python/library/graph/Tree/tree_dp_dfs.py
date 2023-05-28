@@ -1,12 +1,11 @@
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 from collections import*
 class Tree:
     def __init__(self, N):
         self.V = N
         self.edge = [[] for _ in range(N)]
         self.order = []
-    
+
     def add_edges(self, ind=1, bi=True):
         for a,*A in [tuple(I()) for _ in range(self.V-1)]:
             a -= ind; b = A[0] - ind

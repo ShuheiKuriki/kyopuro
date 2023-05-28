@@ -1,7 +1,6 @@
 #最小全域木問題、プリム法
-import sys; input = sys.stdin.readline
-I = lambda:map(int,input().split())
-from heapq import *
+import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
+from heapq import*
 def solve():
     N, M = I()
     edge = [[] for _ in range(N)]
