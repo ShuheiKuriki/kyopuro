@@ -1,5 +1,5 @@
 """
-BFS:未verify
+BFS:verify(TODO)
 01-BFS:verify(https://atcoder.jp/contests/abc213/tasks/abc213_e)
 """
 import sys; input = sys.stdin.readline
@@ -8,10 +8,10 @@ from collections import*
 INF = 10**18
 class Grid:
     def __init__(self, H, W, typ='str'):
-        self.H = H; self.W = W
-        self.dh = [0,1,0,-1]; self.dw = [1,0,-1,0]
+        self.H,self.W = H,W
+        self.dh,self.dw = [0,1,0,-1],[1,0,-1,0]
         if typ=='str': self.grid = [input()[:-1] for _ in range(H)]
-        elif typ=='int': self.grid = [list(I()) for _ in range(H)]
+        else: self.grid = [list(I()) for _ in range(H)]
 
     #01BFSならstd=False
     def bfs(self, sh, sw, gh=-1, gw=-1, ind=0, zero_one=False):
@@ -32,10 +32,8 @@ class Grid:
             #step2-3(隣接頂点をループ)
             for i in range(4):
                 #step2-3-0(移動後が移動できない位置ならスキップ)
-                h0 = h+self.dh[i]; w0 = w+self.dw[i]
-                if not (0<=h0<self.H and 0<=w0<self.W): continue
-                if self.grid[h0][w0]!='.': continue
-                #step2-3-1(ndistを計算)
+                h0,w0 = h+self.dh[i],w+self.dw[i]
+                if not (0<=h0<self.H and 0<=w0<self.W) or self.grid[h0][w0]!='.': continue
                 weight = 1
                 ndist = self.dists[h][w] + weight
                 #step2-3-2(ndist>=dists配列値なら意味がないのでスキップ)
