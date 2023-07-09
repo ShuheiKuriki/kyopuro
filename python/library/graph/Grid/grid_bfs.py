@@ -9,7 +9,7 @@ class Grid:
     def __init__(self, H, W, typ='str'):
         self.H,self.W = H,W
         self.dh,self.dw = [0,1,0,-1],[1,0,-1,0]
-        if typ=='str': self.grid = [input()[:-1] for _ in range(H)]
+        if typ=='str': self.grid = [RL()[:-1] for _ in range(H)]
         else: self.grid = [list(I()) for _ in range(H)]
 
     #01BFSならstd=False

@@ -23,6 +23,10 @@ class Tree:
         self.edge[a].append(atob)
         if bi: self.edge[b].append(btoa)
 
+    def build_rooted_tree(self):
+        for i,p in enumerate(list(I())):
+            self.add_edge(p-1,i+1,ind=0,bi=False)
+
     def bfs(self, s, g=-1, zero_one=False):
         """
         zero_one=Falseなら通常のBFS、Trueなら01-BFS
@@ -59,3 +63,4 @@ N = int(*I())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)
 G.bfs(0, ind=0, zero_one=False)
+# G.build_rooted_tree()

@@ -22,6 +22,10 @@ class Dijkstra:
         self.edge[a].append(atob)
         if bi: self.edge[b].append(btoa)
 
+    def build_rooted_tree(self):
+        for i,p in enumerate(list(I())):
+            self.add_edge(p-1,i+1,ind=0,bi=False)
+
     def dijkstra_heap(self, s, g=-1):
         #step1(初期化)
         que = [(0,s)] #que:[sからの暫定最短距離,頂点]のリスト
@@ -50,3 +54,4 @@ N = int(*I())
 G = Dijkstra(N)
 G.add_edges(ind=1, bi=True)
 G.dijkstra_heap(0)
+# G.build_rooted_tree()

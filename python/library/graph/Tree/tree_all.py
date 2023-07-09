@@ -21,6 +21,10 @@ class Tree:
         self.edge[a].append(atob)
         if bi: self.edge[b].append(btoa)
 
+    def build_rooted_tree(self):
+        for i,p in enumerate(list(I())):
+            self.add_edge(p-1,i+1,ind=0,bi=False)
+
     def dfs_dp(self, start):
         stack = deque([start])
         self.parent = [self.V]*self.V; self.parent[start] = -1
@@ -90,3 +94,4 @@ class Tree:
 N = int(*I())
 G = Tree(N)
 G.add_edges(ind=1, bi=True)
+# G.build_rooted_tree()

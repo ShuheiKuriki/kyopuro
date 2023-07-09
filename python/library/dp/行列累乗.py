@@ -44,6 +44,7 @@ import sys;RL=sys.stdin.readline;I=lambda:map(int,RL().split())
 def solve():
     N, M = I()
     init = [1,0]
+    # 作用前の状態が横、作用後の状態が縦になる。逆にしないように注意！
     mat = [[1,1],[1,0]]
     ans = mv(power(mat,N-2,M),init,M)
     return ans[0]

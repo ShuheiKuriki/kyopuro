@@ -8,12 +8,14 @@ class SegmentTree():
         self.log = (n - 1).bit_length()
         self.size = 1 << self.log
         self.data = [e] * (2 * self.size)
+        self.el = [e] * n
 
     def update(self, k):
         self.data[k] = self.oper(self.data[2 * k], self.data[2 * k + 1])
 
     def build(self, arr):
         # assert len(arr) <= self.n
+        self.el = arr[:]
         for i in range(self.n):
             self.data[self.size + i] = arr[i]
         for i in range(self.size-1,0,-1):
@@ -21,6 +23,7 @@ class SegmentTree():
 
     def set(self, p, x):
         # assert 0 <= p < self.n
+        self.el[p] = x
         p += self.size
         self.data[p] = x
         for i in range(self.log):
@@ -29,7 +32,7 @@ class SegmentTree():
 
     def get(self, p):
         # assert 0 <= p < self.n
-        return self.data[p + self.size]
+        return self.el[p]
 
     def prod(self, l, r):
         # 半開区間[l,r)
