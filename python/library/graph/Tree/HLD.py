@@ -65,7 +65,7 @@ class HLD:
     def query(self, v, u):
         dist = 0
         while self.head[v]!=self.head[u]:
-            # head[v]がhead[u]より遠くなるようにswap
+            # head[v]がhead[u]より深くなるようにswap
             if self.depth[self.head[v]]<self.depth[self.head[u]]:v,u = u,v
             dist += self.bit.get_range_sum(self.ord[self.head[v]], self.ord[v])
             v = self.parent[self.head[v]]
