@@ -11,7 +11,7 @@ def binary_search(low, high, eps=1, get_mini=True):
 def is_ok(target):
     return target
 
-# 単純に下限と上限を指定
-low, high = 2, 10**18
+# 単純に下限と上限を指定（広くして損はないので、広めに設定）
+low, high = 0, 10**18
 res = binary_search(low, high, eps=1, get_mini=False)
 print(res)
