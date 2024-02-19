@@ -27,6 +27,7 @@ Heuristic/*/eps*/
 *.toml
 seeds.txt
 vis.html
-# 作問
+# その他
 作問/
 Future25/
+other/
